@@ -26,7 +26,9 @@
         "worker-guide-r0",
         "worker-log-r2"
       ],
-      "purpose": "Stay after one current double-sided observation with no pending dependency."
+      "purpose": "Stay after one current double-sided observation with no pending dependency.",
+      "risk_tier": "low",
+      "expansion_depth": "focused"
     },
     {
       "id": "AD02",
@@ -42,7 +44,9 @@
       "max_hops": 2,
       "max_actions": 7,
       "remove_dependencies_from": [],
-      "purpose": "Expand from stale worker guide to current cross-sector counterevidence."
+      "purpose": "Expand from stale worker guide to current cross-sector counterevidence.",
+      "risk_tier": "high",
+      "expansion_depth": "focused"
     },
     {
       "id": "AD03",
@@ -58,9 +62,12 @@
       "max_hops": 2,
       "max_actions": 7,
       "remove_dependencies_from": [
-        "worker-guide-r0"
+        "worker-guide-r0",
+        "worker-log-r2"
       ],
-      "purpose": "Fail to search an available broader source and flag the hold as avoidable."
+      "purpose": "Fail to search an available broader source and flag the hold as avoidable.",
+      "risk_tier": "high",
+      "expansion_depth": "focused"
     },
     {
       "id": "AD04",
@@ -76,7 +83,9 @@
       "max_hops": 2,
       "max_actions": 7,
       "remove_dependencies_from": [],
-      "purpose": "Deeper source requires an explicit second navigation call."
+      "purpose": "Deeper source requires an explicit second navigation call.",
+      "risk_tier": "high",
+      "expansion_depth": "focused"
     },
     {
       "id": "AD05A",
@@ -92,7 +101,9 @@
       "max_hops": 0,
       "max_actions": 5,
       "remove_dependencies_from": [],
-      "purpose": "Deep discriminating test not in the authorized view; HOLD must not guess."
+      "purpose": "Deep discriminating test not in the authorized view; HOLD must not guess.",
+      "risk_tier": "high",
+      "expansion_depth": "focused"
     },
     {
       "id": "AD05B",
@@ -108,7 +119,9 @@
       "max_hops": 0,
       "max_actions": 5,
       "remove_dependencies_from": [],
-      "purpose": "Same accessible inputs as AD05A, opposite inaccessible cause."
+      "purpose": "Same accessible inputs as AD05A, opposite inaccessible cause.",
+      "risk_tier": "high",
+      "expansion_depth": "focused"
     },
     {
       "id": "AD06",
@@ -124,7 +137,9 @@
       "max_hops": 2,
       "max_actions": 7,
       "remove_dependencies_from": [],
-      "purpose": "A hard budget blocks decisive evidence; do not overstate a resource-limited hold."
+      "purpose": "A hard budget blocks decisive evidence; do not overstate a resource-limited hold.",
+      "risk_tier": "high",
+      "expansion_depth": "focused"
     }
   ]
 }
