@@ -116,6 +116,20 @@ jobs:
           name: knowledge-genealogy-py-${{ matrix.python-version }}
           path: artifacts/knowledge-genealogy-v0.json
           if-no-files-found: error
+      - name: Detect vertical evidence-chain regressions (M71-M88)
+        env:
+          PYTHONPATH: src
+        run: python scripts/verify_vertical_mutations.py
+      - name: Evaluate public four-stage vertical development cases
+        env:
+          PYTHONPATH: src
+        run: python -m workcoord_lab.vertical_integration_suite --output artifacts/vertical-evidence-v0.json
+      - name: Upload deterministic vertical evidence receipts
+        uses: actions/upload-artifact@v4
+        with:
+          name: vertical-evidence-py-${{ matrix.python-version }}
+          path: artifacts/vertical-evidence-v0.json
+          if-no-files-found: error
       - name: Run synthetic demo
         env:
           PYTHONPATH: src
