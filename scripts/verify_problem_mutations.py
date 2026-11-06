@@ -65,6 +65,14 @@ MUTANTS = (
      '"semantic_closure_granted": False,',
      '"semantic_closure_granted": True,',
      "test_all_outputs_advisory_even_with_work_status_done"),
+    ("M38_disconnect_application_from_selected_remedy",
+     'elif mode not in {',
+     'elif False and mode not in {',
+     "test_application_mode_must_match_selected_remedy"),
+    ("M39_allow_parent_ready_with_required_child_open",
+     'elif row["required"] and blocked_by[row["id"]]:',
+     'elif False and blocked_by[row["id"]]:',
+     "test_child_required_obligation_blocks_parent_readiness"),
 )
 
 

@@ -99,6 +99,9 @@ class ProblemDecisionTests(unittest.TestCase):
         self.assertIn("delivery", r["required_open_node_ids"])
         self.assertNotIn("incident", r["required_open_node_ids"])
         self.assertEqual(r["status"], "HOLD_REQUIRED_PROBLEM_OPEN")
+        root = next(x for x in r["node_results"] if x["id"] == "incident")
+        self.assertEqual(root["subtree_readiness"], "BLOCKED_BY_REQUIRED_DESCENDANTS")
+        self.assertEqual(root["blocked_by_required_descendants"], ["delivery"])
 
     def test_missing_root_acceptance_blocks_even_when_children_are_green(self):
         r = self.result("PD17")
@@ -177,6 +180,8 @@ class ProblemDecisionTests(unittest.TestCase):
         self.assertEqual(costs["build"]["estimated_total_units"], 73)
         self.assertEqual(costs["reuse"]["horizon_cycles"], 24)
         self.assertEqual(costs["build"]["horizon_cycles"], 24)
+        self.assertEqual(costs["reuse"]["risk_allowance_units"], 1)
+        self.assertEqual(costs["build"]["recurring_units"], 3)
         self.assertLess(costs["reuse"]["estimated_total_units"],
                         costs["build"]["estimated_total_units"])
 
@@ -209,6 +214,14 @@ class ProblemDecisionTests(unittest.TestCase):
         r = evaluate_problem_decision(p)
         self.assertIn("APPLICATION_STEPS_MISSING", r["decision_issues"])
         self.assertIn("REVERSIBLE_APPLICATION_HAS_NO_ROLLBACK", r["decision_issues"])
+
+    def test_application_mode_must_match_selected_remedy(self):
+        p = self.packet("PD03")
+        p["decision"]["application"]["mode"] = "new_component"
+        result = evaluate_problem_decision(p)
+        self.assertIn("APPLICATION_MODE_CONFLICTS_WITH_SELECTED_STRATEGY",
+                      result["decision_issues"])
+        self.assertEqual(result["status"], "HOLD_DECISION_INCOMPLETE")
 
     def test_options_require_distinct_strategies_in_structured_case(self):
         p = self.packet()

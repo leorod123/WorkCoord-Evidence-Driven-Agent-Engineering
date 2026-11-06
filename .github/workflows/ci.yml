@@ -74,7 +74,7 @@ jobs:
           name: research-quality-py-${{ matrix.python-version }}
           path: artifacts/research-quality-v0.json
           if-no-files-found: error
-      - name: Detect problem and decision admission regressions (M25-M37)
+      - name: Detect problem and decision admission regressions (M25-M39)
         env:
           PYTHONPATH: src
         run: python scripts/verify_problem_mutations.py

@@ -60,7 +60,9 @@ This intentionally makes a cheap-to-build but expensive-to-maintain option visib
 
 When a selected `build` option is more expensive than a comparable declared `reuse` or `simplify` option covering all required leaves, the alternative's rejection reason must be recorded. A free-text explanation is auditable **but not proof that building is actually necessary**. The admission checker does not choose an option itself or claim that the lowest declared cost is universally optimal.
 
-A selected option that does **not** address all mandatory leaves is incomplete even if all described tests pass. `defer` is a recorded decision **not to complete**, never a successful implementation.
+A selected option that does **not** address all mandatory leaves is incomplete even if all described tests pass. The **application mode must match the selected remedy**: for example, `build` requires `new_component`, while `reuse` requires `reuse_existing` or `configure`. `defer` is a recorded decision **not to complete**, never a successful implementation.
+
+A parent's own evidence may be covered while its required child is open. The report therefore distinguishes `readiness` for the node's own criteria from `subtree_readiness` for the required hierarchy; a blocked descendant keeps the parent subtree blocked.
 
 ## Deterministic development cases
 
@@ -89,7 +91,7 @@ The direct evaluator accepts any user-authored JSON packet conforming to the sch
 PYTHONPATH=src python -m workcoord_lab.problem_decision my-problem.json
 ```
 
-CI runs the 21-case catalog in Python 3.10, 3.11 and 3.13 and saves the deterministic JSON receipt, containing the **SHA-256 of the public case catalog**. Explicit mutation probes **M25–M37** remove or weaken one check at a time: behavior-vs-test typing, revision matching, required-child coverage, negative evidence, alternative scope, recurring costs, cheaper reuse justification, lightweight quick path, external critical review, knowledge uncertainty, root acceptance, optional branches and illicit closure promotion. A mutant only counts when a named negative-control test fails, not when the process crashes.
+CI runs the 21-case catalog in Python 3.10, 3.11 and 3.13 and saves the deterministic JSON receipt, containing the **SHA-256 of the public case catalog**. Explicit mutation probes **M25–M39** remove or weaken one check at a time: behavior-vs-test typing, revision matching, required-child coverage, negative evidence, alternative scope, recurring costs, cheaper reuse justification, lightweight quick path, external critical review, knowledge uncertainty, root acceptance, optional branches, illicit closure promotion, application-mode coherence and mandatory descendant propagation. A mutant only counts when a named negative-control test fails, not when the process crashes.
 
 ## Boundaries and remaining research
 

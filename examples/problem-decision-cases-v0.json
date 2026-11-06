@@ -1069,7 +1069,7 @@
             }
           ],
           "application": {
-            "mode": "modify_local",
+            "mode": "new_component",
             "steps": [
               "Add deterministic idempotency to the fictional worker."
             ],
@@ -1228,7 +1228,7 @@
             }
           ],
           "application": {
-            "mode": "modify_local",
+            "mode": "new_component",
             "steps": [
               "Add deterministic idempotency to the fictional worker."
             ],
@@ -1371,7 +1371,7 @@
             }
           ],
           "application": {
-            "mode": "modify_local",
+            "mode": "reuse_existing",
             "steps": [
               "Add deterministic idempotency to the fictional worker."
             ],
@@ -2593,7 +2593,7 @@
             }
           ],
           "application": {
-            "mode": "modify_local",
+            "mode": "defer",
             "steps": [
               "Add deterministic idempotency to the fictional worker."
             ],

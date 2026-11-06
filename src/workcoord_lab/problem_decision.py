@@ -195,6 +195,8 @@ def _costed_decision(data: Any, leaf_ids: list[str], nodes: dict[str, dict],
         computed.append({
             "id": key, "strategy": strategy, "estimated_total_units": total,
             "upfront_units": upfront, "recurring_units": recurring,
+            "risk_allowance_units": risk_reserve,
+            "rework_allowance_units": rework_reserve,
             "horizon_cycles": horizon, "cost_unit": unit,
         })
     if selected_id not in known:
@@ -229,6 +231,14 @@ def _costed_decision(data: Any, leaf_ids: list[str], nodes: dict[str, dict],
             mode = application.get("mode")
             if not isinstance(mode, str) or mode not in APPLICATIONS:
                 findings.append("APPLICATION_MODE_UNSPECIFIED")
+            elif mode not in {
+                "reuse": {"reuse_existing", "configure"},
+                "simplify": {"modify_local", "configure"},
+                "adapt": {"modify_local", "configure"},
+                "build": {"new_component"},
+                "defer": {"defer"},
+            }[selected["strategy"]]:
+                findings.append("APPLICATION_MODE_CONFLICTS_WITH_SELECTED_STRATEGY")
             steps = application.get("steps")
             if not isinstance(steps, list) or not steps or any(
                     not isinstance(step, str) or not step.strip() for step in steps):
@@ -309,6 +319,25 @@ def evaluate_problem_decision(packet: dict[str, Any]) -> dict[str, Any]:
                           else "COVERED_DECLARATIONS_ONLY" if node["required"]
                           else "OPTIONAL_NOT_A_CLOSURE_GATE"),
         })
+
+    # Local criterion readiness does not imply *subtree* readiness. A parent
+    # remains blocked by mandatory descendants even when its own probe passes.
+    blocked_by = {node_id: [] for node_id in nodes}
+    for open_id in unaddressed:
+        parent_id = nodes[open_id]["parent_id"]
+        while parent_id is not None:
+            blocked_by[parent_id].append(open_id)
+            parent_id = nodes[parent_id]["parent_id"]
+    for row in node_report:
+        row["blocked_by_required_descendants"] = sorted(blocked_by[row["id"]])
+        if row["required"] and row["id"] in unaddressed:
+            row["subtree_readiness"] = "OWN_REQUIRED_CRITERIA_OPEN"
+        elif row["required"] and blocked_by[row["id"]]:
+            row["subtree_readiness"] = "BLOCKED_BY_REQUIRED_DESCENDANTS"
+        elif row["required"]:
+            row["subtree_readiness"] = "DECLARED_SUBTREE_COVERED_UNVERIFIED"
+        else:
+            row["subtree_readiness"] = "OPTIONAL_NOT_A_CLOSURE_GATE"
 
     decision_status, decision_issues, cost_table = _costed_decision(
         packet.get("decision"), leaves, nodes, risk)
