@@ -70,8 +70,8 @@ def main():
             (root / 'src' / 'workcoord_lab').mkdir(parents=True)
             (root / 'tests').mkdir()
             (root / 'examples').mkdir()
-            shutil.copy2(ROOT / 'src' / 'workcoord_lab' / '__init__.py',
-                         root / 'src' / 'workcoord_lab' / '__init__.py')
+            (root / 'src' / 'workcoord_lab' / '__init__.py').write_text(
+                '"""Isolated research check."""\n', encoding='utf-8')
             source = root / 'src' / 'workcoord_lab' / 'research_quality.py'
             shutil.copy2(ROOT / 'src' / 'workcoord_lab' / 'research_quality.py', source)
             shutil.copy2(ROOT / 'src' / 'workcoord_lab' / 'research_quality_suite.py',
