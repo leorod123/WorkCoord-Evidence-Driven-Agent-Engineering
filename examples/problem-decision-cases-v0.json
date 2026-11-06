@@ -1,0 +1,2804 @@
+{
+  "schema": "workcoord.problem-decision-cases/v0",
+  "status": "PUBLIC_FICTIONAL_DEVELOPMENT_CASES",
+  "notice": "All labels are human-authored, self-declared and are not a held-out evaluator.",
+  "cases": [
+    {
+      "id": "PD01",
+      "label": "Quick one-node local fix without mandatory full option matrix",
+      "packet": {
+        "schema": "workcoord.problem-decision/v0",
+        "risk": "QUICK",
+        "problem": {
+          "id": "flowdesk-duplicate-deliveries",
+          "source_revision": "fictional-r2",
+          "statement": "Duplicate messages were observed for one logical event.",
+          "goal": "Exactly one message is delivered per event after retries."
+        },
+        "nodes": [
+          {
+            "id": "small",
+            "parent_id": null,
+            "title": "Simple bounded local test",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "local",
+                "check": "One deterministic local test",
+                "kind": "technical_test"
+              }
+            ]
+          }
+        ],
+        "evidence": [
+          {
+            "id": "small-local-test",
+            "node_id": "small",
+            "criterion_id": "local",
+            "revision": "fictional-r2",
+            "kind": "technical_test",
+            "declared_result": "PASS"
+          }
+        ],
+        "implementation": {
+          "technical_tests_green": true,
+          "work_status": "DONE"
+        }
+      },
+      "expected_status": "CANDIDATE_FOR_EXTERNAL_ACCEPTANCE",
+      "expected_decision_issues": [],
+      "expected_open_nodes": [],
+      "note": ""
+    },
+    {
+      "id": "PD02",
+      "label": "Technical green cannot close missing mandatory delivery outcome",
+      "packet": {
+        "schema": "workcoord.problem-decision/v0",
+        "risk": "STRUCTURED",
+        "problem": {
+          "id": "flowdesk-duplicate-deliveries",
+          "source_revision": "fictional-r2",
+          "statement": "Duplicate messages were observed for one logical event.",
+          "goal": "Exactly one message is delivered per event after retries."
+        },
+        "nodes": [
+          {
+            "id": "incident",
+            "parent_id": null,
+            "title": "End-to-end one-delivery outcome",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "end-to-end",
+                "check": "Replay with a lost acknowledgement and observe one external delivery",
+                "kind": "behavior_probe"
+              }
+            ]
+          },
+          {
+            "id": "worker",
+            "parent_id": "incident",
+            "title": "Worker implementation test",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "unit-test",
+                "check": "Idempotency guard passes deterministic unit test",
+                "kind": "technical_test"
+              }
+            ]
+          },
+          {
+            "id": "delivery",
+            "parent_id": "incident",
+            "title": "External delivery requirement",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "only-once",
+                "check": "Exactly one externally visible delivery for retry case",
+                "kind": "behavior_probe"
+              }
+            ]
+          },
+          {
+            "id": "telemetry",
+            "parent_id": "incident",
+            "title": "Optional telemetry",
+            "required": false,
+            "knowledge": "UNKNOWN",
+            "criteria": []
+          }
+        ],
+        "evidence": [
+          {
+            "id": "behavior-end-to-end",
+            "node_id": "incident",
+            "criterion_id": "end-to-end",
+            "revision": "fictional-r2",
+            "kind": "behavior_probe",
+            "declared_result": "PASS"
+          },
+          {
+            "id": "unit-idempotency",
+            "node_id": "worker",
+            "criterion_id": "unit-test",
+            "revision": "fictional-r2",
+            "kind": "technical_test",
+            "declared_result": "PASS"
+          }
+        ],
+        "implementation": {
+          "technical_tests_green": true,
+          "work_status": "DONE"
+        },
+        "decision": {
+          "horizon_cycles": 12,
+          "cost_unit": "fictional effort-units",
+          "selected_id": "adapt",
+          "rationale": "A small local change is the smallest declared path that covers required nodes.",
+          "alternatives": [
+            {
+              "id": "reuse",
+              "strategy": "reuse",
+              "addresses": [
+                "worker",
+                "delivery"
+              ],
+              "upfront_units": 3,
+              "recurring_units": 1,
+              "risk_allowance_units": 1,
+              "rework_allowance_units": 1,
+              "reversible": true,
+              "rejection_reason": "Requires ongoing manual intervention each cycle."
+            },
+            {
+              "id": "adapt",
+              "strategy": "adapt",
+              "addresses": [
+                "worker",
+                "delivery"
+              ],
+              "upfront_units": 6,
+              "recurring_units": 0,
+              "risk_allowance_units": 1,
+              "rework_allowance_units": 1,
+              "reversible": true,
+              "rejection_reason": ""
+            }
+          ],
+          "application": {
+            "mode": "modify_local",
+            "steps": [
+              "Add deterministic idempotency to the fictional worker."
+            ],
+            "rollback": "Restore the previous fictional worker version."
+          }
+        }
+      },
+      "expected_status": "HOLD_REQUIRED_PROBLEM_OPEN",
+      "expected_decision_issues": [
+        "TECHNICAL_GREEN_DOES_NOT_CLOSE_REQUIRED_OUTCOMES"
+      ],
+      "expected_open_nodes": [
+        "delivery"
+      ],
+      "note": "Core adversarial fixture."
+    },
+    {
+      "id": "PD03",
+      "label": "All mandatory criteria have current declared evidence",
+      "packet": {
+        "schema": "workcoord.problem-decision/v0",
+        "risk": "STRUCTURED",
+        "problem": {
+          "id": "flowdesk-duplicate-deliveries",
+          "source_revision": "fictional-r2",
+          "statement": "Duplicate messages were observed for one logical event.",
+          "goal": "Exactly one message is delivered per event after retries."
+        },
+        "nodes": [
+          {
+            "id": "incident",
+            "parent_id": null,
+            "title": "End-to-end one-delivery outcome",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "end-to-end",
+                "check": "Replay with a lost acknowledgement and observe one external delivery",
+                "kind": "behavior_probe"
+              }
+            ]
+          },
+          {
+            "id": "worker",
+            "parent_id": "incident",
+            "title": "Worker implementation test",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "unit-test",
+                "check": "Idempotency guard passes deterministic unit test",
+                "kind": "technical_test"
+              }
+            ]
+          },
+          {
+            "id": "delivery",
+            "parent_id": "incident",
+            "title": "External delivery requirement",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "only-once",
+                "check": "Exactly one externally visible delivery for retry case",
+                "kind": "behavior_probe"
+              }
+            ]
+          },
+          {
+            "id": "telemetry",
+            "parent_id": "incident",
+            "title": "Optional telemetry",
+            "required": false,
+            "knowledge": "UNKNOWN",
+            "criteria": []
+          }
+        ],
+        "evidence": [
+          {
+            "id": "behavior-end-to-end",
+            "node_id": "incident",
+            "criterion_id": "end-to-end",
+            "revision": "fictional-r2",
+            "kind": "behavior_probe",
+            "declared_result": "PASS"
+          },
+          {
+            "id": "unit-idempotency",
+            "node_id": "worker",
+            "criterion_id": "unit-test",
+            "revision": "fictional-r2",
+            "kind": "technical_test",
+            "declared_result": "PASS"
+          },
+          {
+            "id": "behavior-only-once",
+            "node_id": "delivery",
+            "criterion_id": "only-once",
+            "revision": "fictional-r2",
+            "kind": "behavior_probe",
+            "declared_result": "PASS"
+          }
+        ],
+        "implementation": {
+          "technical_tests_green": true,
+          "work_status": "DONE"
+        },
+        "decision": {
+          "horizon_cycles": 12,
+          "cost_unit": "fictional effort-units",
+          "selected_id": "adapt",
+          "rationale": "A small local change is the smallest declared path that covers required nodes.",
+          "alternatives": [
+            {
+              "id": "reuse",
+              "strategy": "reuse",
+              "addresses": [
+                "worker",
+                "delivery"
+              ],
+              "upfront_units": 3,
+              "recurring_units": 1,
+              "risk_allowance_units": 1,
+              "rework_allowance_units": 1,
+              "reversible": true,
+              "rejection_reason": "Requires ongoing manual intervention each cycle."
+            },
+            {
+              "id": "adapt",
+              "strategy": "adapt",
+              "addresses": [
+                "worker",
+                "delivery"
+              ],
+              "upfront_units": 6,
+              "recurring_units": 0,
+              "risk_allowance_units": 1,
+              "rework_allowance_units": 1,
+              "reversible": true,
+              "rejection_reason": ""
+            }
+          ],
+          "application": {
+            "mode": "modify_local",
+            "steps": [
+              "Add deterministic idempotency to the fictional worker."
+            ],
+            "rollback": "Restore the previous fictional worker version."
+          }
+        }
+      },
+      "expected_status": "CANDIDATE_FOR_EXTERNAL_ACCEPTANCE",
+      "expected_decision_issues": [],
+      "expected_open_nodes": [],
+      "note": ""
+    },
+    {
+      "id": "PD04",
+      "label": "An optional unknown is not a mandatory closure blocker",
+      "packet": {
+        "schema": "workcoord.problem-decision/v0",
+        "risk": "STRUCTURED",
+        "problem": {
+          "id": "flowdesk-duplicate-deliveries",
+          "source_revision": "fictional-r2",
+          "statement": "Duplicate messages were observed for one logical event.",
+          "goal": "Exactly one message is delivered per event after retries."
+        },
+        "nodes": [
+          {
+            "id": "incident",
+            "parent_id": null,
+            "title": "End-to-end one-delivery outcome",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "end-to-end",
+                "check": "Replay with a lost acknowledgement and observe one external delivery",
+                "kind": "behavior_probe"
+              }
+            ]
+          },
+          {
+            "id": "worker",
+            "parent_id": "incident",
+            "title": "Worker implementation test",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "unit-test",
+                "check": "Idempotency guard passes deterministic unit test",
+                "kind": "technical_test"
+              }
+            ]
+          },
+          {
+            "id": "delivery",
+            "parent_id": "incident",
+            "title": "External delivery requirement",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "only-once",
+                "check": "Exactly one externally visible delivery for retry case",
+                "kind": "behavior_probe"
+              }
+            ]
+          },
+          {
+            "id": "telemetry",
+            "parent_id": "incident",
+            "title": "Optional telemetry",
+            "required": false,
+            "knowledge": "UNKNOWN",
+            "criteria": []
+          }
+        ],
+        "evidence": [
+          {
+            "id": "behavior-end-to-end",
+            "node_id": "incident",
+            "criterion_id": "end-to-end",
+            "revision": "fictional-r2",
+            "kind": "behavior_probe",
+            "declared_result": "PASS"
+          },
+          {
+            "id": "unit-idempotency",
+            "node_id": "worker",
+            "criterion_id": "unit-test",
+            "revision": "fictional-r2",
+            "kind": "technical_test",
+            "declared_result": "PASS"
+          },
+          {
+            "id": "behavior-only-once",
+            "node_id": "delivery",
+            "criterion_id": "only-once",
+            "revision": "fictional-r2",
+            "kind": "behavior_probe",
+            "declared_result": "PASS"
+          }
+        ],
+        "implementation": {
+          "technical_tests_green": true,
+          "work_status": "DONE"
+        },
+        "decision": {
+          "horizon_cycles": 12,
+          "cost_unit": "fictional effort-units",
+          "selected_id": "adapt",
+          "rationale": "A small local change is the smallest declared path that covers required nodes.",
+          "alternatives": [
+            {
+              "id": "reuse",
+              "strategy": "reuse",
+              "addresses": [
+                "worker",
+                "delivery"
+              ],
+              "upfront_units": 3,
+              "recurring_units": 1,
+              "risk_allowance_units": 1,
+              "rework_allowance_units": 1,
+              "reversible": true,
+              "rejection_reason": "Requires ongoing manual intervention each cycle."
+            },
+            {
+              "id": "adapt",
+              "strategy": "adapt",
+              "addresses": [
+                "worker",
+                "delivery"
+              ],
+              "upfront_units": 6,
+              "recurring_units": 0,
+              "risk_allowance_units": 1,
+              "rework_allowance_units": 1,
+              "reversible": true,
+              "rejection_reason": ""
+            }
+          ],
+          "application": {
+            "mode": "modify_local",
+            "steps": [
+              "Add deterministic idempotency to the fictional worker."
+            ],
+            "rollback": "Restore the previous fictional worker version."
+          }
+        }
+      },
+      "expected_status": "CANDIDATE_FOR_EXTERNAL_ACCEPTANCE",
+      "expected_decision_issues": [],
+      "expected_open_nodes": [],
+      "note": ""
+    },
+    {
+      "id": "PD05",
+      "label": "Stale semantic evidence cannot close delivery",
+      "packet": {
+        "schema": "workcoord.problem-decision/v0",
+        "risk": "STRUCTURED",
+        "problem": {
+          "id": "flowdesk-duplicate-deliveries",
+          "source_revision": "fictional-r2",
+          "statement": "Duplicate messages were observed for one logical event.",
+          "goal": "Exactly one message is delivered per event after retries."
+        },
+        "nodes": [
+          {
+            "id": "incident",
+            "parent_id": null,
+            "title": "End-to-end one-delivery outcome",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "end-to-end",
+                "check": "Replay with a lost acknowledgement and observe one external delivery",
+                "kind": "behavior_probe"
+              }
+            ]
+          },
+          {
+            "id": "worker",
+            "parent_id": "incident",
+            "title": "Worker implementation test",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "unit-test",
+                "check": "Idempotency guard passes deterministic unit test",
+                "kind": "technical_test"
+              }
+            ]
+          },
+          {
+            "id": "delivery",
+            "parent_id": "incident",
+            "title": "External delivery requirement",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "only-once",
+                "check": "Exactly one externally visible delivery for retry case",
+                "kind": "behavior_probe"
+              }
+            ]
+          },
+          {
+            "id": "telemetry",
+            "parent_id": "incident",
+            "title": "Optional telemetry",
+            "required": false,
+            "knowledge": "UNKNOWN",
+            "criteria": []
+          }
+        ],
+        "evidence": [
+          {
+            "id": "behavior-end-to-end",
+            "node_id": "incident",
+            "criterion_id": "end-to-end",
+            "revision": "fictional-r2",
+            "kind": "behavior_probe",
+            "declared_result": "PASS"
+          },
+          {
+            "id": "unit-idempotency",
+            "node_id": "worker",
+            "criterion_id": "unit-test",
+            "revision": "fictional-r2",
+            "kind": "technical_test",
+            "declared_result": "PASS"
+          },
+          {
+            "id": "behavior-only-once",
+            "node_id": "delivery",
+            "criterion_id": "only-once",
+            "revision": "fictional-r0",
+            "kind": "behavior_probe",
+            "declared_result": "PASS"
+          }
+        ],
+        "implementation": {
+          "technical_tests_green": true,
+          "work_status": "DONE"
+        },
+        "decision": {
+          "horizon_cycles": 12,
+          "cost_unit": "fictional effort-units",
+          "selected_id": "adapt",
+          "rationale": "A small local change is the smallest declared path that covers required nodes.",
+          "alternatives": [
+            {
+              "id": "reuse",
+              "strategy": "reuse",
+              "addresses": [
+                "worker",
+                "delivery"
+              ],
+              "upfront_units": 3,
+              "recurring_units": 1,
+              "risk_allowance_units": 1,
+              "rework_allowance_units": 1,
+              "reversible": true,
+              "rejection_reason": "Requires ongoing manual intervention each cycle."
+            },
+            {
+              "id": "adapt",
+              "strategy": "adapt",
+              "addresses": [
+                "worker",
+                "delivery"
+              ],
+              "upfront_units": 6,
+              "recurring_units": 0,
+              "risk_allowance_units": 1,
+              "rework_allowance_units": 1,
+              "reversible": true,
+              "rejection_reason": ""
+            }
+          ],
+          "application": {
+            "mode": "modify_local",
+            "steps": [
+              "Add deterministic idempotency to the fictional worker."
+            ],
+            "rollback": "Restore the previous fictional worker version."
+          }
+        }
+      },
+      "expected_status": "HOLD_REQUIRED_PROBLEM_OPEN",
+      "expected_decision_issues": [
+        "TECHNICAL_GREEN_DOES_NOT_CLOSE_REQUIRED_OUTCOMES"
+      ],
+      "expected_open_nodes": [
+        "delivery"
+      ],
+      "note": ""
+    },
+    {
+      "id": "PD06",
+      "label": "A current failed behavior probe defeats a current passing probe",
+      "packet": {
+        "schema": "workcoord.problem-decision/v0",
+        "risk": "STRUCTURED",
+        "problem": {
+          "id": "flowdesk-duplicate-deliveries",
+          "source_revision": "fictional-r2",
+          "statement": "Duplicate messages were observed for one logical event.",
+          "goal": "Exactly one message is delivered per event after retries."
+        },
+        "nodes": [
+          {
+            "id": "incident",
+            "parent_id": null,
+            "title": "End-to-end one-delivery outcome",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "end-to-end",
+                "check": "Replay with a lost acknowledgement and observe one external delivery",
+                "kind": "behavior_probe"
+              }
+            ]
+          },
+          {
+            "id": "worker",
+            "parent_id": "incident",
+            "title": "Worker implementation test",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "unit-test",
+                "check": "Idempotency guard passes deterministic unit test",
+                "kind": "technical_test"
+              }
+            ]
+          },
+          {
+            "id": "delivery",
+            "parent_id": "incident",
+            "title": "External delivery requirement",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "only-once",
+                "check": "Exactly one externally visible delivery for retry case",
+                "kind": "behavior_probe"
+              }
+            ]
+          },
+          {
+            "id": "telemetry",
+            "parent_id": "incident",
+            "title": "Optional telemetry",
+            "required": false,
+            "knowledge": "UNKNOWN",
+            "criteria": []
+          }
+        ],
+        "evidence": [
+          {
+            "id": "behavior-end-to-end",
+            "node_id": "incident",
+            "criterion_id": "end-to-end",
+            "revision": "fictional-r2",
+            "kind": "behavior_probe",
+            "declared_result": "PASS"
+          },
+          {
+            "id": "unit-idempotency",
+            "node_id": "worker",
+            "criterion_id": "unit-test",
+            "revision": "fictional-r2",
+            "kind": "technical_test",
+            "declared_result": "PASS"
+          },
+          {
+            "id": "behavior-only-once",
+            "node_id": "delivery",
+            "criterion_id": "only-once",
+            "revision": "fictional-r2",
+            "kind": "behavior_probe",
+            "declared_result": "PASS"
+          },
+          {
+            "id": "delivery-failed-replay",
+            "node_id": "delivery",
+            "criterion_id": "only-once",
+            "revision": "fictional-r2",
+            "kind": "behavior_probe",
+            "declared_result": "FAIL"
+          }
+        ],
+        "implementation": {
+          "technical_tests_green": true,
+          "work_status": "DONE"
+        },
+        "decision": {
+          "horizon_cycles": 12,
+          "cost_unit": "fictional effort-units",
+          "selected_id": "adapt",
+          "rationale": "A small local change is the smallest declared path that covers required nodes.",
+          "alternatives": [
+            {
+              "id": "reuse",
+              "strategy": "reuse",
+              "addresses": [
+                "worker",
+                "delivery"
+              ],
+              "upfront_units": 3,
+              "recurring_units": 1,
+              "risk_allowance_units": 1,
+              "rework_allowance_units": 1,
+              "reversible": true,
+              "rejection_reason": "Requires ongoing manual intervention each cycle."
+            },
+            {
+              "id": "adapt",
+              "strategy": "adapt",
+              "addresses": [
+                "worker",
+                "delivery"
+              ],
+              "upfront_units": 6,
+              "recurring_units": 0,
+              "risk_allowance_units": 1,
+              "rework_allowance_units": 1,
+              "reversible": true,
+              "rejection_reason": ""
+            }
+          ],
+          "application": {
+            "mode": "modify_local",
+            "steps": [
+              "Add deterministic idempotency to the fictional worker."
+            ],
+            "rollback": "Restore the previous fictional worker version."
+          }
+        }
+      },
+      "expected_status": "HOLD_REQUIRED_PROBLEM_OPEN",
+      "expected_decision_issues": [
+        "TECHNICAL_GREEN_DOES_NOT_CLOSE_REQUIRED_OUTCOMES"
+      ],
+      "expected_open_nodes": [
+        "delivery"
+      ],
+      "note": ""
+    },
+    {
+      "id": "PD07",
+      "label": "Known test outcome does not close a hypothesis-level root problem",
+      "packet": {
+        "schema": "workcoord.problem-decision/v0",
+        "risk": "STRUCTURED",
+        "problem": {
+          "id": "flowdesk-duplicate-deliveries",
+          "source_revision": "fictional-r2",
+          "statement": "Duplicate messages were observed for one logical event.",
+          "goal": "Exactly one message is delivered per event after retries."
+        },
+        "nodes": [
+          {
+            "id": "incident",
+            "parent_id": null,
+            "title": "End-to-end one-delivery outcome",
+            "required": true,
+            "knowledge": "HYPOTHESIS",
+            "criteria": [
+              {
+                "id": "end-to-end",
+                "check": "Replay with a lost acknowledgement and observe one external delivery",
+                "kind": "behavior_probe"
+              }
+            ]
+          },
+          {
+            "id": "worker",
+            "parent_id": "incident",
+            "title": "Worker implementation test",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "unit-test",
+                "check": "Idempotency guard passes deterministic unit test",
+                "kind": "technical_test"
+              }
+            ]
+          },
+          {
+            "id": "delivery",
+            "parent_id": "incident",
+            "title": "External delivery requirement",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "only-once",
+                "check": "Exactly one externally visible delivery for retry case",
+                "kind": "behavior_probe"
+              }
+            ]
+          },
+          {
+            "id": "telemetry",
+            "parent_id": "incident",
+            "title": "Optional telemetry",
+            "required": false,
+            "knowledge": "UNKNOWN",
+            "criteria": []
+          }
+        ],
+        "evidence": [
+          {
+            "id": "behavior-end-to-end",
+            "node_id": "incident",
+            "criterion_id": "end-to-end",
+            "revision": "fictional-r2",
+            "kind": "behavior_probe",
+            "declared_result": "PASS"
+          },
+          {
+            "id": "unit-idempotency",
+            "node_id": "worker",
+            "criterion_id": "unit-test",
+            "revision": "fictional-r2",
+            "kind": "technical_test",
+            "declared_result": "PASS"
+          },
+          {
+            "id": "behavior-only-once",
+            "node_id": "delivery",
+            "criterion_id": "only-once",
+            "revision": "fictional-r2",
+            "kind": "behavior_probe",
+            "declared_result": "PASS"
+          }
+        ],
+        "implementation": {
+          "technical_tests_green": true,
+          "work_status": "DONE"
+        },
+        "decision": {
+          "horizon_cycles": 12,
+          "cost_unit": "fictional effort-units",
+          "selected_id": "adapt",
+          "rationale": "A small local change is the smallest declared path that covers required nodes.",
+          "alternatives": [
+            {
+              "id": "reuse",
+              "strategy": "reuse",
+              "addresses": [
+                "worker",
+                "delivery"
+              ],
+              "upfront_units": 3,
+              "recurring_units": 1,
+              "risk_allowance_units": 1,
+              "rework_allowance_units": 1,
+              "reversible": true,
+              "rejection_reason": "Requires ongoing manual intervention each cycle."
+            },
+            {
+              "id": "adapt",
+              "strategy": "adapt",
+              "addresses": [
+                "worker",
+                "delivery"
+              ],
+              "upfront_units": 6,
+              "recurring_units": 0,
+              "risk_allowance_units": 1,
+              "rework_allowance_units": 1,
+              "reversible": true,
+              "rejection_reason": ""
+            }
+          ],
+          "application": {
+            "mode": "modify_local",
+            "steps": [
+              "Add deterministic idempotency to the fictional worker."
+            ],
+            "rollback": "Restore the previous fictional worker version."
+          }
+        }
+      },
+      "expected_status": "HOLD_REQUIRED_PROBLEM_OPEN",
+      "expected_decision_issues": [
+        "TECHNICAL_GREEN_DOES_NOT_CLOSE_REQUIRED_OUTCOMES"
+      ],
+      "expected_open_nodes": [
+        "incident"
+      ],
+      "note": ""
+    },
+    {
+      "id": "PD08",
+      "label": "Choosing a new component without rejecting cheaper comparable reuse",
+      "packet": {
+        "schema": "workcoord.problem-decision/v0",
+        "risk": "STRUCTURED",
+        "problem": {
+          "id": "flowdesk-duplicate-deliveries",
+          "source_revision": "fictional-r2",
+          "statement": "Duplicate messages were observed for one logical event.",
+          "goal": "Exactly one message is delivered per event after retries."
+        },
+        "nodes": [
+          {
+            "id": "incident",
+            "parent_id": null,
+            "title": "End-to-end one-delivery outcome",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "end-to-end",
+                "check": "Replay with a lost acknowledgement and observe one external delivery",
+                "kind": "behavior_probe"
+              }
+            ]
+          },
+          {
+            "id": "worker",
+            "parent_id": "incident",
+            "title": "Worker implementation test",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "unit-test",
+                "check": "Idempotency guard passes deterministic unit test",
+                "kind": "technical_test"
+              }
+            ]
+          },
+          {
+            "id": "delivery",
+            "parent_id": "incident",
+            "title": "External delivery requirement",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "only-once",
+                "check": "Exactly one externally visible delivery for retry case",
+                "kind": "behavior_probe"
+              }
+            ]
+          },
+          {
+            "id": "telemetry",
+            "parent_id": "incident",
+            "title": "Optional telemetry",
+            "required": false,
+            "knowledge": "UNKNOWN",
+            "criteria": []
+          }
+        ],
+        "evidence": [
+          {
+            "id": "behavior-end-to-end",
+            "node_id": "incident",
+            "criterion_id": "end-to-end",
+            "revision": "fictional-r2",
+            "kind": "behavior_probe",
+            "declared_result": "PASS"
+          },
+          {
+            "id": "unit-idempotency",
+            "node_id": "worker",
+            "criterion_id": "unit-test",
+            "revision": "fictional-r2",
+            "kind": "technical_test",
+            "declared_result": "PASS"
+          },
+          {
+            "id": "behavior-only-once",
+            "node_id": "delivery",
+            "criterion_id": "only-once",
+            "revision": "fictional-r2",
+            "kind": "behavior_probe",
+            "declared_result": "PASS"
+          }
+        ],
+        "implementation": {
+          "technical_tests_green": true,
+          "work_status": "DONE"
+        },
+        "decision": {
+          "horizon_cycles": 12,
+          "cost_unit": "fictional effort-units",
+          "selected_id": "build",
+          "rationale": "A small local change is the smallest declared path that covers required nodes.",
+          "alternatives": [
+            {
+              "id": "reuse",
+              "strategy": "reuse",
+              "addresses": [
+                "worker",
+                "delivery"
+              ],
+              "upfront_units": 3,
+              "recurring_units": 1,
+              "risk_allowance_units": 1,
+              "rework_allowance_units": 1,
+              "reversible": true,
+              "rejection_reason": ""
+            },
+            {
+              "id": "adapt",
+              "strategy": "adapt",
+              "addresses": [
+                "worker",
+                "delivery"
+              ],
+              "upfront_units": 6,
+              "recurring_units": 0,
+              "risk_allowance_units": 1,
+              "rework_allowance_units": 1,
+              "reversible": true,
+              "rejection_reason": ""
+            },
+            {
+              "id": "build",
+              "strategy": "build",
+              "addresses": [
+                "worker",
+                "delivery"
+              ],
+              "upfront_units": 11,
+              "recurring_units": 2,
+              "risk_allowance_units": 3,
+              "rework_allowance_units": 2,
+              "reversible": true,
+              "rejection_reason": ""
+            }
+          ],
+          "application": {
+            "mode": "modify_local",
+            "steps": [
+              "Add deterministic idempotency to the fictional worker."
+            ],
+            "rollback": "Restore the previous fictional worker version."
+          }
+        }
+      },
+      "expected_status": "HOLD_DECISION_INCOMPLETE",
+      "expected_decision_issues": [
+        "CHEAPER_COMPARABLE_REUSE_NOT_EXPLAINED"
+      ],
+      "expected_open_nodes": [],
+      "note": ""
+    },
+    {
+      "id": "PD09",
+      "label": "A costly build can be reasoned about but not automatically deemed optimal",
+      "packet": {
+        "schema": "workcoord.problem-decision/v0",
+        "risk": "STRUCTURED",
+        "problem": {
+          "id": "flowdesk-duplicate-deliveries",
+          "source_revision": "fictional-r2",
+          "statement": "Duplicate messages were observed for one logical event.",
+          "goal": "Exactly one message is delivered per event after retries."
+        },
+        "nodes": [
+          {
+            "id": "incident",
+            "parent_id": null,
+            "title": "End-to-end one-delivery outcome",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "end-to-end",
+                "check": "Replay with a lost acknowledgement and observe one external delivery",
+                "kind": "behavior_probe"
+              }
+            ]
+          },
+          {
+            "id": "worker",
+            "parent_id": "incident",
+            "title": "Worker implementation test",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "unit-test",
+                "check": "Idempotency guard passes deterministic unit test",
+                "kind": "technical_test"
+              }
+            ]
+          },
+          {
+            "id": "delivery",
+            "parent_id": "incident",
+            "title": "External delivery requirement",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "only-once",
+                "check": "Exactly one externally visible delivery for retry case",
+                "kind": "behavior_probe"
+              }
+            ]
+          },
+          {
+            "id": "telemetry",
+            "parent_id": "incident",
+            "title": "Optional telemetry",
+            "required": false,
+            "knowledge": "UNKNOWN",
+            "criteria": []
+          }
+        ],
+        "evidence": [
+          {
+            "id": "behavior-end-to-end",
+            "node_id": "incident",
+            "criterion_id": "end-to-end",
+            "revision": "fictional-r2",
+            "kind": "behavior_probe",
+            "declared_result": "PASS"
+          },
+          {
+            "id": "unit-idempotency",
+            "node_id": "worker",
+            "criterion_id": "unit-test",
+            "revision": "fictional-r2",
+            "kind": "technical_test",
+            "declared_result": "PASS"
+          },
+          {
+            "id": "behavior-only-once",
+            "node_id": "delivery",
+            "criterion_id": "only-once",
+            "revision": "fictional-r2",
+            "kind": "behavior_probe",
+            "declared_result": "PASS"
+          }
+        ],
+        "implementation": {
+          "technical_tests_green": true,
+          "work_status": "DONE"
+        },
+        "decision": {
+          "horizon_cycles": 12,
+          "cost_unit": "fictional effort-units",
+          "selected_id": "build",
+          "rationale": "A small local change is the smallest declared path that covers required nodes.",
+          "alternatives": [
+            {
+              "id": "reuse",
+              "strategy": "reuse",
+              "addresses": [
+                "worker",
+                "delivery"
+              ],
+              "upfront_units": 3,
+              "recurring_units": 1,
+              "risk_allowance_units": 1,
+              "rework_allowance_units": 1,
+              "reversible": true,
+              "rejection_reason": "Documented fictional compatibility constraints prevent reuse."
+            },
+            {
+              "id": "adapt",
+              "strategy": "adapt",
+              "addresses": [
+                "worker",
+                "delivery"
+              ],
+              "upfront_units": 6,
+              "recurring_units": 0,
+              "risk_allowance_units": 1,
+              "rework_allowance_units": 1,
+              "reversible": true,
+              "rejection_reason": ""
+            },
+            {
+              "id": "build",
+              "strategy": "build",
+              "addresses": [
+                "worker",
+                "delivery"
+              ],
+              "upfront_units": 11,
+              "recurring_units": 2,
+              "risk_allowance_units": 3,
+              "rework_allowance_units": 2,
+              "reversible": true,
+              "rejection_reason": ""
+            }
+          ],
+          "application": {
+            "mode": "modify_local",
+            "steps": [
+              "Add deterministic idempotency to the fictional worker."
+            ],
+            "rollback": "Restore the previous fictional worker version."
+          }
+        }
+      },
+      "expected_status": "CANDIDATE_FOR_EXTERNAL_ACCEPTANCE",
+      "expected_decision_issues": [],
+      "expected_open_nodes": [],
+      "note": ""
+    },
+    {
+      "id": "PD10",
+      "label": "Common horizon includes recurring and rework allowances",
+      "packet": {
+        "schema": "workcoord.problem-decision/v0",
+        "risk": "STRUCTURED",
+        "problem": {
+          "id": "flowdesk-duplicate-deliveries",
+          "source_revision": "fictional-r2",
+          "statement": "Duplicate messages were observed for one logical event.",
+          "goal": "Exactly one message is delivered per event after retries."
+        },
+        "nodes": [
+          {
+            "id": "incident",
+            "parent_id": null,
+            "title": "End-to-end one-delivery outcome",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "end-to-end",
+                "check": "Replay with a lost acknowledgement and observe one external delivery",
+                "kind": "behavior_probe"
+              }
+            ]
+          },
+          {
+            "id": "worker",
+            "parent_id": "incident",
+            "title": "Worker implementation test",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "unit-test",
+                "check": "Idempotency guard passes deterministic unit test",
+                "kind": "technical_test"
+              }
+            ]
+          },
+          {
+            "id": "delivery",
+            "parent_id": "incident",
+            "title": "External delivery requirement",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "only-once",
+                "check": "Exactly one externally visible delivery for retry case",
+                "kind": "behavior_probe"
+              }
+            ]
+          },
+          {
+            "id": "telemetry",
+            "parent_id": "incident",
+            "title": "Optional telemetry",
+            "required": false,
+            "knowledge": "UNKNOWN",
+            "criteria": []
+          }
+        ],
+        "evidence": [
+          {
+            "id": "behavior-end-to-end",
+            "node_id": "incident",
+            "criterion_id": "end-to-end",
+            "revision": "fictional-r2",
+            "kind": "behavior_probe",
+            "declared_result": "PASS"
+          },
+          {
+            "id": "unit-idempotency",
+            "node_id": "worker",
+            "criterion_id": "unit-test",
+            "revision": "fictional-r2",
+            "kind": "technical_test",
+            "declared_result": "PASS"
+          },
+          {
+            "id": "behavior-only-once",
+            "node_id": "delivery",
+            "criterion_id": "only-once",
+            "revision": "fictional-r2",
+            "kind": "behavior_probe",
+            "declared_result": "PASS"
+          }
+        ],
+        "implementation": {
+          "technical_tests_green": true,
+          "work_status": "DONE"
+        },
+        "decision": {
+          "horizon_cycles": 24,
+          "cost_unit": "fictional effort-units",
+          "selected_id": "reuse",
+          "rationale": "A small local change is the smallest declared path that covers required nodes.",
+          "alternatives": [
+            {
+              "id": "reuse",
+              "strategy": "reuse",
+              "addresses": [
+                "worker",
+                "delivery"
+              ],
+              "upfront_units": 10,
+              "recurring_units": 0,
+              "risk_allowance_units": 1,
+              "rework_allowance_units": 0,
+              "reversible": true,
+              "rejection_reason": ""
+            },
+            {
+              "id": "build",
+              "strategy": "build",
+              "addresses": [
+                "worker",
+                "delivery"
+              ],
+              "upfront_units": 1,
+              "recurring_units": 3,
+              "risk_allowance_units": 0,
+              "rework_allowance_units": 0,
+              "reversible": true,
+              "rejection_reason": ""
+            }
+          ],
+          "application": {
+            "mode": "modify_local",
+            "steps": [
+              "Add deterministic idempotency to the fictional worker."
+            ],
+            "rollback": "Restore the previous fictional worker version."
+          }
+        }
+      },
+      "expected_status": "CANDIDATE_FOR_EXTERNAL_ACCEPTANCE",
+      "expected_decision_issues": [],
+      "expected_open_nodes": [],
+      "note": ""
+    },
+    {
+      "id": "PD11",
+      "label": "Chosen alternative does not address all mandatory leaves",
+      "packet": {
+        "schema": "workcoord.problem-decision/v0",
+        "risk": "STRUCTURED",
+        "problem": {
+          "id": "flowdesk-duplicate-deliveries",
+          "source_revision": "fictional-r2",
+          "statement": "Duplicate messages were observed for one logical event.",
+          "goal": "Exactly one message is delivered per event after retries."
+        },
+        "nodes": [
+          {
+            "id": "incident",
+            "parent_id": null,
+            "title": "End-to-end one-delivery outcome",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "end-to-end",
+                "check": "Replay with a lost acknowledgement and observe one external delivery",
+                "kind": "behavior_probe"
+              }
+            ]
+          },
+          {
+            "id": "worker",
+            "parent_id": "incident",
+            "title": "Worker implementation test",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "unit-test",
+                "check": "Idempotency guard passes deterministic unit test",
+                "kind": "technical_test"
+              }
+            ]
+          },
+          {
+            "id": "delivery",
+            "parent_id": "incident",
+            "title": "External delivery requirement",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "only-once",
+                "check": "Exactly one externally visible delivery for retry case",
+                "kind": "behavior_probe"
+              }
+            ]
+          },
+          {
+            "id": "telemetry",
+            "parent_id": "incident",
+            "title": "Optional telemetry",
+            "required": false,
+            "knowledge": "UNKNOWN",
+            "criteria": []
+          }
+        ],
+        "evidence": [
+          {
+            "id": "behavior-end-to-end",
+            "node_id": "incident",
+            "criterion_id": "end-to-end",
+            "revision": "fictional-r2",
+            "kind": "behavior_probe",
+            "declared_result": "PASS"
+          },
+          {
+            "id": "unit-idempotency",
+            "node_id": "worker",
+            "criterion_id": "unit-test",
+            "revision": "fictional-r2",
+            "kind": "technical_test",
+            "declared_result": "PASS"
+          },
+          {
+            "id": "behavior-only-once",
+            "node_id": "delivery",
+            "criterion_id": "only-once",
+            "revision": "fictional-r2",
+            "kind": "behavior_probe",
+            "declared_result": "PASS"
+          }
+        ],
+        "implementation": {
+          "technical_tests_green": true,
+          "work_status": "DONE"
+        },
+        "decision": {
+          "horizon_cycles": 12,
+          "cost_unit": "fictional effort-units",
+          "selected_id": "adapt",
+          "rationale": "A small local change is the smallest declared path that covers required nodes.",
+          "alternatives": [
+            {
+              "id": "reuse",
+              "strategy": "reuse",
+              "addresses": [
+                "worker",
+                "delivery"
+              ],
+              "upfront_units": 3,
+              "recurring_units": 1,
+              "risk_allowance_units": 1,
+              "rework_allowance_units": 1,
+              "reversible": true,
+              "rejection_reason": "Requires ongoing manual intervention each cycle."
+            },
+            {
+              "id": "adapt",
+              "strategy": "adapt",
+              "addresses": [
+                "worker"
+              ],
+              "upfront_units": 6,
+              "recurring_units": 0,
+              "risk_allowance_units": 1,
+              "rework_allowance_units": 1,
+              "reversible": true,
+              "rejection_reason": ""
+            }
+          ],
+          "application": {
+            "mode": "modify_local",
+            "steps": [
+              "Add deterministic idempotency to the fictional worker."
+            ],
+            "rollback": "Restore the previous fictional worker version."
+          }
+        }
+      },
+      "expected_status": "HOLD_DECISION_INCOMPLETE",
+      "expected_decision_issues": [
+        "REQUIRED_LEAF_NOT_ADDRESSED_BY_SELECTED_ALTERNATIVE"
+      ],
+      "expected_open_nodes": [],
+      "note": ""
+    },
+    {
+      "id": "PD12",
+      "label": "Structured work without alternatives remains incomplete",
+      "packet": {
+        "schema": "workcoord.problem-decision/v0",
+        "risk": "STRUCTURED",
+        "problem": {
+          "id": "flowdesk-duplicate-deliveries",
+          "source_revision": "fictional-r2",
+          "statement": "Duplicate messages were observed for one logical event.",
+          "goal": "Exactly one message is delivered per event after retries."
+        },
+        "nodes": [
+          {
+            "id": "incident",
+            "parent_id": null,
+            "title": "End-to-end one-delivery outcome",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "end-to-end",
+                "check": "Replay with a lost acknowledgement and observe one external delivery",
+                "kind": "behavior_probe"
+              }
+            ]
+          },
+          {
+            "id": "worker",
+            "parent_id": "incident",
+            "title": "Worker implementation test",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "unit-test",
+                "check": "Idempotency guard passes deterministic unit test",
+                "kind": "technical_test"
+              }
+            ]
+          },
+          {
+            "id": "delivery",
+            "parent_id": "incident",
+            "title": "External delivery requirement",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "only-once",
+                "check": "Exactly one externally visible delivery for retry case",
+                "kind": "behavior_probe"
+              }
+            ]
+          },
+          {
+            "id": "telemetry",
+            "parent_id": "incident",
+            "title": "Optional telemetry",
+            "required": false,
+            "knowledge": "UNKNOWN",
+            "criteria": []
+          }
+        ],
+        "evidence": [
+          {
+            "id": "behavior-end-to-end",
+            "node_id": "incident",
+            "criterion_id": "end-to-end",
+            "revision": "fictional-r2",
+            "kind": "behavior_probe",
+            "declared_result": "PASS"
+          },
+          {
+            "id": "unit-idempotency",
+            "node_id": "worker",
+            "criterion_id": "unit-test",
+            "revision": "fictional-r2",
+            "kind": "technical_test",
+            "declared_result": "PASS"
+          },
+          {
+            "id": "behavior-only-once",
+            "node_id": "delivery",
+            "criterion_id": "only-once",
+            "revision": "fictional-r2",
+            "kind": "behavior_probe",
+            "declared_result": "PASS"
+          }
+        ],
+        "implementation": {
+          "technical_tests_green": true,
+          "work_status": "DONE"
+        }
+      },
+      "expected_status": "HOLD_DECISION_INCOMPLETE",
+      "expected_decision_issues": [
+        "ALTERNATIVES_NOT_RECORDED"
+      ],
+      "expected_open_nodes": [],
+      "note": ""
+    },
+    {
+      "id": "PD13",
+      "label": "Critical design requires an external independent review",
+      "packet": {
+        "schema": "workcoord.problem-decision/v0",
+        "risk": "CRITICAL",
+        "problem": {
+          "id": "flowdesk-duplicate-deliveries",
+          "source_revision": "fictional-r2",
+          "statement": "Duplicate messages were observed for one logical event.",
+          "goal": "Exactly one message is delivered per event after retries."
+        },
+        "nodes": [
+          {
+            "id": "incident",
+            "parent_id": null,
+            "title": "End-to-end one-delivery outcome",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "end-to-end",
+                "check": "Replay with a lost acknowledgement and observe one external delivery",
+                "kind": "behavior_probe"
+              }
+            ]
+          },
+          {
+            "id": "worker",
+            "parent_id": "incident",
+            "title": "Worker implementation test",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "unit-test",
+                "check": "Idempotency guard passes deterministic unit test",
+                "kind": "technical_test"
+              }
+            ]
+          },
+          {
+            "id": "delivery",
+            "parent_id": "incident",
+            "title": "External delivery requirement",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "only-once",
+                "check": "Exactly one externally visible delivery for retry case",
+                "kind": "behavior_probe"
+              }
+            ]
+          },
+          {
+            "id": "telemetry",
+            "parent_id": "incident",
+            "title": "Optional telemetry",
+            "required": false,
+            "knowledge": "UNKNOWN",
+            "criteria": []
+          }
+        ],
+        "evidence": [
+          {
+            "id": "behavior-end-to-end",
+            "node_id": "incident",
+            "criterion_id": "end-to-end",
+            "revision": "fictional-r2",
+            "kind": "behavior_probe",
+            "declared_result": "PASS"
+          },
+          {
+            "id": "unit-idempotency",
+            "node_id": "worker",
+            "criterion_id": "unit-test",
+            "revision": "fictional-r2",
+            "kind": "technical_test",
+            "declared_result": "PASS"
+          },
+          {
+            "id": "behavior-only-once",
+            "node_id": "delivery",
+            "criterion_id": "only-once",
+            "revision": "fictional-r2",
+            "kind": "behavior_probe",
+            "declared_result": "PASS"
+          }
+        ],
+        "implementation": {
+          "technical_tests_green": true,
+          "work_status": "DONE"
+        },
+        "decision": {
+          "horizon_cycles": 12,
+          "cost_unit": "fictional effort-units",
+          "selected_id": "adapt",
+          "rationale": "A small local change is the smallest declared path that covers required nodes.",
+          "alternatives": [
+            {
+              "id": "reuse",
+              "strategy": "reuse",
+              "addresses": [
+                "worker",
+                "delivery"
+              ],
+              "upfront_units": 3,
+              "recurring_units": 1,
+              "risk_allowance_units": 1,
+              "rework_allowance_units": 1,
+              "reversible": true,
+              "rejection_reason": "Requires ongoing manual intervention each cycle."
+            },
+            {
+              "id": "adapt",
+              "strategy": "adapt",
+              "addresses": [
+                "worker",
+                "delivery"
+              ],
+              "upfront_units": 6,
+              "recurring_units": 0,
+              "risk_allowance_units": 1,
+              "rework_allowance_units": 1,
+              "reversible": true,
+              "rejection_reason": ""
+            }
+          ],
+          "application": {
+            "mode": "modify_local",
+            "steps": [
+              "Add deterministic idempotency to the fictional worker."
+            ],
+            "rollback": "Restore the previous fictional worker version.",
+            "containment": "Keep the fictional notification test offline and reversible."
+          }
+        }
+      },
+      "expected_status": "REQUIRES_EXTERNAL_REVIEW",
+      "expected_decision_issues": [],
+      "expected_open_nodes": [],
+      "note": ""
+    },
+    {
+      "id": "PD14",
+      "label": "Critical plan without containment is not ready",
+      "packet": {
+        "schema": "workcoord.problem-decision/v0",
+        "risk": "CRITICAL",
+        "problem": {
+          "id": "flowdesk-duplicate-deliveries",
+          "source_revision": "fictional-r2",
+          "statement": "Duplicate messages were observed for one logical event.",
+          "goal": "Exactly one message is delivered per event after retries."
+        },
+        "nodes": [
+          {
+            "id": "incident",
+            "parent_id": null,
+            "title": "End-to-end one-delivery outcome",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "end-to-end",
+                "check": "Replay with a lost acknowledgement and observe one external delivery",
+                "kind": "behavior_probe"
+              }
+            ]
+          },
+          {
+            "id": "worker",
+            "parent_id": "incident",
+            "title": "Worker implementation test",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "unit-test",
+                "check": "Idempotency guard passes deterministic unit test",
+                "kind": "technical_test"
+              }
+            ]
+          },
+          {
+            "id": "delivery",
+            "parent_id": "incident",
+            "title": "External delivery requirement",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "only-once",
+                "check": "Exactly one externally visible delivery for retry case",
+                "kind": "behavior_probe"
+              }
+            ]
+          },
+          {
+            "id": "telemetry",
+            "parent_id": "incident",
+            "title": "Optional telemetry",
+            "required": false,
+            "knowledge": "UNKNOWN",
+            "criteria": []
+          }
+        ],
+        "evidence": [
+          {
+            "id": "behavior-end-to-end",
+            "node_id": "incident",
+            "criterion_id": "end-to-end",
+            "revision": "fictional-r2",
+            "kind": "behavior_probe",
+            "declared_result": "PASS"
+          },
+          {
+            "id": "unit-idempotency",
+            "node_id": "worker",
+            "criterion_id": "unit-test",
+            "revision": "fictional-r2",
+            "kind": "technical_test",
+            "declared_result": "PASS"
+          },
+          {
+            "id": "behavior-only-once",
+            "node_id": "delivery",
+            "criterion_id": "only-once",
+            "revision": "fictional-r2",
+            "kind": "behavior_probe",
+            "declared_result": "PASS"
+          }
+        ],
+        "implementation": {
+          "technical_tests_green": true,
+          "work_status": "DONE"
+        },
+        "decision": {
+          "horizon_cycles": 12,
+          "cost_unit": "fictional effort-units",
+          "selected_id": "adapt",
+          "rationale": "A small local change is the smallest declared path that covers required nodes.",
+          "alternatives": [
+            {
+              "id": "reuse",
+              "strategy": "reuse",
+              "addresses": [
+                "worker",
+                "delivery"
+              ],
+              "upfront_units": 3,
+              "recurring_units": 1,
+              "risk_allowance_units": 1,
+              "rework_allowance_units": 1,
+              "reversible": true,
+              "rejection_reason": "Requires ongoing manual intervention each cycle."
+            },
+            {
+              "id": "adapt",
+              "strategy": "adapt",
+              "addresses": [
+                "worker",
+                "delivery"
+              ],
+              "upfront_units": 6,
+              "recurring_units": 0,
+              "risk_allowance_units": 1,
+              "rework_allowance_units": 1,
+              "reversible": true,
+              "rejection_reason": ""
+            }
+          ],
+          "application": {
+            "mode": "modify_local",
+            "steps": [
+              "Add deterministic idempotency to the fictional worker."
+            ],
+            "rollback": "Restore the previous fictional worker version."
+          }
+        }
+      },
+      "expected_status": "HOLD_DECISION_INCOMPLETE",
+      "expected_decision_issues": [
+        "CRITICAL_IMPACT_CONTAINMENT_NOT_RECORDED"
+      ],
+      "expected_open_nodes": [],
+      "note": ""
+    },
+    {
+      "id": "PD15",
+      "label": "Required root with only optional child still needs selected coverage",
+      "packet": {
+        "schema": "workcoord.problem-decision/v0",
+        "risk": "STRUCTURED",
+        "problem": {
+          "id": "flowdesk-duplicate-deliveries",
+          "source_revision": "fictional-r2",
+          "statement": "Duplicate messages were observed for one logical event.",
+          "goal": "Exactly one message is delivered per event after retries."
+        },
+        "nodes": [
+          {
+            "id": "incident",
+            "parent_id": null,
+            "title": "End-to-end one-delivery outcome",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "end-to-end",
+                "check": "Replay with a lost acknowledgement and observe one external delivery",
+                "kind": "behavior_probe"
+              }
+            ]
+          },
+          {
+            "id": "telemetry",
+            "parent_id": "incident",
+            "title": "Optional telemetry",
+            "required": false,
+            "knowledge": "UNKNOWN",
+            "criteria": []
+          }
+        ],
+        "evidence": [
+          {
+            "id": "behavior-end-to-end",
+            "node_id": "incident",
+            "criterion_id": "end-to-end",
+            "revision": "fictional-r2",
+            "kind": "behavior_probe",
+            "declared_result": "PASS"
+          }
+        ],
+        "implementation": {
+          "technical_tests_green": true,
+          "work_status": "DONE"
+        },
+        "decision": {
+          "horizon_cycles": 12,
+          "cost_unit": "fictional effort-units",
+          "selected_id": "adapt",
+          "rationale": "A small local change is the smallest declared path that covers required nodes.",
+          "alternatives": [
+            {
+              "id": "reuse",
+              "strategy": "reuse",
+              "addresses": [
+                "incident"
+              ],
+              "upfront_units": 3,
+              "recurring_units": 1,
+              "risk_allowance_units": 1,
+              "rework_allowance_units": 1,
+              "reversible": true,
+              "rejection_reason": "Requires ongoing manual intervention each cycle."
+            },
+            {
+              "id": "adapt",
+              "strategy": "adapt",
+              "addresses": [
+                "incident"
+              ],
+              "upfront_units": 6,
+              "recurring_units": 0,
+              "risk_allowance_units": 1,
+              "rework_allowance_units": 1,
+              "reversible": true,
+              "rejection_reason": ""
+            }
+          ],
+          "application": {
+            "mode": "modify_local",
+            "steps": [
+              "Add deterministic idempotency to the fictional worker."
+            ],
+            "rollback": "Restore the previous fictional worker version."
+          }
+        }
+      },
+      "expected_status": "CANDIDATE_FOR_EXTERNAL_ACCEPTANCE",
+      "expected_decision_issues": [],
+      "expected_open_nodes": [],
+      "note": ""
+    },
+    {
+      "id": "PD16",
+      "label": "Technical test mislabeled as behavioral proof does not establish outcome",
+      "packet": {
+        "schema": "workcoord.problem-decision/v0",
+        "risk": "STRUCTURED",
+        "problem": {
+          "id": "flowdesk-duplicate-deliveries",
+          "source_revision": "fictional-r2",
+          "statement": "Duplicate messages were observed for one logical event.",
+          "goal": "Exactly one message is delivered per event after retries."
+        },
+        "nodes": [
+          {
+            "id": "incident",
+            "parent_id": null,
+            "title": "End-to-end one-delivery outcome",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "end-to-end",
+                "check": "Replay with a lost acknowledgement and observe one external delivery",
+                "kind": "behavior_probe"
+              }
+            ]
+          },
+          {
+            "id": "worker",
+            "parent_id": "incident",
+            "title": "Worker implementation test",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "unit-test",
+                "check": "Idempotency guard passes deterministic unit test",
+                "kind": "technical_test"
+              }
+            ]
+          },
+          {
+            "id": "delivery",
+            "parent_id": "incident",
+            "title": "External delivery requirement",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "only-once",
+                "check": "Exactly one externally visible delivery for retry case",
+                "kind": "behavior_probe"
+              }
+            ]
+          },
+          {
+            "id": "telemetry",
+            "parent_id": "incident",
+            "title": "Optional telemetry",
+            "required": false,
+            "knowledge": "UNKNOWN",
+            "criteria": []
+          }
+        ],
+        "evidence": [
+          {
+            "id": "behavior-end-to-end",
+            "node_id": "incident",
+            "criterion_id": "end-to-end",
+            "revision": "fictional-r2",
+            "kind": "behavior_probe",
+            "declared_result": "PASS"
+          },
+          {
+            "id": "unit-idempotency",
+            "node_id": "worker",
+            "criterion_id": "unit-test",
+            "revision": "fictional-r2",
+            "kind": "technical_test",
+            "declared_result": "PASS"
+          },
+          {
+            "id": "behavior-only-once",
+            "node_id": "delivery",
+            "criterion_id": "only-once",
+            "revision": "fictional-r2",
+            "kind": "technical_test",
+            "declared_result": "PASS"
+          }
+        ],
+        "implementation": {
+          "technical_tests_green": true,
+          "work_status": "DONE"
+        },
+        "decision": {
+          "horizon_cycles": 12,
+          "cost_unit": "fictional effort-units",
+          "selected_id": "adapt",
+          "rationale": "A small local change is the smallest declared path that covers required nodes.",
+          "alternatives": [
+            {
+              "id": "reuse",
+              "strategy": "reuse",
+              "addresses": [
+                "worker",
+                "delivery"
+              ],
+              "upfront_units": 3,
+              "recurring_units": 1,
+              "risk_allowance_units": 1,
+              "rework_allowance_units": 1,
+              "reversible": true,
+              "rejection_reason": "Requires ongoing manual intervention each cycle."
+            },
+            {
+              "id": "adapt",
+              "strategy": "adapt",
+              "addresses": [
+                "worker",
+                "delivery"
+              ],
+              "upfront_units": 6,
+              "recurring_units": 0,
+              "risk_allowance_units": 1,
+              "rework_allowance_units": 1,
+              "reversible": true,
+              "rejection_reason": ""
+            }
+          ],
+          "application": {
+            "mode": "modify_local",
+            "steps": [
+              "Add deterministic idempotency to the fictional worker."
+            ],
+            "rollback": "Restore the previous fictional worker version."
+          }
+        }
+      },
+      "expected_status": "HOLD_REQUIRED_PROBLEM_OPEN",
+      "expected_decision_issues": [
+        "TECHNICAL_GREEN_DOES_NOT_CLOSE_REQUIRED_OUTCOMES"
+      ],
+      "expected_open_nodes": [
+        "delivery"
+      ],
+      "note": ""
+    },
+    {
+      "id": "PD17",
+      "label": "A passing worker and delivery test do not replace the root criterion",
+      "packet": {
+        "schema": "workcoord.problem-decision/v0",
+        "risk": "STRUCTURED",
+        "problem": {
+          "id": "flowdesk-duplicate-deliveries",
+          "source_revision": "fictional-r2",
+          "statement": "Duplicate messages were observed for one logical event.",
+          "goal": "Exactly one message is delivered per event after retries."
+        },
+        "nodes": [
+          {
+            "id": "incident",
+            "parent_id": null,
+            "title": "End-to-end one-delivery outcome",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "end-to-end",
+                "check": "Replay with a lost acknowledgement and observe one external delivery",
+                "kind": "behavior_probe"
+              }
+            ]
+          },
+          {
+            "id": "worker",
+            "parent_id": "incident",
+            "title": "Worker implementation test",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "unit-test",
+                "check": "Idempotency guard passes deterministic unit test",
+                "kind": "technical_test"
+              }
+            ]
+          },
+          {
+            "id": "delivery",
+            "parent_id": "incident",
+            "title": "External delivery requirement",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "only-once",
+                "check": "Exactly one externally visible delivery for retry case",
+                "kind": "behavior_probe"
+              }
+            ]
+          },
+          {
+            "id": "telemetry",
+            "parent_id": "incident",
+            "title": "Optional telemetry",
+            "required": false,
+            "knowledge": "UNKNOWN",
+            "criteria": []
+          }
+        ],
+        "evidence": [
+          {
+            "id": "unit-idempotency",
+            "node_id": "worker",
+            "criterion_id": "unit-test",
+            "revision": "fictional-r2",
+            "kind": "technical_test",
+            "declared_result": "PASS"
+          },
+          {
+            "id": "behavior-only-once",
+            "node_id": "delivery",
+            "criterion_id": "only-once",
+            "revision": "fictional-r2",
+            "kind": "behavior_probe",
+            "declared_result": "PASS"
+          }
+        ],
+        "implementation": {
+          "technical_tests_green": true,
+          "work_status": "DONE"
+        },
+        "decision": {
+          "horizon_cycles": 12,
+          "cost_unit": "fictional effort-units",
+          "selected_id": "adapt",
+          "rationale": "A small local change is the smallest declared path that covers required nodes.",
+          "alternatives": [
+            {
+              "id": "reuse",
+              "strategy": "reuse",
+              "addresses": [
+                "worker",
+                "delivery"
+              ],
+              "upfront_units": 3,
+              "recurring_units": 1,
+              "risk_allowance_units": 1,
+              "rework_allowance_units": 1,
+              "reversible": true,
+              "rejection_reason": "Requires ongoing manual intervention each cycle."
+            },
+            {
+              "id": "adapt",
+              "strategy": "adapt",
+              "addresses": [
+                "worker",
+                "delivery"
+              ],
+              "upfront_units": 6,
+              "recurring_units": 0,
+              "risk_allowance_units": 1,
+              "rework_allowance_units": 1,
+              "reversible": true,
+              "rejection_reason": ""
+            }
+          ],
+          "application": {
+            "mode": "modify_local",
+            "steps": [
+              "Add deterministic idempotency to the fictional worker."
+            ],
+            "rollback": "Restore the previous fictional worker version."
+          }
+        }
+      },
+      "expected_status": "HOLD_REQUIRED_PROBLEM_OPEN",
+      "expected_decision_issues": [
+        "TECHNICAL_GREEN_DOES_NOT_CLOSE_REQUIRED_OUTCOMES"
+      ],
+      "expected_open_nodes": [
+        "incident"
+      ],
+      "note": ""
+    },
+    {
+      "id": "PD18",
+      "label": "A required unknown cannot be silently closed by green tests",
+      "packet": {
+        "schema": "workcoord.problem-decision/v0",
+        "risk": "STRUCTURED",
+        "problem": {
+          "id": "flowdesk-duplicate-deliveries",
+          "source_revision": "fictional-r2",
+          "statement": "Duplicate messages were observed for one logical event.",
+          "goal": "Exactly one message is delivered per event after retries."
+        },
+        "nodes": [
+          {
+            "id": "incident",
+            "parent_id": null,
+            "title": "End-to-end one-delivery outcome",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "end-to-end",
+                "check": "Replay with a lost acknowledgement and observe one external delivery",
+                "kind": "behavior_probe"
+              }
+            ]
+          },
+          {
+            "id": "worker",
+            "parent_id": "incident",
+            "title": "Worker implementation test",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "unit-test",
+                "check": "Idempotency guard passes deterministic unit test",
+                "kind": "technical_test"
+              }
+            ]
+          },
+          {
+            "id": "delivery",
+            "parent_id": "incident",
+            "title": "External delivery requirement",
+            "required": true,
+            "knowledge": "UNKNOWN",
+            "criteria": [
+              {
+                "id": "only-once",
+                "check": "Exactly one externally visible delivery for retry case",
+                "kind": "behavior_probe"
+              }
+            ]
+          },
+          {
+            "id": "telemetry",
+            "parent_id": "incident",
+            "title": "Optional telemetry",
+            "required": false,
+            "knowledge": "UNKNOWN",
+            "criteria": []
+          }
+        ],
+        "evidence": [
+          {
+            "id": "behavior-end-to-end",
+            "node_id": "incident",
+            "criterion_id": "end-to-end",
+            "revision": "fictional-r2",
+            "kind": "behavior_probe",
+            "declared_result": "PASS"
+          },
+          {
+            "id": "unit-idempotency",
+            "node_id": "worker",
+            "criterion_id": "unit-test",
+            "revision": "fictional-r2",
+            "kind": "technical_test",
+            "declared_result": "PASS"
+          },
+          {
+            "id": "behavior-only-once",
+            "node_id": "delivery",
+            "criterion_id": "only-once",
+            "revision": "fictional-r2",
+            "kind": "behavior_probe",
+            "declared_result": "PASS"
+          }
+        ],
+        "implementation": {
+          "technical_tests_green": true,
+          "work_status": "DONE"
+        },
+        "decision": {
+          "horizon_cycles": 12,
+          "cost_unit": "fictional effort-units",
+          "selected_id": "adapt",
+          "rationale": "A small local change is the smallest declared path that covers required nodes.",
+          "alternatives": [
+            {
+              "id": "reuse",
+              "strategy": "reuse",
+              "addresses": [
+                "worker",
+                "delivery"
+              ],
+              "upfront_units": 3,
+              "recurring_units": 1,
+              "risk_allowance_units": 1,
+              "rework_allowance_units": 1,
+              "reversible": true,
+              "rejection_reason": "Requires ongoing manual intervention each cycle."
+            },
+            {
+              "id": "adapt",
+              "strategy": "adapt",
+              "addresses": [
+                "worker",
+                "delivery"
+              ],
+              "upfront_units": 6,
+              "recurring_units": 0,
+              "risk_allowance_units": 1,
+              "rework_allowance_units": 1,
+              "reversible": true,
+              "rejection_reason": ""
+            }
+          ],
+          "application": {
+            "mode": "modify_local",
+            "steps": [
+              "Add deterministic idempotency to the fictional worker."
+            ],
+            "rollback": "Restore the previous fictional worker version."
+          }
+        }
+      },
+      "expected_status": "HOLD_REQUIRED_PROBLEM_OPEN",
+      "expected_decision_issues": [
+        "TECHNICAL_GREEN_DOES_NOT_CLOSE_REQUIRED_OUTCOMES"
+      ],
+      "expected_open_nodes": [
+        "delivery"
+      ],
+      "note": ""
+    },
+    {
+      "id": "PD19",
+      "label": "Selecting defer is not an approved implementation",
+      "packet": {
+        "schema": "workcoord.problem-decision/v0",
+        "risk": "STRUCTURED",
+        "problem": {
+          "id": "flowdesk-duplicate-deliveries",
+          "source_revision": "fictional-r2",
+          "statement": "Duplicate messages were observed for one logical event.",
+          "goal": "Exactly one message is delivered per event after retries."
+        },
+        "nodes": [
+          {
+            "id": "incident",
+            "parent_id": null,
+            "title": "End-to-end one-delivery outcome",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "end-to-end",
+                "check": "Replay with a lost acknowledgement and observe one external delivery",
+                "kind": "behavior_probe"
+              }
+            ]
+          },
+          {
+            "id": "worker",
+            "parent_id": "incident",
+            "title": "Worker implementation test",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "unit-test",
+                "check": "Idempotency guard passes deterministic unit test",
+                "kind": "technical_test"
+              }
+            ]
+          },
+          {
+            "id": "delivery",
+            "parent_id": "incident",
+            "title": "External delivery requirement",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "only-once",
+                "check": "Exactly one externally visible delivery for retry case",
+                "kind": "behavior_probe"
+              }
+            ]
+          },
+          {
+            "id": "telemetry",
+            "parent_id": "incident",
+            "title": "Optional telemetry",
+            "required": false,
+            "knowledge": "UNKNOWN",
+            "criteria": []
+          }
+        ],
+        "evidence": [
+          {
+            "id": "behavior-end-to-end",
+            "node_id": "incident",
+            "criterion_id": "end-to-end",
+            "revision": "fictional-r2",
+            "kind": "behavior_probe",
+            "declared_result": "PASS"
+          },
+          {
+            "id": "unit-idempotency",
+            "node_id": "worker",
+            "criterion_id": "unit-test",
+            "revision": "fictional-r2",
+            "kind": "technical_test",
+            "declared_result": "PASS"
+          },
+          {
+            "id": "behavior-only-once",
+            "node_id": "delivery",
+            "criterion_id": "only-once",
+            "revision": "fictional-r2",
+            "kind": "behavior_probe",
+            "declared_result": "PASS"
+          }
+        ],
+        "implementation": {
+          "technical_tests_green": true,
+          "work_status": "DONE"
+        },
+        "decision": {
+          "horizon_cycles": 12,
+          "cost_unit": "fictional effort-units",
+          "selected_id": "defer",
+          "rationale": "A small local change is the smallest declared path that covers required nodes.",
+          "alternatives": [
+            {
+              "id": "reuse",
+              "strategy": "reuse",
+              "addresses": [
+                "worker",
+                "delivery"
+              ],
+              "upfront_units": 3,
+              "recurring_units": 1,
+              "risk_allowance_units": 1,
+              "rework_allowance_units": 1,
+              "reversible": true,
+              "rejection_reason": "Requires ongoing manual intervention each cycle."
+            },
+            {
+              "id": "adapt",
+              "strategy": "adapt",
+              "addresses": [
+                "worker",
+                "delivery"
+              ],
+              "upfront_units": 6,
+              "recurring_units": 0,
+              "risk_allowance_units": 1,
+              "rework_allowance_units": 1,
+              "reversible": true,
+              "rejection_reason": ""
+            },
+            {
+              "id": "defer",
+              "strategy": "defer",
+              "addresses": [
+                "worker",
+                "delivery"
+              ],
+              "upfront_units": 0,
+              "recurring_units": 0,
+              "risk_allowance_units": 1,
+              "rework_allowance_units": 1,
+              "reversible": true,
+              "rejection_reason": ""
+            }
+          ],
+          "application": {
+            "mode": "modify_local",
+            "steps": [
+              "Add deterministic idempotency to the fictional worker."
+            ],
+            "rollback": "Restore the previous fictional worker version."
+          }
+        }
+      },
+      "expected_status": "HOLD_DECISION_INCOMPLETE",
+      "expected_decision_issues": [
+        "DECISION_IS_DEFERRED"
+      ],
+      "expected_open_nodes": [],
+      "note": ""
+    },
+    {
+      "id": "PD20",
+      "label": "An unknown optional child is not mandatory work at closure",
+      "packet": {
+        "schema": "workcoord.problem-decision/v0",
+        "risk": "STRUCTURED",
+        "problem": {
+          "id": "flowdesk-duplicate-deliveries",
+          "source_revision": "fictional-r2",
+          "statement": "Duplicate messages were observed for one logical event.",
+          "goal": "Exactly one message is delivered per event after retries."
+        },
+        "nodes": [
+          {
+            "id": "incident",
+            "parent_id": null,
+            "title": "End-to-end one-delivery outcome",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "end-to-end",
+                "check": "Replay with a lost acknowledgement and observe one external delivery",
+                "kind": "behavior_probe"
+              }
+            ]
+          },
+          {
+            "id": "worker",
+            "parent_id": "incident",
+            "title": "Worker implementation test",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "unit-test",
+                "check": "Idempotency guard passes deterministic unit test",
+                "kind": "technical_test"
+              }
+            ]
+          },
+          {
+            "id": "delivery",
+            "parent_id": "incident",
+            "title": "External delivery requirement",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "only-once",
+                "check": "Exactly one externally visible delivery for retry case",
+                "kind": "behavior_probe"
+              }
+            ]
+          },
+          {
+            "id": "telemetry",
+            "parent_id": "incident",
+            "title": "Optional telemetry",
+            "required": false,
+            "knowledge": "UNKNOWN",
+            "criteria": [
+              {
+                "id": "optional-note",
+                "check": "Optional exploratory metric",
+                "kind": "behavior_probe"
+              }
+            ]
+          }
+        ],
+        "evidence": [
+          {
+            "id": "behavior-end-to-end",
+            "node_id": "incident",
+            "criterion_id": "end-to-end",
+            "revision": "fictional-r2",
+            "kind": "behavior_probe",
+            "declared_result": "PASS"
+          },
+          {
+            "id": "unit-idempotency",
+            "node_id": "worker",
+            "criterion_id": "unit-test",
+            "revision": "fictional-r2",
+            "kind": "technical_test",
+            "declared_result": "PASS"
+          },
+          {
+            "id": "behavior-only-once",
+            "node_id": "delivery",
+            "criterion_id": "only-once",
+            "revision": "fictional-r2",
+            "kind": "behavior_probe",
+            "declared_result": "PASS"
+          }
+        ],
+        "implementation": {
+          "technical_tests_green": true,
+          "work_status": "DONE"
+        },
+        "decision": {
+          "horizon_cycles": 12,
+          "cost_unit": "fictional effort-units",
+          "selected_id": "adapt",
+          "rationale": "A small local change is the smallest declared path that covers required nodes.",
+          "alternatives": [
+            {
+              "id": "reuse",
+              "strategy": "reuse",
+              "addresses": [
+                "worker",
+                "delivery"
+              ],
+              "upfront_units": 3,
+              "recurring_units": 1,
+              "risk_allowance_units": 1,
+              "rework_allowance_units": 1,
+              "reversible": true,
+              "rejection_reason": "Requires ongoing manual intervention each cycle."
+            },
+            {
+              "id": "adapt",
+              "strategy": "adapt",
+              "addresses": [
+                "worker",
+                "delivery"
+              ],
+              "upfront_units": 6,
+              "recurring_units": 0,
+              "risk_allowance_units": 1,
+              "rework_allowance_units": 1,
+              "reversible": true,
+              "rejection_reason": ""
+            }
+          ],
+          "application": {
+            "mode": "modify_local",
+            "steps": [
+              "Add deterministic idempotency to the fictional worker."
+            ],
+            "rollback": "Restore the previous fictional worker version."
+          }
+        }
+      },
+      "expected_status": "CANDIDATE_FOR_EXTERNAL_ACCEPTANCE",
+      "expected_decision_issues": [],
+      "expected_open_nodes": [],
+      "note": ""
+    },
+    {
+      "id": "PD21",
+      "label": "Quick route still needs its one declared acceptance witness",
+      "packet": {
+        "schema": "workcoord.problem-decision/v0",
+        "risk": "QUICK",
+        "problem": {
+          "id": "flowdesk-duplicate-deliveries",
+          "source_revision": "fictional-r2",
+          "statement": "Duplicate messages were observed for one logical event.",
+          "goal": "Exactly one message is delivered per event after retries."
+        },
+        "nodes": [
+          {
+            "id": "small",
+            "parent_id": null,
+            "title": "One local check",
+            "required": true,
+            "knowledge": "KNOWN",
+            "criteria": [
+              {
+                "id": "local",
+                "check": "One local bounded test",
+                "kind": "technical_test"
+              }
+            ]
+          }
+        ],
+        "evidence": [],
+        "implementation": {
+          "technical_tests_green": true,
+          "work_status": "DONE"
+        }
+      },
+      "expected_status": "HOLD_REQUIRED_PROBLEM_OPEN",
+      "expected_decision_issues": [
+        "TECHNICAL_GREEN_DOES_NOT_CLOSE_REQUIRED_OUTCOMES"
+      ],
+      "expected_open_nodes": [
+        "small"
+      ],
+      "note": ""
+    }
+  ]
+}

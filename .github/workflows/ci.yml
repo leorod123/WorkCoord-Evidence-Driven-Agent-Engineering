@@ -74,6 +74,20 @@ jobs:
           name: research-quality-py-${{ matrix.python-version }}
           path: artifacts/research-quality-v0.json
           if-no-files-found: error
+      - name: Detect problem and decision admission regressions (M25-M37)
+        env:
+          PYTHONPATH: src
+        run: python scripts/verify_problem_mutations.py
+      - name: Evaluate public problem-decision development cases
+        env:
+          PYTHONPATH: src
+        run: python -m workcoord_lab.problem_decision_suite --output artifacts/problem-decision-v0.json
+      - name: Upload deterministic problem-decision receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: problem-decision-py-${{ matrix.python-version }}
+          path: artifacts/problem-decision-v0.json
+          if-no-files-found: error
       - name: Run synthetic demo
         env:
           PYTHONPATH: src

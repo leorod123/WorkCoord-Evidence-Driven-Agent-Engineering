@@ -121,7 +121,8 @@ def _tree(nodes: list[dict]) -> tuple[dict[str, dict], str, list[str]]:
             parent = indexed[parent]["parent_id"]
         if roots[0] not in ancestors:
             raise ProblemInputError("disconnected problem map")
-    parents = {n["parent_id"] for n in indexed.values() if n["parent_id"]}
+    parents = {n["parent_id"] for n in indexed.values()
+               if n["required"] and n["parent_id"]}
     leaf_ids = sorted(key for key, n in indexed.items()
                       if n["required"] and key not in parents)
     return indexed, roots[0], leaf_ids
