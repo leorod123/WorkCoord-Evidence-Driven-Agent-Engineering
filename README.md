@@ -133,6 +133,8 @@ PYTHONPATH=src python -m workcoord_lab.knowledge_genealogy_suite
 
 The 19 cases are **public authored toy examples**, not proof of real agent learning, source authenticity or improved outcomes. Hashes detect content changes relative to the supplied chain; they are **not third-party signatures** or independent proof.
 
+The [executed synthetic-development results](docs/knowledge-genealogy-results-v0.md) report both advisory recoveries and deliberately unresolved states; they do not measure learned model behavior or net efficiency.
+
 ## What we will measure
 
 | Comparison | Purpose |
