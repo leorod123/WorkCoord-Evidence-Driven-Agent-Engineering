@@ -139,6 +139,20 @@ jobs:
           name: vertical-evidence-py-${{ matrix.python-version }}
           path: artifacts/vertical-evidence-v0.json
           if-no-files-found: error
+      - name: Detect end-to-end Ledger bridge mutations (M96-M106)
+        env:
+          PYTHONPATH: src
+        run: python scripts/verify_ledger_vertical_mutations.py
+      - name: Replay fictional context-to-Ledger revision-aware proof path
+        env:
+          PYTHONPATH: src
+        run: python -m workcoord_lab.ledger_vertical_e2e --output artifacts/ledger-vertical-e2e-v0.json
+      - name: Upload redacted Ledger integration receipt
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: ledger-vertical-e2e-py-${{ matrix.python-version }}
+          path: artifacts/ledger-vertical-e2e-v0.json
+          if-no-files-found: error
       - name: Run synthetic demo
         env:
           PYTHONPATH: src

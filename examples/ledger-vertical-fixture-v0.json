@@ -1,0 +1,467 @@
+{
+  "schema": "workcoord.ledger-vertical-fixture/v0",
+  "status": "PUBLIC_FICTIONAL_DEVELOPMENT_NOT_INDEPENDENT_EVALUATION",
+  "description": "Demonstrates one claim, revision-bound proof, rejected stale evidence and renewal. All inputs and expected outcomes are author-written.",
+  "base_vertical_case": "VI01",
+  "base_history_cut": 4,
+  "late_counterevidence_history_cut": 6,
+  "revised_history_cut": 8,
+  "work_id": "flowdesk-duplicate-deliveries",
+  "owner_label": "synthetic-worker-A",
+  "reviewer_label": "synthetic-reviewer-B",
+  "context_budget_chars": 2400,
+  "initial_primary_document": {
+    "id": "unit-idempotency",
+    "title": "Fictional unit observation for revision fictional-r2",
+    "body": "Idempotency unit tests pass; the external notification behavior is not checked here.",
+    "sector": "worker",
+    "perspectives": [
+      "reliability"
+    ],
+    "depth": "focused",
+    "revision": "fictional-r2",
+    "maturity": "observed",
+    "tags": [
+      "duplicate-notification"
+    ],
+    "depends_on": [
+      "queue"
+    ],
+    "signals": {
+      "ack-retry": "supports"
+    }
+  },
+  "revised_primary_document": {
+    "id": "unit-idempotency-r3",
+    "title": "Fictional unit observation for revision fictional-r3",
+    "body": "Worker retry revision r3 has a refreshed fictional unit observation; delivery still needs the local oracle.",
+    "sector": "worker",
+    "perspectives": [
+      "reliability"
+    ],
+    "depth": "focused",
+    "revision": "fictional-r3",
+    "maturity": "observed",
+    "tags": [
+      "duplicate-notification"
+    ],
+    "depends_on": [
+      "queue"
+    ],
+    "signals": {
+      "ack-retry": "supports"
+    }
+  },
+  "revision_patches": [
+    {
+      "op": "set",
+      "path": [
+        "manifest",
+        "source_revision"
+      ],
+      "value": "fictional-r3"
+    },
+    {
+      "op": "set",
+      "path": [
+        "manifest",
+        "primary_source_id"
+      ],
+      "value": "worker-r3"
+    },
+    {
+      "op": "set",
+      "path": [
+        "manifest",
+        "primary_observation_id"
+      ],
+      "value": "unit-idempotency-r3"
+    },
+    {
+      "op": "set",
+      "path": [
+        "manifest",
+        "primary_source_sha256"
+      ],
+      "value": "c23adbd9afc44f2ef80eeb87a262bde86110c06d584f4208a5a9105ce8234b7a"
+    },
+    {
+      "op": "set",
+      "path": [
+        "research",
+        "source",
+        "id"
+      ],
+      "value": "worker-r3"
+    },
+    {
+      "op": "set",
+      "path": [
+        "research",
+        "source",
+        "revision"
+      ],
+      "value": "fictional-r3"
+    },
+    {
+      "op": "set",
+      "path": [
+        "research",
+        "evidence",
+        0,
+        "id"
+      ],
+      "value": "unit-idempotency-r3"
+    },
+    {
+      "op": "set",
+      "path": [
+        "research",
+        "evidence",
+        0,
+        "revision"
+      ],
+      "value": "fictional-r3"
+    },
+    {
+      "op": "set",
+      "path": [
+        "research",
+        "evidence",
+        0,
+        "finding"
+      ],
+      "value": "Worker retry revision r3 has a refreshed fictional unit observation; delivery still needs the local oracle."
+    },
+    {
+      "op": "set",
+      "path": [
+        "research",
+        "hypotheses",
+        0,
+        "evidence_ids",
+        0
+      ],
+      "value": "unit-idempotency-r3"
+    },
+    {
+      "op": "set",
+      "path": [
+        "problem",
+        "problem",
+        "source_revision"
+      ],
+      "value": "fictional-r3"
+    },
+    {
+      "op": "set",
+      "path": [
+        "problem",
+        "evidence",
+        0,
+        "revision"
+      ],
+      "value": "fictional-r3"
+    },
+    {
+      "op": "set",
+      "path": [
+        "problem",
+        "evidence",
+        1,
+        "id"
+      ],
+      "value": "unit-idempotency-r3"
+    },
+    {
+      "op": "set",
+      "path": [
+        "problem",
+        "evidence",
+        1,
+        "revision"
+      ],
+      "value": "fictional-r3"
+    },
+    {
+      "op": "set",
+      "path": [
+        "problem",
+        "evidence",
+        2,
+        "revision"
+      ],
+      "value": "fictional-r3"
+    },
+    {
+      "op": "set",
+      "path": [
+        "cognitive",
+        "issue",
+        "source_revision"
+      ],
+      "value": "fictional-r3"
+    },
+    {
+      "op": "set",
+      "path": [
+        "cognitive",
+        "issue",
+        "decision_tick"
+      ],
+      "value": 30
+    },
+    {
+      "op": "set",
+      "path": [
+        "cognitive",
+        "sources",
+        0,
+        "id"
+      ],
+      "value": "unit-idempotency-r3"
+    },
+    {
+      "op": "set",
+      "path": [
+        "cognitive",
+        "sources",
+        0,
+        "source_revision"
+      ],
+      "value": "fictional-r3"
+    },
+    {
+      "op": "set",
+      "path": [
+        "cognitive",
+        "sources",
+        0,
+        "available_tick"
+      ],
+      "value": 12
+    },
+    {
+      "op": "set",
+      "path": [
+        "cognitive",
+        "sources",
+        0,
+        "finding"
+      ],
+      "value": "Worker retry revision r3 has a refreshed fictional unit observation; delivery still needs the local oracle."
+    },
+    {
+      "op": "set",
+      "path": [
+        "cognitive",
+        "sources",
+        1,
+        "source_revision"
+      ],
+      "value": "fictional-r3"
+    },
+    {
+      "op": "set",
+      "path": [
+        "cognitive",
+        "sources",
+        2,
+        "source_revision"
+      ],
+      "value": "fictional-r3"
+    },
+    {
+      "op": "set",
+      "path": [
+        "cognitive",
+        "reviews",
+        0,
+        "source_revision"
+      ],
+      "value": "fictional-r3"
+    },
+    {
+      "op": "set",
+      "path": [
+        "cognitive",
+        "reviews",
+        0,
+        "review_tick"
+      ],
+      "value": 20
+    },
+    {
+      "op": "set",
+      "path": [
+        "cognitive",
+        "reviews",
+        0,
+        "source_ids",
+        0
+      ],
+      "value": "unit-idempotency-r3"
+    },
+    {
+      "op": "set",
+      "path": [
+        "cognitive",
+        "reviews",
+        1,
+        "source_revision"
+      ],
+      "value": "fictional-r3"
+    },
+    {
+      "op": "set",
+      "path": [
+        "cognitive",
+        "reviews",
+        1,
+        "review_tick"
+      ],
+      "value": 20
+    },
+    {
+      "op": "set",
+      "path": [
+        "cognitive",
+        "reviews",
+        1,
+        "source_ids",
+        0
+      ],
+      "value": "unit-idempotency-r3"
+    },
+    {
+      "op": "set",
+      "path": [
+        "cognitive",
+        "reviews",
+        2,
+        "source_revision"
+      ],
+      "value": "fictional-r3"
+    },
+    {
+      "op": "set",
+      "path": [
+        "cognitive",
+        "reviews",
+        2,
+        "review_tick"
+      ],
+      "value": 20
+    },
+    {
+      "op": "set",
+      "path": [
+        "cognitive",
+        "reviews",
+        3,
+        "source_revision"
+      ],
+      "value": "fictional-r3"
+    },
+    {
+      "op": "set",
+      "path": [
+        "cognitive",
+        "reviews",
+        3,
+        "review_tick"
+      ],
+      "value": 20
+    },
+    {
+      "op": "append",
+      "path": [
+        "knowledge_actions"
+      ],
+      "value": {
+        "id": "e05",
+        "tick": 5,
+        "kind": "SOURCE_ADD",
+        "data": {
+          "source_id": "worker-r3",
+          "lineage_id": "worker",
+          "revision": "fictional-r3",
+          "body": "Worker retry revision r3 has a refreshed fictional unit observation; delivery still needs the local oracle.",
+          "available_tick": 5
+        }
+      }
+    },
+    {
+      "op": "append",
+      "path": [
+        "knowledge_actions"
+      ],
+      "value": {
+        "id": "e06",
+        "tick": 6,
+        "kind": "SOURCE_SUPERSEDE",
+        "data": {
+          "old_source_id": "worker-r2",
+          "new_source_id": "worker-r3",
+          "reason": "Fictional upstream worker revision changes after earlier review."
+        }
+      }
+    },
+    {
+      "op": "append",
+      "path": [
+        "knowledge_actions"
+      ],
+      "value": {
+        "id": "e07",
+        "tick": 7,
+        "kind": "OBSERVATION_ADD",
+        "data": {
+          "observation_id": "unit-idempotency-r3",
+          "claim_id": "H-retry",
+          "source_id": "worker-r3",
+          "stance": "SUPPORT",
+          "finding": "Worker retry revision r3 has a refreshed fictional unit observation; delivery still needs the local oracle."
+        }
+      }
+    },
+    {
+      "op": "append",
+      "path": [
+        "knowledge_actions"
+      ],
+      "value": {
+        "id": "e08",
+        "tick": 8,
+        "kind": "REVIEW_ACCEPT",
+        "data": {
+          "claim_id": "H-retry",
+          "basis_ids": [
+            "unit-idempotency-r3"
+          ],
+          "review_note": "New explicit consultative review on refreshed source, not independent validation."
+        }
+      }
+    }
+  ],
+  "logical_events": [
+    "fictional-notification-42",
+    "fictional-notification-42"
+  ],
+  "broken_delivery_observations": [
+    "fictional-notification-42",
+    "fictional-notification-42"
+  ],
+  "correct_delivery_observations": [
+    "fictional-notification-42"
+  ],
+  "expected_states": {
+    "initial_vertical": "ADVISORY_CANDIDATE_FOR_EXTERNAL_ACCEPTANCE",
+    "late_vertical": "HOLD_KNOWLEDGE",
+    "stale_vertical": "HOLD_REASSESS_REVISION",
+    "refreshed_vertical": "ADVISORY_CANDIDATE_FOR_EXTERNAL_ACCEPTANCE",
+    "before_revision_ledger": "VERIFIED",
+    "after_revision_ledger": "CLAIMED",
+    "after_reproof_ledger": "DONE"
+  }
+}
