@@ -79,6 +79,8 @@ PYTHONPATH=src python -m workcoord_lab.adaptive_eval
 
 Its evaluator is **separate from the selectors but public in this repository**. These are hand-authored test scenarios, not a protected held-out study or a claim of intelligent reasoning.
 
+On the seven public development cases, the adaptive policy produced **three evidence-supported provisional labels**, **two justified access-limited HOLDs**, **one avoidable HOLD** and **one budget-limited HOLD**. It read **3,161** source-body characters versus **2,522** for fixed dependency expansion and **6,001** for the full corpus comparator. See the [case-by-case results and negative findings](docs/adaptive-evidence-results-v0.md). These are *not* measures of intelligence or total agent cost.
+
 ## What we will measure
 
 | Comparison | Purpose |
