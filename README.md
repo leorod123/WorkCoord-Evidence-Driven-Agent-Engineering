@@ -119,6 +119,8 @@ PYTHONPATH=src python -m workcoord_lab.cognitive_perspectives_suite
 
 All **19 scenarios are public, fictional, human-authored development fixtures**. No four-agent system, independently verified evidence, measured model benefit, or execution authority is claimed.
 
+The [executed synthetic-development results](docs/cognitive-perspectives-results-v0.md) include explicit disagreement, missing and stale evidence, low-risk shortcut cases and the required external-review boundary.
+
 ## What we will measure
 
 | Comparison | Purpose |
