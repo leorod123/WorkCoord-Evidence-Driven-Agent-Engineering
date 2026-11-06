@@ -1,0 +1,1781 @@
+{
+  "schema": "workcoord.knowledge-genealogy-cases/v0",
+  "status": "PUBLIC_FICTIONAL_DEVELOPMENT_NOT_HELD_OUT",
+  "warning": "All expected statuses, observations, source texts and claims are hand-authored fictional inputs, not independently validated knowledge.",
+  "cases": [
+    {
+      "case_id": "KG01",
+      "name": "Initial current advisory basis",
+      "actions": [
+        {
+          "id": "e01",
+          "tick": 1,
+          "kind": "SOURCE_ADD",
+          "data": {
+            "source_id": "worker-r1",
+            "lineage_id": "worker",
+            "revision": "r1",
+            "body": "Synthetic worker retry observation, version r1.",
+            "available_tick": 1
+          }
+        },
+        {
+          "id": "e02",
+          "tick": 2,
+          "kind": "CLAIM_OPEN",
+          "data": {
+            "claim_id": "cause",
+            "statement": "Fictional cause notification-retry hypothesis.",
+            "depends_on": []
+          }
+        },
+        {
+          "id": "e03",
+          "tick": 3,
+          "kind": "OBSERVATION_ADD",
+          "data": {
+            "observation_id": "worker-support",
+            "claim_id": "cause",
+            "source_id": "worker-r1",
+            "stance": "SUPPORT",
+            "finding": "Original worker trace supports a provisional retry hypothesis."
+          }
+        },
+        {
+          "id": "e04",
+          "tick": 4,
+          "kind": "REVIEW_ACCEPT",
+          "data": {
+            "claim_id": "cause",
+            "basis_ids": [
+              "worker-support"
+            ],
+            "review_note": "Consultative review of cause; not independent validation."
+          }
+        }
+      ],
+      "expected_status_by_claim": {
+        "cause": "ADVISORY_CURRENT"
+      },
+      "at_seq_checks": [
+        {
+          "at_seq": 3,
+          "status_by_claim": {
+            "cause": "HOLD_UNREVIEWED"
+          }
+        }
+      ],
+      "note": "Evidence and review are declared, not authenticated."
+    },
+    {
+      "case_id": "KG02",
+      "name": "Source supersession invalidates earlier accepted conclusion",
+      "actions": [
+        {
+          "id": "e01",
+          "tick": 1,
+          "kind": "SOURCE_ADD",
+          "data": {
+            "source_id": "worker-r1",
+            "lineage_id": "worker",
+            "revision": "r1",
+            "body": "Synthetic worker retry observation, version r1.",
+            "available_tick": 1
+          }
+        },
+        {
+          "id": "e02",
+          "tick": 2,
+          "kind": "CLAIM_OPEN",
+          "data": {
+            "claim_id": "cause",
+            "statement": "Fictional cause notification-retry hypothesis.",
+            "depends_on": []
+          }
+        },
+        {
+          "id": "e03",
+          "tick": 3,
+          "kind": "OBSERVATION_ADD",
+          "data": {
+            "observation_id": "worker-support",
+            "claim_id": "cause",
+            "source_id": "worker-r1",
+            "stance": "SUPPORT",
+            "finding": "Original worker trace supports a provisional retry hypothesis."
+          }
+        },
+        {
+          "id": "e04",
+          "tick": 4,
+          "kind": "REVIEW_ACCEPT",
+          "data": {
+            "claim_id": "cause",
+            "basis_ids": [
+              "worker-support"
+            ],
+            "review_note": "Consultative review of cause; not independent validation."
+          }
+        },
+        {
+          "id": "e05",
+          "tick": 5,
+          "kind": "SOURCE_ADD",
+          "data": {
+            "source_id": "worker-r2",
+            "lineage_id": "worker",
+            "revision": "r2",
+            "body": "Synthetic worker retry observation, version r2.",
+            "available_tick": 5
+          }
+        },
+        {
+          "id": "e06",
+          "tick": 6,
+          "kind": "SOURCE_SUPERSEDE",
+          "data": {
+            "old_source_id": "worker-r1",
+            "new_source_id": "worker-r2",
+            "reason": "A newer fictional source revision replaces the prior reference."
+          }
+        }
+      ],
+      "expected_status_by_claim": {
+        "cause": "HOLD_STALE_BASIS"
+      },
+      "at_seq_checks": [
+        {
+          "at_seq": 4,
+          "status_by_claim": {
+            "cause": "ADVISORY_CURRENT"
+          }
+        },
+        {
+          "at_seq": 5,
+          "status_by_claim": {
+            "cause": "ADVISORY_CURRENT"
+          }
+        }
+      ],
+      "note": "The review still points to an old revision."
+    },
+    {
+      "case_id": "KG03",
+      "name": "Fresh observation and explicit review restore advisory currency",
+      "actions": [
+        {
+          "id": "e01",
+          "tick": 1,
+          "kind": "SOURCE_ADD",
+          "data": {
+            "source_id": "worker-r1",
+            "lineage_id": "worker",
+            "revision": "r1",
+            "body": "Synthetic worker retry observation, version r1.",
+            "available_tick": 1
+          }
+        },
+        {
+          "id": "e02",
+          "tick": 2,
+          "kind": "CLAIM_OPEN",
+          "data": {
+            "claim_id": "cause",
+            "statement": "Fictional cause notification-retry hypothesis.",
+            "depends_on": []
+          }
+        },
+        {
+          "id": "e03",
+          "tick": 3,
+          "kind": "OBSERVATION_ADD",
+          "data": {
+            "observation_id": "worker-support",
+            "claim_id": "cause",
+            "source_id": "worker-r1",
+            "stance": "SUPPORT",
+            "finding": "Original worker trace supports a provisional retry hypothesis."
+          }
+        },
+        {
+          "id": "e04",
+          "tick": 4,
+          "kind": "REVIEW_ACCEPT",
+          "data": {
+            "claim_id": "cause",
+            "basis_ids": [
+              "worker-support"
+            ],
+            "review_note": "Consultative review of cause; not independent validation."
+          }
+        },
+        {
+          "id": "e05",
+          "tick": 5,
+          "kind": "SOURCE_ADD",
+          "data": {
+            "source_id": "worker-r2",
+            "lineage_id": "worker",
+            "revision": "r2",
+            "body": "Synthetic worker retry observation, version r2.",
+            "available_tick": 5
+          }
+        },
+        {
+          "id": "e06",
+          "tick": 6,
+          "kind": "SOURCE_SUPERSEDE",
+          "data": {
+            "old_source_id": "worker-r1",
+            "new_source_id": "worker-r2",
+            "reason": "A newer fictional source revision replaces the prior reference."
+          }
+        },
+        {
+          "id": "e07",
+          "tick": 7,
+          "kind": "OBSERVATION_ADD",
+          "data": {
+            "observation_id": "worker-new-support",
+            "claim_id": "cause",
+            "source_id": "worker-r2",
+            "stance": "SUPPORT",
+            "finding": "New revision again supports the cause."
+          }
+        },
+        {
+          "id": "e08",
+          "tick": 8,
+          "kind": "REVIEW_ACCEPT",
+          "data": {
+            "claim_id": "cause",
+            "basis_ids": [
+              "worker-new-support"
+            ],
+            "review_note": "Consultative review of cause; not independent validation."
+          }
+        }
+      ],
+      "expected_status_by_claim": {
+        "cause": "ADVISORY_CURRENT"
+      },
+      "at_seq_checks": [
+        {
+          "at_seq": 6,
+          "status_by_claim": {
+            "cause": "HOLD_STALE_BASIS"
+          }
+        },
+        {
+          "at_seq": 7,
+          "status_by_claim": {
+            "cause": "HOLD_STALE_BASIS"
+          }
+        }
+      ],
+      "note": "Old review and old source remain in the log."
+    },
+    {
+      "case_id": "KG04",
+      "name": "Current contradictory observation blocks an earlier review",
+      "actions": [
+        {
+          "id": "e01",
+          "tick": 1,
+          "kind": "SOURCE_ADD",
+          "data": {
+            "source_id": "worker-r1",
+            "lineage_id": "worker",
+            "revision": "r1",
+            "body": "Synthetic worker retry observation, version r1.",
+            "available_tick": 1
+          }
+        },
+        {
+          "id": "e02",
+          "tick": 2,
+          "kind": "CLAIM_OPEN",
+          "data": {
+            "claim_id": "cause",
+            "statement": "Fictional cause notification-retry hypothesis.",
+            "depends_on": []
+          }
+        },
+        {
+          "id": "e03",
+          "tick": 3,
+          "kind": "OBSERVATION_ADD",
+          "data": {
+            "observation_id": "worker-support",
+            "claim_id": "cause",
+            "source_id": "worker-r1",
+            "stance": "SUPPORT",
+            "finding": "Original worker trace supports a provisional retry hypothesis."
+          }
+        },
+        {
+          "id": "e04",
+          "tick": 4,
+          "kind": "REVIEW_ACCEPT",
+          "data": {
+            "claim_id": "cause",
+            "basis_ids": [
+              "worker-support"
+            ],
+            "review_note": "Consultative review of cause; not independent validation."
+          }
+        },
+        {
+          "id": "e05",
+          "tick": 5,
+          "kind": "OBSERVATION_ADD",
+          "data": {
+            "observation_id": "negative-current",
+            "claim_id": "cause",
+            "source_id": "worker-r1",
+            "stance": "CHALLENGE",
+            "finding": "A current retry counterexample remains unresolved."
+          }
+        }
+      ],
+      "expected_status_by_claim": {
+        "cause": "HOLD_COUNTEREVIDENCE"
+      },
+      "at_seq_checks": [],
+      "note": ""
+    },
+    {
+      "case_id": "KG05",
+      "name": "Explicit retraction preserves historical negative evidence but still requires rereview",
+      "actions": [
+        {
+          "id": "e01",
+          "tick": 1,
+          "kind": "SOURCE_ADD",
+          "data": {
+            "source_id": "worker-r1",
+            "lineage_id": "worker",
+            "revision": "r1",
+            "body": "Synthetic worker retry observation, version r1.",
+            "available_tick": 1
+          }
+        },
+        {
+          "id": "e02",
+          "tick": 2,
+          "kind": "CLAIM_OPEN",
+          "data": {
+            "claim_id": "cause",
+            "statement": "Fictional cause notification-retry hypothesis.",
+            "depends_on": []
+          }
+        },
+        {
+          "id": "e03",
+          "tick": 3,
+          "kind": "OBSERVATION_ADD",
+          "data": {
+            "observation_id": "worker-support",
+            "claim_id": "cause",
+            "source_id": "worker-r1",
+            "stance": "SUPPORT",
+            "finding": "Original worker trace supports a provisional retry hypothesis."
+          }
+        },
+        {
+          "id": "e04",
+          "tick": 4,
+          "kind": "REVIEW_ACCEPT",
+          "data": {
+            "claim_id": "cause",
+            "basis_ids": [
+              "worker-support"
+            ],
+            "review_note": "Consultative review of cause; not independent validation."
+          }
+        },
+        {
+          "id": "e05",
+          "tick": 5,
+          "kind": "OBSERVATION_ADD",
+          "data": {
+            "observation_id": "negative-current",
+            "claim_id": "cause",
+            "source_id": "worker-r1",
+            "stance": "CHALLENGE",
+            "finding": "A current retry counterexample remains unresolved."
+          }
+        },
+        {
+          "id": "e06",
+          "tick": 6,
+          "kind": "OBSERVATION_RETRACT",
+          "data": {
+            "observation_id": "negative-current",
+            "reason": "A named fictional follow-up invalidated this earlier observation; history retained."
+          }
+        }
+      ],
+      "expected_status_by_claim": {
+        "cause": "HOLD_REVIEW_REQUIRED"
+      },
+      "at_seq_checks": [],
+      "note": "No automatic reinstatement after retraction."
+    },
+    {
+      "case_id": "KG06",
+      "name": "Post-retraction review can restore current advisory basis",
+      "actions": [
+        {
+          "id": "e01",
+          "tick": 1,
+          "kind": "SOURCE_ADD",
+          "data": {
+            "source_id": "worker-r1",
+            "lineage_id": "worker",
+            "revision": "r1",
+            "body": "Synthetic worker retry observation, version r1.",
+            "available_tick": 1
+          }
+        },
+        {
+          "id": "e02",
+          "tick": 2,
+          "kind": "CLAIM_OPEN",
+          "data": {
+            "claim_id": "cause",
+            "statement": "Fictional cause notification-retry hypothesis.",
+            "depends_on": []
+          }
+        },
+        {
+          "id": "e03",
+          "tick": 3,
+          "kind": "OBSERVATION_ADD",
+          "data": {
+            "observation_id": "worker-support",
+            "claim_id": "cause",
+            "source_id": "worker-r1",
+            "stance": "SUPPORT",
+            "finding": "Original worker trace supports a provisional retry hypothesis."
+          }
+        },
+        {
+          "id": "e04",
+          "tick": 4,
+          "kind": "REVIEW_ACCEPT",
+          "data": {
+            "claim_id": "cause",
+            "basis_ids": [
+              "worker-support"
+            ],
+            "review_note": "Consultative review of cause; not independent validation."
+          }
+        },
+        {
+          "id": "e05",
+          "tick": 5,
+          "kind": "OBSERVATION_ADD",
+          "data": {
+            "observation_id": "negative-current",
+            "claim_id": "cause",
+            "source_id": "worker-r1",
+            "stance": "CHALLENGE",
+            "finding": "A current retry counterexample remains unresolved."
+          }
+        },
+        {
+          "id": "e06",
+          "tick": 6,
+          "kind": "OBSERVATION_RETRACT",
+          "data": {
+            "observation_id": "negative-current",
+            "reason": "A named fictional follow-up invalidated this earlier observation; history retained."
+          }
+        },
+        {
+          "id": "e07",
+          "tick": 7,
+          "kind": "REVIEW_ACCEPT",
+          "data": {
+            "claim_id": "cause",
+            "basis_ids": [
+              "worker-support"
+            ],
+            "review_note": "Consultative review of cause; not independent validation."
+          }
+        }
+      ],
+      "expected_status_by_claim": {
+        "cause": "ADVISORY_CURRENT"
+      },
+      "at_seq_checks": [],
+      "note": "The retracted negative observation is still in immutable event history."
+    },
+    {
+      "case_id": "KG07",
+      "name": "Superseding upstream source invalidates dependent outcome",
+      "actions": [
+        {
+          "id": "e01",
+          "tick": 1,
+          "kind": "SOURCE_ADD",
+          "data": {
+            "source_id": "worker-r1",
+            "lineage_id": "worker",
+            "revision": "r1",
+            "body": "Synthetic worker retry observation, version r1.",
+            "available_tick": 1
+          }
+        },
+        {
+          "id": "e02",
+          "tick": 2,
+          "kind": "CLAIM_OPEN",
+          "data": {
+            "claim_id": "cause",
+            "statement": "Fictional cause notification-retry hypothesis.",
+            "depends_on": []
+          }
+        },
+        {
+          "id": "e03",
+          "tick": 3,
+          "kind": "OBSERVATION_ADD",
+          "data": {
+            "observation_id": "worker-support",
+            "claim_id": "cause",
+            "source_id": "worker-r1",
+            "stance": "SUPPORT",
+            "finding": "Original worker trace supports a provisional retry hypothesis."
+          }
+        },
+        {
+          "id": "e04",
+          "tick": 4,
+          "kind": "REVIEW_ACCEPT",
+          "data": {
+            "claim_id": "cause",
+            "basis_ids": [
+              "worker-support"
+            ],
+            "review_note": "Consultative review of cause; not independent validation."
+          }
+        },
+        {
+          "id": "e05",
+          "tick": 5,
+          "kind": "SOURCE_ADD",
+          "data": {
+            "source_id": "delivery-r1",
+            "lineage_id": "delivery",
+            "revision": "r1",
+            "body": "Synthetic downstream delivery confirms one delivery in this toy context.",
+            "available_tick": 5
+          }
+        },
+        {
+          "id": "e06",
+          "tick": 6,
+          "kind": "CLAIM_OPEN",
+          "data": {
+            "claim_id": "outcome",
+            "statement": "Fictional outcome notification-retry hypothesis.",
+            "depends_on": [
+              "cause"
+            ]
+          }
+        },
+        {
+          "id": "e07",
+          "tick": 7,
+          "kind": "OBSERVATION_ADD",
+          "data": {
+            "observation_id": "delivery-support",
+            "claim_id": "outcome",
+            "source_id": "delivery-r1",
+            "stance": "SUPPORT",
+            "finding": "A downstream delivery observation supports the dependent outcome."
+          }
+        },
+        {
+          "id": "e08",
+          "tick": 8,
+          "kind": "REVIEW_ACCEPT",
+          "data": {
+            "claim_id": "outcome",
+            "basis_ids": [
+              "delivery-support"
+            ],
+            "review_note": "Consultative review of outcome; not independent validation."
+          }
+        },
+        {
+          "id": "e09",
+          "tick": 9,
+          "kind": "SOURCE_ADD",
+          "data": {
+            "source_id": "worker-r2",
+            "lineage_id": "worker",
+            "revision": "r2",
+            "body": "Synthetic worker retry observation, version r2.",
+            "available_tick": 9
+          }
+        },
+        {
+          "id": "e10",
+          "tick": 10,
+          "kind": "SOURCE_SUPERSEDE",
+          "data": {
+            "old_source_id": "worker-r1",
+            "new_source_id": "worker-r2",
+            "reason": "A newer fictional source revision replaces the prior reference."
+          }
+        }
+      ],
+      "expected_status_by_claim": {
+        "cause": "HOLD_STALE_BASIS",
+        "outcome": "HOLD_UPSTREAM"
+      },
+      "at_seq_checks": [
+        {
+          "at_seq": 8,
+          "status_by_claim": {
+            "cause": "ADVISORY_CURRENT",
+            "outcome": "ADVISORY_CURRENT"
+          }
+        }
+      ],
+      "note": "Downstream had a passing review, but upstream changed."
+    },
+    {
+      "case_id": "KG08",
+      "name": "Upstream rereview cannot silently reactivate dependent decision",
+      "actions": [
+        {
+          "id": "e01",
+          "tick": 1,
+          "kind": "SOURCE_ADD",
+          "data": {
+            "source_id": "worker-r1",
+            "lineage_id": "worker",
+            "revision": "r1",
+            "body": "Synthetic worker retry observation, version r1.",
+            "available_tick": 1
+          }
+        },
+        {
+          "id": "e02",
+          "tick": 2,
+          "kind": "CLAIM_OPEN",
+          "data": {
+            "claim_id": "cause",
+            "statement": "Fictional cause notification-retry hypothesis.",
+            "depends_on": []
+          }
+        },
+        {
+          "id": "e03",
+          "tick": 3,
+          "kind": "OBSERVATION_ADD",
+          "data": {
+            "observation_id": "worker-support",
+            "claim_id": "cause",
+            "source_id": "worker-r1",
+            "stance": "SUPPORT",
+            "finding": "Original worker trace supports a provisional retry hypothesis."
+          }
+        },
+        {
+          "id": "e04",
+          "tick": 4,
+          "kind": "REVIEW_ACCEPT",
+          "data": {
+            "claim_id": "cause",
+            "basis_ids": [
+              "worker-support"
+            ],
+            "review_note": "Consultative review of cause; not independent validation."
+          }
+        },
+        {
+          "id": "e05",
+          "tick": 5,
+          "kind": "SOURCE_ADD",
+          "data": {
+            "source_id": "delivery-r1",
+            "lineage_id": "delivery",
+            "revision": "r1",
+            "body": "Synthetic downstream delivery confirms one delivery in this toy context.",
+            "available_tick": 5
+          }
+        },
+        {
+          "id": "e06",
+          "tick": 6,
+          "kind": "CLAIM_OPEN",
+          "data": {
+            "claim_id": "outcome",
+            "statement": "Fictional outcome notification-retry hypothesis.",
+            "depends_on": [
+              "cause"
+            ]
+          }
+        },
+        {
+          "id": "e07",
+          "tick": 7,
+          "kind": "OBSERVATION_ADD",
+          "data": {
+            "observation_id": "delivery-support",
+            "claim_id": "outcome",
+            "source_id": "delivery-r1",
+            "stance": "SUPPORT",
+            "finding": "A downstream delivery observation supports the dependent outcome."
+          }
+        },
+        {
+          "id": "e08",
+          "tick": 8,
+          "kind": "REVIEW_ACCEPT",
+          "data": {
+            "claim_id": "outcome",
+            "basis_ids": [
+              "delivery-support"
+            ],
+            "review_note": "Consultative review of outcome; not independent validation."
+          }
+        },
+        {
+          "id": "e09",
+          "tick": 9,
+          "kind": "SOURCE_ADD",
+          "data": {
+            "source_id": "worker-r2",
+            "lineage_id": "worker",
+            "revision": "r2",
+            "body": "Synthetic worker retry observation, version r2.",
+            "available_tick": 9
+          }
+        },
+        {
+          "id": "e10",
+          "tick": 10,
+          "kind": "SOURCE_SUPERSEDE",
+          "data": {
+            "old_source_id": "worker-r1",
+            "new_source_id": "worker-r2",
+            "reason": "A newer fictional source revision replaces the prior reference."
+          }
+        },
+        {
+          "id": "e11",
+          "tick": 11,
+          "kind": "OBSERVATION_ADD",
+          "data": {
+            "observation_id": "worker-new-support",
+            "claim_id": "cause",
+            "source_id": "worker-r2",
+            "stance": "SUPPORT",
+            "finding": "Current replacement supports the upstream claim."
+          }
+        },
+        {
+          "id": "e12",
+          "tick": 12,
+          "kind": "REVIEW_ACCEPT",
+          "data": {
+            "claim_id": "cause",
+            "basis_ids": [
+              "worker-new-support"
+            ],
+            "review_note": "Consultative review of cause; not independent validation."
+          }
+        }
+      ],
+      "expected_status_by_claim": {
+        "cause": "ADVISORY_CURRENT",
+        "outcome": "HOLD_UPSTREAM_REVIEW_CHANGED"
+      },
+      "at_seq_checks": [],
+      "note": "Downstream basis binds the old upstream review hash."
+    },
+    {
+      "case_id": "KG09",
+      "name": "Explicit downstream rereview restores a dependent advisory conclusion",
+      "actions": [
+        {
+          "id": "e01",
+          "tick": 1,
+          "kind": "SOURCE_ADD",
+          "data": {
+            "source_id": "worker-r1",
+            "lineage_id": "worker",
+            "revision": "r1",
+            "body": "Synthetic worker retry observation, version r1.",
+            "available_tick": 1
+          }
+        },
+        {
+          "id": "e02",
+          "tick": 2,
+          "kind": "CLAIM_OPEN",
+          "data": {
+            "claim_id": "cause",
+            "statement": "Fictional cause notification-retry hypothesis.",
+            "depends_on": []
+          }
+        },
+        {
+          "id": "e03",
+          "tick": 3,
+          "kind": "OBSERVATION_ADD",
+          "data": {
+            "observation_id": "worker-support",
+            "claim_id": "cause",
+            "source_id": "worker-r1",
+            "stance": "SUPPORT",
+            "finding": "Original worker trace supports a provisional retry hypothesis."
+          }
+        },
+        {
+          "id": "e04",
+          "tick": 4,
+          "kind": "REVIEW_ACCEPT",
+          "data": {
+            "claim_id": "cause",
+            "basis_ids": [
+              "worker-support"
+            ],
+            "review_note": "Consultative review of cause; not independent validation."
+          }
+        },
+        {
+          "id": "e05",
+          "tick": 5,
+          "kind": "SOURCE_ADD",
+          "data": {
+            "source_id": "delivery-r1",
+            "lineage_id": "delivery",
+            "revision": "r1",
+            "body": "Synthetic downstream delivery confirms one delivery in this toy context.",
+            "available_tick": 5
+          }
+        },
+        {
+          "id": "e06",
+          "tick": 6,
+          "kind": "CLAIM_OPEN",
+          "data": {
+            "claim_id": "outcome",
+            "statement": "Fictional outcome notification-retry hypothesis.",
+            "depends_on": [
+              "cause"
+            ]
+          }
+        },
+        {
+          "id": "e07",
+          "tick": 7,
+          "kind": "OBSERVATION_ADD",
+          "data": {
+            "observation_id": "delivery-support",
+            "claim_id": "outcome",
+            "source_id": "delivery-r1",
+            "stance": "SUPPORT",
+            "finding": "A downstream delivery observation supports the dependent outcome."
+          }
+        },
+        {
+          "id": "e08",
+          "tick": 8,
+          "kind": "REVIEW_ACCEPT",
+          "data": {
+            "claim_id": "outcome",
+            "basis_ids": [
+              "delivery-support"
+            ],
+            "review_note": "Consultative review of outcome; not independent validation."
+          }
+        },
+        {
+          "id": "e09",
+          "tick": 9,
+          "kind": "SOURCE_ADD",
+          "data": {
+            "source_id": "worker-r2",
+            "lineage_id": "worker",
+            "revision": "r2",
+            "body": "Synthetic worker retry observation, version r2.",
+            "available_tick": 9
+          }
+        },
+        {
+          "id": "e10",
+          "tick": 10,
+          "kind": "SOURCE_SUPERSEDE",
+          "data": {
+            "old_source_id": "worker-r1",
+            "new_source_id": "worker-r2",
+            "reason": "A newer fictional source revision replaces the prior reference."
+          }
+        },
+        {
+          "id": "e11",
+          "tick": 11,
+          "kind": "OBSERVATION_ADD",
+          "data": {
+            "observation_id": "worker-new-support",
+            "claim_id": "cause",
+            "source_id": "worker-r2",
+            "stance": "SUPPORT",
+            "finding": "Current replacement supports the upstream claim."
+          }
+        },
+        {
+          "id": "e12",
+          "tick": 12,
+          "kind": "REVIEW_ACCEPT",
+          "data": {
+            "claim_id": "cause",
+            "basis_ids": [
+              "worker-new-support"
+            ],
+            "review_note": "Consultative review of cause; not independent validation."
+          }
+        },
+        {
+          "id": "e13",
+          "tick": 13,
+          "kind": "REVIEW_ACCEPT",
+          "data": {
+            "claim_id": "outcome",
+            "basis_ids": [
+              "delivery-support"
+            ],
+            "review_note": "Consultative review of outcome; not independent validation."
+          }
+        }
+      ],
+      "expected_status_by_claim": {
+        "cause": "ADVISORY_CURRENT",
+        "outcome": "ADVISORY_CURRENT"
+      },
+      "at_seq_checks": [
+        {
+          "at_seq": 12,
+          "status_by_claim": {
+            "cause": "ADVISORY_CURRENT",
+            "outcome": "HOLD_UPSTREAM_REVIEW_CHANGED"
+          }
+        }
+      ],
+      "note": "No implicit promotion; both reviews are visible."
+    },
+    {
+      "case_id": "KG10",
+      "name": "New supporting observation still invalidates the old review basis",
+      "actions": [
+        {
+          "id": "e01",
+          "tick": 1,
+          "kind": "SOURCE_ADD",
+          "data": {
+            "source_id": "worker-r1",
+            "lineage_id": "worker",
+            "revision": "r1",
+            "body": "Synthetic worker retry observation, version r1.",
+            "available_tick": 1
+          }
+        },
+        {
+          "id": "e02",
+          "tick": 2,
+          "kind": "CLAIM_OPEN",
+          "data": {
+            "claim_id": "cause",
+            "statement": "Fictional cause notification-retry hypothesis.",
+            "depends_on": []
+          }
+        },
+        {
+          "id": "e03",
+          "tick": 3,
+          "kind": "OBSERVATION_ADD",
+          "data": {
+            "observation_id": "worker-support",
+            "claim_id": "cause",
+            "source_id": "worker-r1",
+            "stance": "SUPPORT",
+            "finding": "Original worker trace supports a provisional retry hypothesis."
+          }
+        },
+        {
+          "id": "e04",
+          "tick": 4,
+          "kind": "REVIEW_ACCEPT",
+          "data": {
+            "claim_id": "cause",
+            "basis_ids": [
+              "worker-support"
+            ],
+            "review_note": "Consultative review of cause; not independent validation."
+          }
+        },
+        {
+          "id": "e05",
+          "tick": 5,
+          "kind": "OBSERVATION_ADD",
+          "data": {
+            "observation_id": "new-support",
+            "claim_id": "cause",
+            "source_id": "worker-r1",
+            "stance": "SUPPORT",
+            "finding": "Another current positive observation requires a fresh review."
+          }
+        }
+      ],
+      "expected_status_by_claim": {
+        "cause": "HOLD_REVIEW_REQUIRED"
+      },
+      "at_seq_checks": [],
+      "note": "More apparent support is not automatic confirmation."
+    },
+    {
+      "case_id": "KG11",
+      "name": "Retracting accepted support invalidates the review",
+      "actions": [
+        {
+          "id": "e01",
+          "tick": 1,
+          "kind": "SOURCE_ADD",
+          "data": {
+            "source_id": "worker-r1",
+            "lineage_id": "worker",
+            "revision": "r1",
+            "body": "Synthetic worker retry observation, version r1.",
+            "available_tick": 1
+          }
+        },
+        {
+          "id": "e02",
+          "tick": 2,
+          "kind": "CLAIM_OPEN",
+          "data": {
+            "claim_id": "cause",
+            "statement": "Fictional cause notification-retry hypothesis.",
+            "depends_on": []
+          }
+        },
+        {
+          "id": "e03",
+          "tick": 3,
+          "kind": "OBSERVATION_ADD",
+          "data": {
+            "observation_id": "worker-support",
+            "claim_id": "cause",
+            "source_id": "worker-r1",
+            "stance": "SUPPORT",
+            "finding": "Original worker trace supports a provisional retry hypothesis."
+          }
+        },
+        {
+          "id": "e04",
+          "tick": 4,
+          "kind": "REVIEW_ACCEPT",
+          "data": {
+            "claim_id": "cause",
+            "basis_ids": [
+              "worker-support"
+            ],
+            "review_note": "Consultative review of cause; not independent validation."
+          }
+        },
+        {
+          "id": "e05",
+          "tick": 5,
+          "kind": "OBSERVATION_RETRACT",
+          "data": {
+            "observation_id": "worker-support",
+            "reason": "A named fictional follow-up invalidated this earlier observation; history retained."
+          }
+        }
+      ],
+      "expected_status_by_claim": {
+        "cause": "HOLD_RETRACTED_BASIS"
+      },
+      "at_seq_checks": [],
+      "note": ""
+    },
+    {
+      "case_id": "KG12",
+      "name": "Staged source does not invalidate before explicit supersession",
+      "actions": [
+        {
+          "id": "e01",
+          "tick": 1,
+          "kind": "SOURCE_ADD",
+          "data": {
+            "source_id": "worker-r1",
+            "lineage_id": "worker",
+            "revision": "r1",
+            "body": "Synthetic worker retry observation, version r1.",
+            "available_tick": 1
+          }
+        },
+        {
+          "id": "e02",
+          "tick": 2,
+          "kind": "CLAIM_OPEN",
+          "data": {
+            "claim_id": "cause",
+            "statement": "Fictional cause notification-retry hypothesis.",
+            "depends_on": []
+          }
+        },
+        {
+          "id": "e03",
+          "tick": 3,
+          "kind": "OBSERVATION_ADD",
+          "data": {
+            "observation_id": "worker-support",
+            "claim_id": "cause",
+            "source_id": "worker-r1",
+            "stance": "SUPPORT",
+            "finding": "Original worker trace supports a provisional retry hypothesis."
+          }
+        },
+        {
+          "id": "e04",
+          "tick": 4,
+          "kind": "REVIEW_ACCEPT",
+          "data": {
+            "claim_id": "cause",
+            "basis_ids": [
+              "worker-support"
+            ],
+            "review_note": "Consultative review of cause; not independent validation."
+          }
+        },
+        {
+          "id": "e05",
+          "tick": 5,
+          "kind": "SOURCE_ADD",
+          "data": {
+            "source_id": "worker-r2",
+            "lineage_id": "worker",
+            "revision": "r2",
+            "body": "Not yet promoted, so the active revision remains r1.",
+            "available_tick": 5
+          }
+        }
+      ],
+      "expected_status_by_claim": {
+        "cause": "ADVISORY_CURRENT"
+      },
+      "at_seq_checks": [],
+      "note": "No automatic adoption of newest registered file."
+    },
+    {
+      "case_id": "KG13",
+      "name": "Unrelated lineage revision does not invalidate this claim",
+      "actions": [
+        {
+          "id": "e01",
+          "tick": 1,
+          "kind": "SOURCE_ADD",
+          "data": {
+            "source_id": "worker-r1",
+            "lineage_id": "worker",
+            "revision": "r1",
+            "body": "Synthetic worker retry observation, version r1.",
+            "available_tick": 1
+          }
+        },
+        {
+          "id": "e02",
+          "tick": 2,
+          "kind": "CLAIM_OPEN",
+          "data": {
+            "claim_id": "cause",
+            "statement": "Fictional cause notification-retry hypothesis.",
+            "depends_on": []
+          }
+        },
+        {
+          "id": "e03",
+          "tick": 3,
+          "kind": "OBSERVATION_ADD",
+          "data": {
+            "observation_id": "worker-support",
+            "claim_id": "cause",
+            "source_id": "worker-r1",
+            "stance": "SUPPORT",
+            "finding": "Original worker trace supports a provisional retry hypothesis."
+          }
+        },
+        {
+          "id": "e04",
+          "tick": 4,
+          "kind": "REVIEW_ACCEPT",
+          "data": {
+            "claim_id": "cause",
+            "basis_ids": [
+              "worker-support"
+            ],
+            "review_note": "Consultative review of cause; not independent validation."
+          }
+        },
+        {
+          "id": "e05",
+          "tick": 5,
+          "kind": "SOURCE_ADD",
+          "data": {
+            "source_id": "other-r1",
+            "lineage_id": "other",
+            "revision": "r1",
+            "body": "An unrelated synthetic document from another lineage.",
+            "available_tick": 5
+          }
+        },
+        {
+          "id": "e06",
+          "tick": 6,
+          "kind": "SOURCE_ADD",
+          "data": {
+            "source_id": "other-r2",
+            "lineage_id": "other",
+            "revision": "r2",
+            "body": "A new unrelated synthetic document.",
+            "available_tick": 6
+          }
+        },
+        {
+          "id": "e07",
+          "tick": 7,
+          "kind": "SOURCE_SUPERSEDE",
+          "data": {
+            "old_source_id": "other-r1",
+            "new_source_id": "other-r2",
+            "reason": "A newer fictional source revision replaces the prior reference."
+          }
+        }
+      ],
+      "expected_status_by_claim": {
+        "cause": "ADVISORY_CURRENT"
+      },
+      "at_seq_checks": [],
+      "note": ""
+    },
+    {
+      "case_id": "KG14",
+      "name": "Contradicting downstream origin cannot be outweighed by support",
+      "actions": [
+        {
+          "id": "e01",
+          "tick": 1,
+          "kind": "SOURCE_ADD",
+          "data": {
+            "source_id": "worker-r1",
+            "lineage_id": "worker",
+            "revision": "r1",
+            "body": "Synthetic worker retry observation, version r1.",
+            "available_tick": 1
+          }
+        },
+        {
+          "id": "e02",
+          "tick": 2,
+          "kind": "CLAIM_OPEN",
+          "data": {
+            "claim_id": "cause",
+            "statement": "Fictional cause notification-retry hypothesis.",
+            "depends_on": []
+          }
+        },
+        {
+          "id": "e03",
+          "tick": 3,
+          "kind": "OBSERVATION_ADD",
+          "data": {
+            "observation_id": "worker-support",
+            "claim_id": "cause",
+            "source_id": "worker-r1",
+            "stance": "SUPPORT",
+            "finding": "Original worker trace supports a provisional retry hypothesis."
+          }
+        },
+        {
+          "id": "e04",
+          "tick": 4,
+          "kind": "REVIEW_ACCEPT",
+          "data": {
+            "claim_id": "cause",
+            "basis_ids": [
+              "worker-support"
+            ],
+            "review_note": "Consultative review of cause; not independent validation."
+          }
+        },
+        {
+          "id": "e05",
+          "tick": 5,
+          "kind": "SOURCE_ADD",
+          "data": {
+            "source_id": "delivery-r1",
+            "lineage_id": "delivery",
+            "revision": "r1",
+            "body": "Independent origin group is declared, not verified.",
+            "available_tick": 5
+          }
+        },
+        {
+          "id": "e06",
+          "tick": 6,
+          "kind": "OBSERVATION_ADD",
+          "data": {
+            "observation_id": "delivery-negative",
+            "claim_id": "cause",
+            "source_id": "delivery-r1",
+            "stance": "CHALLENGE",
+            "finding": "Delivery behavior contradicts the optimistic worker hypothesis."
+          }
+        }
+      ],
+      "expected_status_by_claim": {
+        "cause": "HOLD_COUNTEREVIDENCE"
+      },
+      "at_seq_checks": [],
+      "note": ""
+    },
+    {
+      "case_id": "KG15",
+      "name": "Same text digest under a new revision still invalidates old reviewed source ID",
+      "actions": [
+        {
+          "id": "e01",
+          "tick": 1,
+          "kind": "SOURCE_ADD",
+          "data": {
+            "source_id": "worker-r1",
+            "lineage_id": "worker",
+            "revision": "r1",
+            "body": "Synthetic worker retry observation, version r1.",
+            "available_tick": 1
+          }
+        },
+        {
+          "id": "e02",
+          "tick": 2,
+          "kind": "CLAIM_OPEN",
+          "data": {
+            "claim_id": "cause",
+            "statement": "Fictional cause notification-retry hypothesis.",
+            "depends_on": []
+          }
+        },
+        {
+          "id": "e03",
+          "tick": 3,
+          "kind": "OBSERVATION_ADD",
+          "data": {
+            "observation_id": "worker-support",
+            "claim_id": "cause",
+            "source_id": "worker-r1",
+            "stance": "SUPPORT",
+            "finding": "Original worker trace supports a provisional retry hypothesis."
+          }
+        },
+        {
+          "id": "e04",
+          "tick": 4,
+          "kind": "REVIEW_ACCEPT",
+          "data": {
+            "claim_id": "cause",
+            "basis_ids": [
+              "worker-support"
+            ],
+            "review_note": "Consultative review of cause; not independent validation."
+          }
+        },
+        {
+          "id": "e05",
+          "tick": 5,
+          "kind": "SOURCE_ADD",
+          "data": {
+            "source_id": "worker-r2",
+            "lineage_id": "worker",
+            "revision": "r2",
+            "body": "Synthetic worker retry observation, version r1.",
+            "available_tick": 5
+          }
+        },
+        {
+          "id": "e06",
+          "tick": 6,
+          "kind": "SOURCE_SUPERSEDE",
+          "data": {
+            "old_source_id": "worker-r1",
+            "new_source_id": "worker-r2",
+            "reason": "A newer fictional source revision replaces the prior reference."
+          }
+        }
+      ],
+      "expected_status_by_claim": {
+        "cause": "HOLD_STALE_BASIS"
+      },
+      "at_seq_checks": [],
+      "note": "Content equality is not a license to silently rebind provenance."
+    },
+    {
+      "case_id": "KG16",
+      "name": "Unreviewed, unsupported claim remains unresolved",
+      "actions": [
+        {
+          "id": "e01",
+          "tick": 1,
+          "kind": "SOURCE_ADD",
+          "data": {
+            "source_id": "worker-r1",
+            "lineage_id": "worker",
+            "revision": "r1",
+            "body": "Only raw source exists; no finding.",
+            "available_tick": 1
+          }
+        },
+        {
+          "id": "e02",
+          "tick": 2,
+          "kind": "CLAIM_OPEN",
+          "data": {
+            "claim_id": "cause",
+            "statement": "Fictional cause notification-retry hypothesis.",
+            "depends_on": []
+          }
+        }
+      ],
+      "expected_status_by_claim": {
+        "cause": "HOLD_UNREVIEWED"
+      },
+      "at_seq_checks": [],
+      "note": ""
+    },
+    {
+      "case_id": "KG17",
+      "name": "Revision invalidates only affected claim and descendants",
+      "actions": [
+        {
+          "id": "e01",
+          "tick": 1,
+          "kind": "SOURCE_ADD",
+          "data": {
+            "source_id": "worker-r1",
+            "lineage_id": "worker",
+            "revision": "r1",
+            "body": "Synthetic worker retry observation, version r1.",
+            "available_tick": 1
+          }
+        },
+        {
+          "id": "e02",
+          "tick": 2,
+          "kind": "CLAIM_OPEN",
+          "data": {
+            "claim_id": "cause",
+            "statement": "Fictional cause notification-retry hypothesis.",
+            "depends_on": []
+          }
+        },
+        {
+          "id": "e03",
+          "tick": 3,
+          "kind": "OBSERVATION_ADD",
+          "data": {
+            "observation_id": "worker-support",
+            "claim_id": "cause",
+            "source_id": "worker-r1",
+            "stance": "SUPPORT",
+            "finding": "Original worker trace supports a provisional retry hypothesis."
+          }
+        },
+        {
+          "id": "e04",
+          "tick": 4,
+          "kind": "REVIEW_ACCEPT",
+          "data": {
+            "claim_id": "cause",
+            "basis_ids": [
+              "worker-support"
+            ],
+            "review_note": "Consultative review of cause; not independent validation."
+          }
+        },
+        {
+          "id": "e05",
+          "tick": 5,
+          "kind": "SOURCE_ADD",
+          "data": {
+            "source_id": "unrelated-r1",
+            "lineage_id": "spare",
+            "revision": "r1",
+            "body": "Second independent claim has a distinct source.",
+            "available_tick": 5
+          }
+        },
+        {
+          "id": "e06",
+          "tick": 6,
+          "kind": "CLAIM_OPEN",
+          "data": {
+            "claim_id": "other",
+            "statement": "Fictional other notification-retry hypothesis.",
+            "depends_on": []
+          }
+        },
+        {
+          "id": "e07",
+          "tick": 7,
+          "kind": "OBSERVATION_ADD",
+          "data": {
+            "observation_id": "other-support",
+            "claim_id": "other",
+            "source_id": "unrelated-r1",
+            "stance": "SUPPORT",
+            "finding": "Second claim relies on an unrelated lineage."
+          }
+        },
+        {
+          "id": "e08",
+          "tick": 8,
+          "kind": "REVIEW_ACCEPT",
+          "data": {
+            "claim_id": "other",
+            "basis_ids": [
+              "other-support"
+            ],
+            "review_note": "Consultative review of other; not independent validation."
+          }
+        },
+        {
+          "id": "e09",
+          "tick": 9,
+          "kind": "SOURCE_ADD",
+          "data": {
+            "source_id": "worker-r2",
+            "lineage_id": "worker",
+            "revision": "r2",
+            "body": "Synthetic worker retry observation, version r2.",
+            "available_tick": 9
+          }
+        },
+        {
+          "id": "e10",
+          "tick": 10,
+          "kind": "SOURCE_SUPERSEDE",
+          "data": {
+            "old_source_id": "worker-r1",
+            "new_source_id": "worker-r2",
+            "reason": "A newer fictional source revision replaces the prior reference."
+          }
+        }
+      ],
+      "expected_status_by_claim": {
+        "cause": "HOLD_STALE_BASIS",
+        "other": "ADVISORY_CURRENT"
+      },
+      "at_seq_checks": [],
+      "note": ""
+    },
+    {
+      "case_id": "KG18",
+      "name": "New source plus new evidence is not enough without a fresh review",
+      "actions": [
+        {
+          "id": "e01",
+          "tick": 1,
+          "kind": "SOURCE_ADD",
+          "data": {
+            "source_id": "worker-r1",
+            "lineage_id": "worker",
+            "revision": "r1",
+            "body": "Synthetic worker retry observation, version r1.",
+            "available_tick": 1
+          }
+        },
+        {
+          "id": "e02",
+          "tick": 2,
+          "kind": "CLAIM_OPEN",
+          "data": {
+            "claim_id": "cause",
+            "statement": "Fictional cause notification-retry hypothesis.",
+            "depends_on": []
+          }
+        },
+        {
+          "id": "e03",
+          "tick": 3,
+          "kind": "OBSERVATION_ADD",
+          "data": {
+            "observation_id": "worker-support",
+            "claim_id": "cause",
+            "source_id": "worker-r1",
+            "stance": "SUPPORT",
+            "finding": "Original worker trace supports a provisional retry hypothesis."
+          }
+        },
+        {
+          "id": "e04",
+          "tick": 4,
+          "kind": "REVIEW_ACCEPT",
+          "data": {
+            "claim_id": "cause",
+            "basis_ids": [
+              "worker-support"
+            ],
+            "review_note": "Consultative review of cause; not independent validation."
+          }
+        },
+        {
+          "id": "e05",
+          "tick": 5,
+          "kind": "SOURCE_ADD",
+          "data": {
+            "source_id": "worker-r2",
+            "lineage_id": "worker",
+            "revision": "r2",
+            "body": "Synthetic worker retry observation, version r2.",
+            "available_tick": 5
+          }
+        },
+        {
+          "id": "e06",
+          "tick": 6,
+          "kind": "SOURCE_SUPERSEDE",
+          "data": {
+            "old_source_id": "worker-r1",
+            "new_source_id": "worker-r2",
+            "reason": "A newer fictional source revision replaces the prior reference."
+          }
+        },
+        {
+          "id": "e07",
+          "tick": 7,
+          "kind": "OBSERVATION_ADD",
+          "data": {
+            "observation_id": "worker-new-support",
+            "claim_id": "cause",
+            "source_id": "worker-r2",
+            "stance": "SUPPORT",
+            "finding": "A replacement observation exists."
+          }
+        }
+      ],
+      "expected_status_by_claim": {
+        "cause": "HOLD_STALE_BASIS"
+      },
+      "at_seq_checks": [],
+      "note": ""
+    },
+    {
+      "case_id": "KG19",
+      "name": "Historical retracted contradiction and old support survive in log",
+      "actions": [
+        {
+          "id": "e01",
+          "tick": 1,
+          "kind": "SOURCE_ADD",
+          "data": {
+            "source_id": "worker-r1",
+            "lineage_id": "worker",
+            "revision": "r1",
+            "body": "Synthetic worker retry observation, version r1.",
+            "available_tick": 1
+          }
+        },
+        {
+          "id": "e02",
+          "tick": 2,
+          "kind": "CLAIM_OPEN",
+          "data": {
+            "claim_id": "cause",
+            "statement": "Fictional cause notification-retry hypothesis.",
+            "depends_on": []
+          }
+        },
+        {
+          "id": "e03",
+          "tick": 3,
+          "kind": "OBSERVATION_ADD",
+          "data": {
+            "observation_id": "worker-support",
+            "claim_id": "cause",
+            "source_id": "worker-r1",
+            "stance": "SUPPORT",
+            "finding": "Original worker trace supports a provisional retry hypothesis."
+          }
+        },
+        {
+          "id": "e04",
+          "tick": 4,
+          "kind": "REVIEW_ACCEPT",
+          "data": {
+            "claim_id": "cause",
+            "basis_ids": [
+              "worker-support"
+            ],
+            "review_note": "Consultative review of cause; not independent validation."
+          }
+        },
+        {
+          "id": "e05",
+          "tick": 5,
+          "kind": "OBSERVATION_ADD",
+          "data": {
+            "observation_id": "negative-current",
+            "claim_id": "cause",
+            "source_id": "worker-r1",
+            "stance": "CHALLENGE",
+            "finding": "Contradiction was observed."
+          }
+        },
+        {
+          "id": "e06",
+          "tick": 6,
+          "kind": "OBSERVATION_RETRACT",
+          "data": {
+            "observation_id": "negative-current",
+            "reason": "A named fictional follow-up invalidated this earlier observation; history retained."
+          }
+        },
+        {
+          "id": "e07",
+          "tick": 7,
+          "kind": "SOURCE_ADD",
+          "data": {
+            "source_id": "worker-r2",
+            "lineage_id": "worker",
+            "revision": "r2",
+            "body": "Replacement version with no new independent review.",
+            "available_tick": 7
+          }
+        },
+        {
+          "id": "e08",
+          "tick": 8,
+          "kind": "SOURCE_SUPERSEDE",
+          "data": {
+            "old_source_id": "worker-r1",
+            "new_source_id": "worker-r2",
+            "reason": "A newer fictional source revision replaces the prior reference."
+          }
+        }
+      ],
+      "expected_status_by_claim": {
+        "cause": "HOLD_STALE_BASIS"
+      },
+      "at_seq_checks": [],
+      "note": ""
+    }
+  ]
+}

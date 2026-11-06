@@ -47,3 +47,7 @@ The [Problem & Decision v0 companion](problem-decision-v0.md) adds a hierarchica
 ## Cognitive viewpoints remain advisory
 
 The [Cognitive Perspectives v0 demo](cognitive-perspectives-v0.md) applies four different review lenses to the **same fictional decision**. Their arguments, declared provenance, disagreeing stances, suggested tests and checkpoint identity are retained in one reproducible record. An objection is not automatically resolved by counting votes, and four declared reviews are not four independent sources. The simple `QUICK` path limits review overhead. No live agent reasoning, cost gain or execution authority is established.
+
+## Preserve negative findings and changed assumptions
+
+[Knowledge & Learning v0](knowledge-genealogy-v0.md) shows how an append-only fictional evidence history can preserve supporting and challenging observations while a source revision or parent review becomes outdated. Rejected hypotheses and explicit retractions remain visible; restored advisory readiness requires a new review bound to current source IDs. A hash-chained log supports deterministic replay and change detection, **not authenticated fact, independent reviewer identity or model training**.

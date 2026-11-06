@@ -79,6 +79,12 @@ The [independent Problem & Decision reference](problem-decision-v0.md) models a 
 
 Alternatives are compared at a common assumed time horizon, and the application plan is distinct from choosing the remedy. This is a fictional advisory contract; the code does not independently inspect an operational system or grant a correct outcome.
 
+## Knowledge genealogy is not authorization
+
+The [Knowledge & Learning v0 reference](knowledge-genealogy-v0.md) makes each source revision, evidence observation, counterevidence, retraction and claim review an explicit event in a **fictional, append-only hash chain**. Historical snapshots can be replayed; a source supersession invalidates a prior accepted advisory review, and dependent conclusions are rechecked. Negative findings remain visible after retraction.
+
+A new source revision is *staged* until an explicit supersession event; a revised basis cannot silently re-enable a claim. A later independently unverified review can restore **advisory temporal currency**, not scientific truth or production authorization. SHA-256 links synthetic event bytes but is not an external attestation or signed, trusted clock.
+
 ## Decision and completion gates
 
 1. A unit can be claimed only with an unexpired, uniquely fenced lease.
