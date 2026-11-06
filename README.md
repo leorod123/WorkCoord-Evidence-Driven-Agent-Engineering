@@ -67,6 +67,8 @@ PYTHONPATH=src python -m workcoord_lab.context_comparison
 
 Metrics are **evidence recall**, a shared hand-annotated provisional hypothesis *proxy*, and **source-body characters read**. This is **not** a held-out agent benchmark or demonstrated productivity/token savings.
 
+In four public toy cases, the **full corpus** recovered all required sources while reading **6,024** source-body characters; **local selection** read **774** with **25%** mean decisive-evidence recall; **dependency expansion** read **2,457** with **50%** mean recall. Expansion missed evidence when a dependency link was absent or the decisive source required a deeper pass. These figures are descriptive only; see [auditable synthetic results](docs/context-comparison-results-v0.md), not real-agent performance.
+
 ## What we will measure
 
 | Comparison | Purpose |
