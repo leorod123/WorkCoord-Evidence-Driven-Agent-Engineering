@@ -13,7 +13,7 @@ from .ledger import GateError, Ledger
 def main():
     mode, database = sys.argv[1:3]
     if mode == "compete":
-        _, _, agent, ready, start = sys.argv
+        _, _, _, agent, ready, start = sys.argv
         db = Ledger(database)
         try:
             Path(ready).touch()

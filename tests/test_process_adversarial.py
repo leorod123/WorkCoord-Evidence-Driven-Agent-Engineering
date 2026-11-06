@@ -40,7 +40,10 @@ class MultiProcessTests(unittest.TestCase):
             deadline = time.monotonic() + 12
             while not all((Path(self.temp.name) / f"ready-{idx}").exists() for idx in range(8)):
                 self.assertTrue(time.monotonic() < deadline, "workers did not become ready")
-                self.assertTrue(all(p.poll() is None for p in workers), "worker exited before start")
+                failed = [p for p in workers if p.poll() is not None]
+                if failed:
+                    _, error = failed[0].communicate(timeout=2)
+                    self.fail("worker exited before start: " + error[-1000:])
                 time.sleep(0.01)
             Path(start).touch()
             reports = []
@@ -60,6 +63,7 @@ class MultiProcessTests(unittest.TestCase):
             for proc in workers:
                 if proc.poll() is None:
                     proc.kill()
+                if proc.stdout and not proc.stdout.closed:
                     proc.communicate(timeout=4)
 
     def test_interrupted_uncommitted_transaction_rolls_back(self):
