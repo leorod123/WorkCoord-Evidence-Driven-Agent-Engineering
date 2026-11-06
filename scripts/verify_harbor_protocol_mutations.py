@@ -73,8 +73,12 @@ def main():
             (root / "tests").mkdir()
             (root / "evals").mkdir()
             folder.mkdir(parents=True, exist_ok=True)
-            shutil.copy2(ROOT / "src" / "workcoord_lab" / "__init__.py",
-                         folder / "__init__.py")
+            # Isolate only the evaluated module: the normal package
+            # initializer imports the unrelated Ledger by design.
+            (folder / "__init__.py").write_text(
+                '"""Isolated offline benchmark protocol tests."""\n',
+                encoding="utf-8",
+            )
             shutil.copy2(ROOT / "src" / "workcoord_lab" / "harbor_pilot.py",
                          folder / "harbor_pilot.py")
             shutil.copy2(ROOT / "tests" / "test_harbor_pilot.py",
