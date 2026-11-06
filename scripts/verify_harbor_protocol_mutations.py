@@ -72,11 +72,9 @@ def main():
             folder.parent.mkdir(parents=True)
             (root / "tests").mkdir()
             (root / "evals").mkdir()
-            shutil.copy2(ROOT / "src" / "workcoord_lab" / "__init__.py",
-                         folder.parent / "__init__.py") if (
-                             ROOT / "src" / "workcoord_lab" / "__init__.py"
-                         ).exists() else None
             folder.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(ROOT / "src" / "workcoord_lab" / "__init__.py",
+                         folder / "__init__.py")
             shutil.copy2(ROOT / "src" / "workcoord_lab" / "harbor_pilot.py",
                          folder / "harbor_pilot.py")
             shutil.copy2(ROOT / "tests" / "test_harbor_pilot.py",

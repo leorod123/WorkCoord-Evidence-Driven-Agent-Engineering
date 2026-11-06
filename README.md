@@ -212,6 +212,7 @@ We will report valid repairs, justified abstentions, invalid completions, time, 
 | [Vertical evidence chain v0](docs/vertical-evidence-v0.md) | Four existing advisory contracts on one case; late negative invalidation | Synthetic draft |
 | [Independent audit remediation](docs/reviews/independent-audit-remediation-v0.md) | Directed A01-A05 tests, reader isolation and pinned CI Actions | Synthetic draft |
 | [Ledger E2E v0](docs/ledger-vertical-e2e-v0.md) | Existing context, four advisory gates, fencing, renewed behavioral proof and revision invalidation | Synthetic draft |
+| [Harbor pilot protocol v0](docs/harbor-pilot-protocol-v0.md) | Public freeze-first A/B/C external verifier and all-attempt cost rubric | **Draft, not frozen or executed** |
 | [Experimental design](docs/experimental-design.md) | Comparison plan, metrics and validity threats | Draft, not preregistered |
 | [Scenario catalog](evals/scenarios-v0.json) | Eight fictional scenario families | Draft |
 | [Preregistration](evals/preregistration-v0.json) | Proposed experimental parameters | Draft, not sealed |
@@ -226,6 +227,16 @@ The [LLM Context Engineering Playbook](https://github.com/leorod123/llm-context-
 It does **not** claim to have invented leases, retrieval, task graphs, or multi-agent orchestration. It does not run production actions or require a hosted model. Experimental mechanisms will be labeled as such; proposed features will not be described as implemented.
 
 For discussion in Portuguese, see [README-pt.md](README-pt.md).
+
+## External evaluation readiness — planned, not performed
+
+The [Harbor/Terminal-Bench 2.0 study protocol](docs/harbor-pilot-protocol-v0.md) specifies an externally scored, three-arm comparison (one agent; two agents with basic coordination; two agents with WorkCoord). It enforces exact task IDs, pinned harness and dataset revisions, identical external graders, fixed denominators including failures and HARNESS_ERROR, and **cost per independent valid outcome including failures**. A public synthetic negative-control case shows that WorkCoord may be *worse* than a simpler baseline. None of this is a real agent benchmark.
+
+The protocol JSON is intentionally `DRAFT_UNFROZEN` with no model, tasks, spending authority, API key or results; an offline validator refuses to score it as a real study. See the [PR #12 human prepublication gates](docs/reviews/prepublication-gate-v0.md); a clean automated scan is not licensing/confidentiality approval.
+
+```bash
+PYTHONPATH=src python -m workcoord_lab.harbor_pilot
+```
 
 ## Status and next milestone
 

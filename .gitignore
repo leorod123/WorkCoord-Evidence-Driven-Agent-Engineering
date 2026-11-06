@@ -1,0 +1,14 @@
+# Generated experiment files are local-only and may include provider data.
+# Git ignore is not a security boundary and cannot sanitize git history.
+.env
+.env.*
+!.env.example
+.harbor/
+harbor-jobs/
+jobs/
+artifacts/
+.codex/
+codex-auth.json
+auth.json
+*.trace.jsonl
+*.private-trials.json
