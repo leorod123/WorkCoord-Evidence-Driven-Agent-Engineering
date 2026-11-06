@@ -230,6 +230,9 @@ def evaluate_perspectives(packet: dict[str, Any]) -> dict[str, Any]:
             "origin_group": sources[item]["origin"],
             "source_revision": sources[item]["revision"],
             "available_tick": sources[item]["available_tick"],
+            "finding_sha256": hashlib.sha256(
+                sources[item]["summary"].encode("utf-8")
+            ).hexdigest(),
         } for item in sorted(cited_ids) if item in sources
     ]
     source_chars = sum(len(sources[item]["summary"]) for item in cited_ids

@@ -88,6 +88,20 @@ jobs:
           name: problem-decision-py-${{ matrix.python-version }}
           path: artifacts/problem-decision-v0.json
           if-no-files-found: error
+      - name: Detect cognitive perspective regressions (M40-M53)
+        env:
+          PYTHONPATH: src
+        run: python scripts/verify_cognitive_mutations.py
+      - name: Evaluate public cognitive perspective development cases
+        env:
+          PYTHONPATH: src
+        run: python -m workcoord_lab.cognitive_perspectives_suite --output artifacts/cognitive-perspectives-v0.json
+      - name: Upload deterministic cognitive perspective receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: cognitive-perspectives-py-${{ matrix.python-version }}
+          path: artifacts/cognitive-perspectives-v0.json
+          if-no-files-found: error
       - name: Run synthetic demo
         env:
           PYTHONPATH: src

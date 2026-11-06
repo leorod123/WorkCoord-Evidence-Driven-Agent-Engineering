@@ -43,3 +43,7 @@ It is **advisory and schema-level only**: no source authentication, causal infer
 ## Problem closure is a separate check
 
 The [Problem & Decision v0 companion](problem-decision-v0.md) adds a hierarchical map of required versus optional acceptance criteria, distinguishes technical-test witnesses from observable behavior, and keeps remedy selection and application separate from problem closure. An apparently green implementation cannot close a mandatory outcome lacking the specified witness. Positive results are only candidates for independent acceptance, with no granted validation or authority.
+
+## Cognitive viewpoints remain advisory
+
+The [Cognitive Perspectives v0 demo](cognitive-perspectives-v0.md) applies four different review lenses to the **same fictional decision**. Their arguments, declared provenance, disagreeing stances, suggested tests and checkpoint identity are retained in one reproducible record. An objection is not automatically resolved by counting votes, and four declared reviews are not four independent sources. The simple `QUICK` path limits review overhead. No live agent reasoning, cost gain or execution authority is established.

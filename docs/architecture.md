@@ -35,6 +35,12 @@ Context is selected along independent dimensions rather than injected as a large
 
 A selected context response should expose its source, reason for inclusion, authority, and known gaps. The selector is not permission to execute.
 
+## Cognitive perspectives are not technical sectors
+
+The [Cognitive Perspectives v0 reference](cognitive-perspectives-v0.md) distinguishes *where evidence came from* (API, worker, queue) from *which question should be challenged* (Research, Engineering, Efficiency, Risk). One fictional issue and one proposed remedy receive separately recorded advisory views and a **single revision-bound checkpoint**.
+
+A dissenting risk view cannot be overruled by the number of supporting views; missing, old or causally unavailable source references appear as explicit gaps. A QUICK local check can use fewer perspectives, but additional volunteered objections are never silently ignored. This is a deterministic source-declaration contract, not independent agents, authenticated evidence, work coordination, or new execution authority.
+
 ## Research discipline
 
 Record the question, falsifiable hypotheses, observations, contradictory evidence, cost of investigation, and the next discriminating test. For a simple low-risk task, use a lightweight route; for a high-risk dependency-heavy task, require explicit alternatives and independent review.

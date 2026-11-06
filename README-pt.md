@@ -45,3 +45,7 @@ Uma [verificação consultiva de pesquisa](docs/research-quality-v0.md) identifi
 ## Problem & Decision v0 — teste verde não fecha o problema
 
 A [demonstração executável](docs/problem-decision-v0.md) separa o mapa hierárquico de problemas, critérios obrigatórios, alternativas de solução, custos assumidos, aplicação e comprovação. O caso principal tem testes técnicos verdes e status de trabalho `DONE`, mas falta uma observação comportamental obrigatória: **a conclusão fica em HOLD**. A rota `QUICK` não exige matriz extensa de alternativas. Nenhum resultado concede autorização de execução ou validação científica; os cenários são fictícios e públicos.
+
+## Cognitive Perspectives v0 — quatro perspectivas, um problema
+
+A [demonstração pública](docs/cognitive-perspectives-v0.md) usa quatro perspectivas **consultivas** (Pesquisa, Engenharia, Eficiência e Risco) sobre o mesmo problema, com um checkpoint canônico. Diferencia setores técnicos de perguntas cognitivas, preserva contraprovas e bloqueia consenso fictício, mesmo quando três perspectivas apoiam e apenas uma contesta. A rota `QUICK` evita a obrigatoriedade de quatro análises em tarefas simples. As perspectivas são registros escritos no cenário fictício, **não quatro agentes, revisão independente ou autorização para executar**.

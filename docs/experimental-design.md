@@ -80,3 +80,7 @@ Use comparable models and prompts, matched underlying facts and permissions, ind
 Synthetic tasks can favor the architecture designed around them. The work may not generalize to large repositories or different models; fixed budgets do not guarantee equal reasoning opportunity. A confirmatory study would require held-out cases and a separately justified sample size. **None has been completed.**
 
 See [machine-readable scenario catalog](../evals/scenarios-v0.json) and [draft preregistration](../evals/preregistration-v0.json).
+
+## Public cognitive-perspective development probe
+
+The [Cognitive Perspectives v0 cases](cognitive-perspectives-v0.md) are a **published, deterministic reference demonstration** of cross-perspective disagreement and a shared checkpoint. Their authored opinions, expected outputs and invented review costs are not hidden from any agent inspecting the repository and **must not** be reused as independent confirmatory evaluation instances. A future empirical study must record actual human/agent effort, source retrieval and errors, including cases where four-lens review adds cost without improving the outcome.
