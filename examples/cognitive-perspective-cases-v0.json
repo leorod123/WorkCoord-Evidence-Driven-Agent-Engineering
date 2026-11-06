@@ -1,0 +1,2077 @@
+{
+  "schema": "workcoord.cognitive-perspective-cases/v0",
+  "status": "PUBLIC_DEVELOPMENT_FIXTURES_NOT_HELD_OUT",
+  "warning": "All perspectives, stances, source identities and expected outcomes are hand-authored fictional records; no LLM or live system.",
+  "cases": [
+    {
+      "id": "CP01",
+      "label": "Full four-perspective advisory review",
+      "packet": {
+        "schema": "workcoord.cognitive-perspectives/v0",
+        "issue": {
+          "id": "fictional-duplicate-notification",
+          "proposal_id": "retry-guard-local-adaptation",
+          "source_revision": "fictional-r2",
+          "question": "Does the proposed retry guard resolve one-delivery behavior economically and safely?",
+          "risk": "STRUCTURED",
+          "decision_tick": 20
+        },
+        "sources": [
+          {
+            "id": "unit-green",
+            "source_revision": "fictional-r2",
+            "technical_sector": "worker",
+            "origin_group": "unit-execution-A",
+            "available_tick": 2,
+            "finding": "Idempotency unit tests pass; the external notification behavior is not checked here."
+          },
+          {
+            "id": "delivery-repeat",
+            "source_revision": "fictional-r2",
+            "technical_sector": "delivery",
+            "origin_group": "end-to-end-check-B",
+            "available_tick": 4,
+            "finding": "The fictional delivery log still shows a duplicate after retry."
+          },
+          {
+            "id": "cost-notes",
+            "source_revision": "fictional-r2",
+            "technical_sector": "operations",
+            "origin_group": "design-estimate-C",
+            "available_tick": 1,
+            "finding": "A hypothetical new service adds maintenance costs relative to a bounded worker change."
+          },
+          {
+            "id": "risk-note",
+            "source_revision": "fictional-r2",
+            "technical_sector": "queue",
+            "origin_group": "risk-analysis-D",
+            "available_tick": 3,
+            "finding": "An unacknowledged delivery can be retried; completion needs an external acceptance probe."
+          }
+        ],
+        "reviews": [
+          {
+            "perspective": "RESEARCH",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "unit-green"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "The minimal hypothesis can be tested against the current unit trace.",
+            "open_question": "",
+            "next_check": "Reproduce the lost acknowledgement with a discriminating observation.",
+            "estimated_review_units": 2
+          },
+          {
+            "perspective": "ENGINEERING",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "unit-green"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "The local worker interface has a deterministic test but not a verified system-level outcome.",
+            "open_question": "",
+            "next_check": "Run the external delivery acceptance probe.",
+            "estimated_review_units": 2
+          },
+          {
+            "perspective": "EFFICIENCY",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "cost-notes"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "Reuse of the existing worker appears less complex than a new service in this fictional estimate.",
+            "open_question": "",
+            "next_check": "Check the recurring cost assumption and rollback burden.",
+            "estimated_review_units": 2
+          },
+          {
+            "perspective": "RISK",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "risk-note"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "The simulated risk review has no current contradictory observation in this packet.",
+            "open_question": "",
+            "next_check": "Require explicit authorization and independent delivery validation.",
+            "estimated_review_units": 2
+          }
+        ]
+      },
+      "expected_status": "ADVISORY_READY",
+      "expected_marker": ""
+    },
+    {
+      "id": "CP02",
+      "label": "Risk challenge contradicts three supporting lenses",
+      "packet": {
+        "schema": "workcoord.cognitive-perspectives/v0",
+        "issue": {
+          "id": "fictional-duplicate-notification",
+          "proposal_id": "retry-guard-local-adaptation",
+          "source_revision": "fictional-r2",
+          "question": "Does the proposed retry guard resolve one-delivery behavior economically and safely?",
+          "risk": "STRUCTURED",
+          "decision_tick": 20
+        },
+        "sources": [
+          {
+            "id": "unit-green",
+            "source_revision": "fictional-r2",
+            "technical_sector": "worker",
+            "origin_group": "unit-execution-A",
+            "available_tick": 2,
+            "finding": "Idempotency unit tests pass; the external notification behavior is not checked here."
+          },
+          {
+            "id": "delivery-repeat",
+            "source_revision": "fictional-r2",
+            "technical_sector": "delivery",
+            "origin_group": "end-to-end-check-B",
+            "available_tick": 4,
+            "finding": "The fictional delivery log still shows a duplicate after retry."
+          },
+          {
+            "id": "cost-notes",
+            "source_revision": "fictional-r2",
+            "technical_sector": "operations",
+            "origin_group": "design-estimate-C",
+            "available_tick": 1,
+            "finding": "A hypothetical new service adds maintenance costs relative to a bounded worker change."
+          },
+          {
+            "id": "risk-note",
+            "source_revision": "fictional-r2",
+            "technical_sector": "queue",
+            "origin_group": "risk-analysis-D",
+            "available_tick": 3,
+            "finding": "An unacknowledged delivery can be retried; completion needs an external acceptance probe."
+          }
+        ],
+        "reviews": [
+          {
+            "perspective": "RESEARCH",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "unit-green"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "The minimal hypothesis can be tested against the current unit trace.",
+            "open_question": "",
+            "next_check": "Reproduce the lost acknowledgement with a discriminating observation.",
+            "estimated_review_units": 2
+          },
+          {
+            "perspective": "ENGINEERING",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "unit-green"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "The local worker interface has a deterministic test but not a verified system-level outcome.",
+            "open_question": "",
+            "next_check": "Run the external delivery acceptance probe.",
+            "estimated_review_units": 2
+          },
+          {
+            "perspective": "EFFICIENCY",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "cost-notes"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "Reuse of the existing worker appears less complex than a new service in this fictional estimate.",
+            "open_question": "",
+            "next_check": "Check the recurring cost assumption and rollback burden.",
+            "estimated_review_units": 2
+          },
+          {
+            "perspective": "RISK",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "CHALLENGE",
+            "source_ids": [
+              "risk-note",
+              "delivery-repeat"
+            ],
+            "counterevidence_ids": [
+              "delivery-repeat"
+            ],
+            "rationale": "A current downstream duplicate contradicts a readiness claim.",
+            "open_question": "Why does the external duplicate remain after the technical test?",
+            "next_check": "Require explicit authorization and independent delivery validation.",
+            "estimated_review_units": 2
+          }
+        ]
+      },
+      "expected_status": "HOLD_CONTRADICTION",
+      "expected_marker": "has_support_challenge_conflict"
+    },
+    {
+      "id": "CP03",
+      "label": "Efficiency perspective remains uncertain",
+      "packet": {
+        "schema": "workcoord.cognitive-perspectives/v0",
+        "issue": {
+          "id": "fictional-duplicate-notification",
+          "proposal_id": "retry-guard-local-adaptation",
+          "source_revision": "fictional-r2",
+          "question": "Does the proposed retry guard resolve one-delivery behavior economically and safely?",
+          "risk": "STRUCTURED",
+          "decision_tick": 20
+        },
+        "sources": [
+          {
+            "id": "unit-green",
+            "source_revision": "fictional-r2",
+            "technical_sector": "worker",
+            "origin_group": "unit-execution-A",
+            "available_tick": 2,
+            "finding": "Idempotency unit tests pass; the external notification behavior is not checked here."
+          },
+          {
+            "id": "delivery-repeat",
+            "source_revision": "fictional-r2",
+            "technical_sector": "delivery",
+            "origin_group": "end-to-end-check-B",
+            "available_tick": 4,
+            "finding": "The fictional delivery log still shows a duplicate after retry."
+          },
+          {
+            "id": "cost-notes",
+            "source_revision": "fictional-r2",
+            "technical_sector": "operations",
+            "origin_group": "design-estimate-C",
+            "available_tick": 1,
+            "finding": "A hypothetical new service adds maintenance costs relative to a bounded worker change."
+          },
+          {
+            "id": "risk-note",
+            "source_revision": "fictional-r2",
+            "technical_sector": "queue",
+            "origin_group": "risk-analysis-D",
+            "available_tick": 3,
+            "finding": "An unacknowledged delivery can be retried; completion needs an external acceptance probe."
+          }
+        ],
+        "reviews": [
+          {
+            "perspective": "RESEARCH",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "unit-green"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "The minimal hypothesis can be tested against the current unit trace.",
+            "open_question": "",
+            "next_check": "Reproduce the lost acknowledgement with a discriminating observation.",
+            "estimated_review_units": 2
+          },
+          {
+            "perspective": "ENGINEERING",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "unit-green"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "The local worker interface has a deterministic test but not a verified system-level outcome.",
+            "open_question": "",
+            "next_check": "Run the external delivery acceptance probe.",
+            "estimated_review_units": 2
+          },
+          {
+            "perspective": "EFFICIENCY",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "UNCERTAIN",
+            "source_ids": [
+              "cost-notes"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "Reuse of the existing worker appears less complex than a new service in this fictional estimate.",
+            "open_question": "Is the estimated recurring maintenance burden accurate?",
+            "next_check": "Check the recurring cost assumption and rollback burden.",
+            "estimated_review_units": 2
+          },
+          {
+            "perspective": "RISK",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "risk-note"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "The simulated risk review has no current contradictory observation in this packet.",
+            "open_question": "",
+            "next_check": "Require explicit authorization and independent delivery validation.",
+            "estimated_review_units": 2
+          }
+        ]
+      },
+      "expected_status": "HOLD_UNRESOLVED_UNCERTAINTY",
+      "expected_marker": ""
+    },
+    {
+      "id": "CP04",
+      "label": "Missing risk perspective on structured investigation",
+      "packet": {
+        "schema": "workcoord.cognitive-perspectives/v0",
+        "issue": {
+          "id": "fictional-duplicate-notification",
+          "proposal_id": "retry-guard-local-adaptation",
+          "source_revision": "fictional-r2",
+          "question": "Does the proposed retry guard resolve one-delivery behavior economically and safely?",
+          "risk": "STRUCTURED",
+          "decision_tick": 20
+        },
+        "sources": [
+          {
+            "id": "unit-green",
+            "source_revision": "fictional-r2",
+            "technical_sector": "worker",
+            "origin_group": "unit-execution-A",
+            "available_tick": 2,
+            "finding": "Idempotency unit tests pass; the external notification behavior is not checked here."
+          },
+          {
+            "id": "delivery-repeat",
+            "source_revision": "fictional-r2",
+            "technical_sector": "delivery",
+            "origin_group": "end-to-end-check-B",
+            "available_tick": 4,
+            "finding": "The fictional delivery log still shows a duplicate after retry."
+          },
+          {
+            "id": "cost-notes",
+            "source_revision": "fictional-r2",
+            "technical_sector": "operations",
+            "origin_group": "design-estimate-C",
+            "available_tick": 1,
+            "finding": "A hypothetical new service adds maintenance costs relative to a bounded worker change."
+          },
+          {
+            "id": "risk-note",
+            "source_revision": "fictional-r2",
+            "technical_sector": "queue",
+            "origin_group": "risk-analysis-D",
+            "available_tick": 3,
+            "finding": "An unacknowledged delivery can be retried; completion needs an external acceptance probe."
+          }
+        ],
+        "reviews": [
+          {
+            "perspective": "RESEARCH",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "unit-green"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "The minimal hypothesis can be tested against the current unit trace.",
+            "open_question": "",
+            "next_check": "Reproduce the lost acknowledgement with a discriminating observation.",
+            "estimated_review_units": 2
+          },
+          {
+            "perspective": "ENGINEERING",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "unit-green"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "The local worker interface has a deterministic test but not a verified system-level outcome.",
+            "open_question": "",
+            "next_check": "Run the external delivery acceptance probe.",
+            "estimated_review_units": 2
+          },
+          {
+            "perspective": "EFFICIENCY",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "cost-notes"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "Reuse of the existing worker appears less complex than a new service in this fictional estimate.",
+            "open_question": "",
+            "next_check": "Check the recurring cost assumption and rollback burden.",
+            "estimated_review_units": 2
+          }
+        ]
+      },
+      "expected_status": "HOLD_MISSING_PERSPECTIVE",
+      "expected_marker": "missing_perspectives"
+    },
+    {
+      "id": "CP05",
+      "label": "Risk review pinned to prior source revision",
+      "packet": {
+        "schema": "workcoord.cognitive-perspectives/v0",
+        "issue": {
+          "id": "fictional-duplicate-notification",
+          "proposal_id": "retry-guard-local-adaptation",
+          "source_revision": "fictional-r2",
+          "question": "Does the proposed retry guard resolve one-delivery behavior economically and safely?",
+          "risk": "STRUCTURED",
+          "decision_tick": 20
+        },
+        "sources": [
+          {
+            "id": "unit-green",
+            "source_revision": "fictional-r2",
+            "technical_sector": "worker",
+            "origin_group": "unit-execution-A",
+            "available_tick": 2,
+            "finding": "Idempotency unit tests pass; the external notification behavior is not checked here."
+          },
+          {
+            "id": "delivery-repeat",
+            "source_revision": "fictional-r2",
+            "technical_sector": "delivery",
+            "origin_group": "end-to-end-check-B",
+            "available_tick": 4,
+            "finding": "The fictional delivery log still shows a duplicate after retry."
+          },
+          {
+            "id": "cost-notes",
+            "source_revision": "fictional-r2",
+            "technical_sector": "operations",
+            "origin_group": "design-estimate-C",
+            "available_tick": 1,
+            "finding": "A hypothetical new service adds maintenance costs relative to a bounded worker change."
+          },
+          {
+            "id": "risk-note",
+            "source_revision": "fictional-r2",
+            "technical_sector": "queue",
+            "origin_group": "risk-analysis-D",
+            "available_tick": 3,
+            "finding": "An unacknowledged delivery can be retried; completion needs an external acceptance probe."
+          }
+        ],
+        "reviews": [
+          {
+            "perspective": "RESEARCH",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "unit-green"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "The minimal hypothesis can be tested against the current unit trace.",
+            "open_question": "",
+            "next_check": "Reproduce the lost acknowledgement with a discriminating observation.",
+            "estimated_review_units": 2
+          },
+          {
+            "perspective": "ENGINEERING",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "unit-green"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "The local worker interface has a deterministic test but not a verified system-level outcome.",
+            "open_question": "",
+            "next_check": "Run the external delivery acceptance probe.",
+            "estimated_review_units": 2
+          },
+          {
+            "perspective": "EFFICIENCY",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "cost-notes"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "Reuse of the existing worker appears less complex than a new service in this fictional estimate.",
+            "open_question": "",
+            "next_check": "Check the recurring cost assumption and rollback burden.",
+            "estimated_review_units": 2
+          },
+          {
+            "perspective": "RISK",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r1",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "risk-note"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "The simulated risk review has no current contradictory observation in this packet.",
+            "open_question": "",
+            "next_check": "Require explicit authorization and independent delivery validation.",
+            "estimated_review_units": 2
+          }
+        ]
+      },
+      "expected_status": "HOLD_STALE_PERSPECTIVE",
+      "expected_marker": "stale_perspectives"
+    },
+    {
+      "id": "CP06",
+      "label": "A cited source is older than the current revision",
+      "packet": {
+        "schema": "workcoord.cognitive-perspectives/v0",
+        "issue": {
+          "id": "fictional-duplicate-notification",
+          "proposal_id": "retry-guard-local-adaptation",
+          "source_revision": "fictional-r2",
+          "question": "Does the proposed retry guard resolve one-delivery behavior economically and safely?",
+          "risk": "STRUCTURED",
+          "decision_tick": 20
+        },
+        "sources": [
+          {
+            "id": "unit-green",
+            "source_revision": "fictional-r2",
+            "technical_sector": "worker",
+            "origin_group": "unit-execution-A",
+            "available_tick": 2,
+            "finding": "Idempotency unit tests pass; the external notification behavior is not checked here."
+          },
+          {
+            "id": "delivery-repeat",
+            "source_revision": "fictional-r2",
+            "technical_sector": "delivery",
+            "origin_group": "end-to-end-check-B",
+            "available_tick": 4,
+            "finding": "The fictional delivery log still shows a duplicate after retry."
+          },
+          {
+            "id": "cost-notes",
+            "source_revision": "fictional-r2",
+            "technical_sector": "operations",
+            "origin_group": "design-estimate-C",
+            "available_tick": 1,
+            "finding": "A hypothetical new service adds maintenance costs relative to a bounded worker change."
+          },
+          {
+            "id": "risk-note",
+            "source_revision": "fictional-r1",
+            "technical_sector": "queue",
+            "origin_group": "risk-analysis-D",
+            "available_tick": 3,
+            "finding": "An unacknowledged delivery can be retried; completion needs an external acceptance probe."
+          }
+        ],
+        "reviews": [
+          {
+            "perspective": "RESEARCH",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "unit-green"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "The minimal hypothesis can be tested against the current unit trace.",
+            "open_question": "",
+            "next_check": "Reproduce the lost acknowledgement with a discriminating observation.",
+            "estimated_review_units": 2
+          },
+          {
+            "perspective": "ENGINEERING",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "unit-green"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "The local worker interface has a deterministic test but not a verified system-level outcome.",
+            "open_question": "",
+            "next_check": "Run the external delivery acceptance probe.",
+            "estimated_review_units": 2
+          },
+          {
+            "perspective": "EFFICIENCY",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "cost-notes"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "Reuse of the existing worker appears less complex than a new service in this fictional estimate.",
+            "open_question": "",
+            "next_check": "Check the recurring cost assumption and rollback burden.",
+            "estimated_review_units": 2
+          },
+          {
+            "perspective": "RISK",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "risk-note"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "The simulated risk review has no current contradictory observation in this packet.",
+            "open_question": "",
+            "next_check": "Require explicit authorization and independent delivery validation.",
+            "estimated_review_units": 2
+          }
+        ]
+      },
+      "expected_status": "HOLD_SOURCE_GAP",
+      "expected_marker": "SOURCE_REVISION_NOT_CURRENT"
+    },
+    {
+      "id": "CP07",
+      "label": "Critical consensus still requires an external independent reviewer",
+      "packet": {
+        "schema": "workcoord.cognitive-perspectives/v0",
+        "issue": {
+          "id": "fictional-duplicate-notification",
+          "proposal_id": "retry-guard-local-adaptation",
+          "source_revision": "fictional-r2",
+          "question": "Does the proposed retry guard resolve one-delivery behavior economically and safely?",
+          "risk": "CRITICAL",
+          "decision_tick": 20
+        },
+        "sources": [
+          {
+            "id": "unit-green",
+            "source_revision": "fictional-r2",
+            "technical_sector": "worker",
+            "origin_group": "unit-execution-A",
+            "available_tick": 2,
+            "finding": "Idempotency unit tests pass; the external notification behavior is not checked here."
+          },
+          {
+            "id": "delivery-repeat",
+            "source_revision": "fictional-r2",
+            "technical_sector": "delivery",
+            "origin_group": "end-to-end-check-B",
+            "available_tick": 4,
+            "finding": "The fictional delivery log still shows a duplicate after retry."
+          },
+          {
+            "id": "cost-notes",
+            "source_revision": "fictional-r2",
+            "technical_sector": "operations",
+            "origin_group": "design-estimate-C",
+            "available_tick": 1,
+            "finding": "A hypothetical new service adds maintenance costs relative to a bounded worker change."
+          },
+          {
+            "id": "risk-note",
+            "source_revision": "fictional-r2",
+            "technical_sector": "queue",
+            "origin_group": "risk-analysis-D",
+            "available_tick": 3,
+            "finding": "An unacknowledged delivery can be retried; completion needs an external acceptance probe."
+          }
+        ],
+        "reviews": [
+          {
+            "perspective": "RESEARCH",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "unit-green"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "The minimal hypothesis can be tested against the current unit trace.",
+            "open_question": "",
+            "next_check": "Reproduce the lost acknowledgement with a discriminating observation.",
+            "estimated_review_units": 2
+          },
+          {
+            "perspective": "ENGINEERING",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "unit-green"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "The local worker interface has a deterministic test but not a verified system-level outcome.",
+            "open_question": "",
+            "next_check": "Run the external delivery acceptance probe.",
+            "estimated_review_units": 2
+          },
+          {
+            "perspective": "EFFICIENCY",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "cost-notes"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "Reuse of the existing worker appears less complex than a new service in this fictional estimate.",
+            "open_question": "",
+            "next_check": "Check the recurring cost assumption and rollback burden.",
+            "estimated_review_units": 2
+          },
+          {
+            "perspective": "RISK",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "risk-note"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "The simulated risk review has no current contradictory observation in this packet.",
+            "open_question": "",
+            "next_check": "Require explicit authorization and independent delivery validation.",
+            "estimated_review_units": 2
+          }
+        ]
+      },
+      "expected_status": "REQUIRES_EXTERNAL_REVIEW",
+      "expected_marker": ""
+    },
+    {
+      "id": "CP08",
+      "label": "A minimal low-risk engineering-only check avoids full reviews",
+      "packet": {
+        "schema": "workcoord.cognitive-perspectives/v0",
+        "issue": {
+          "id": "fictional-duplicate-notification",
+          "proposal_id": "retry-guard-local-adaptation",
+          "source_revision": "fictional-r2",
+          "question": "Does the proposed retry guard resolve one-delivery behavior economically and safely?",
+          "risk": "QUICK",
+          "decision_tick": 20
+        },
+        "sources": [
+          {
+            "id": "unit-green",
+            "source_revision": "fictional-r2",
+            "technical_sector": "worker",
+            "origin_group": "unit-execution-A",
+            "available_tick": 2,
+            "finding": "Idempotency unit tests pass; the external notification behavior is not checked here."
+          },
+          {
+            "id": "delivery-repeat",
+            "source_revision": "fictional-r2",
+            "technical_sector": "delivery",
+            "origin_group": "end-to-end-check-B",
+            "available_tick": 4,
+            "finding": "The fictional delivery log still shows a duplicate after retry."
+          },
+          {
+            "id": "cost-notes",
+            "source_revision": "fictional-r2",
+            "technical_sector": "operations",
+            "origin_group": "design-estimate-C",
+            "available_tick": 1,
+            "finding": "A hypothetical new service adds maintenance costs relative to a bounded worker change."
+          },
+          {
+            "id": "risk-note",
+            "source_revision": "fictional-r2",
+            "technical_sector": "queue",
+            "origin_group": "risk-analysis-D",
+            "available_tick": 3,
+            "finding": "An unacknowledged delivery can be retried; completion needs an external acceptance probe."
+          }
+        ],
+        "reviews": [
+          {
+            "perspective": "ENGINEERING",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "unit-green"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "The local worker interface has a deterministic test but not a verified system-level outcome.",
+            "open_question": "",
+            "next_check": "Run the external delivery acceptance probe.",
+            "estimated_review_units": 1
+          }
+        ]
+      },
+      "expected_status": "ADVISORY_READY",
+      "expected_marker": ""
+    },
+    {
+      "id": "CP09",
+      "label": "Quick work still records a voluntarily raised risk challenge",
+      "packet": {
+        "schema": "workcoord.cognitive-perspectives/v0",
+        "issue": {
+          "id": "fictional-duplicate-notification",
+          "proposal_id": "retry-guard-local-adaptation",
+          "source_revision": "fictional-r2",
+          "question": "Does the proposed retry guard resolve one-delivery behavior economically and safely?",
+          "risk": "QUICK",
+          "decision_tick": 20
+        },
+        "sources": [
+          {
+            "id": "unit-green",
+            "source_revision": "fictional-r2",
+            "technical_sector": "worker",
+            "origin_group": "unit-execution-A",
+            "available_tick": 2,
+            "finding": "Idempotency unit tests pass; the external notification behavior is not checked here."
+          },
+          {
+            "id": "delivery-repeat",
+            "source_revision": "fictional-r2",
+            "technical_sector": "delivery",
+            "origin_group": "end-to-end-check-B",
+            "available_tick": 4,
+            "finding": "The fictional delivery log still shows a duplicate after retry."
+          },
+          {
+            "id": "cost-notes",
+            "source_revision": "fictional-r2",
+            "technical_sector": "operations",
+            "origin_group": "design-estimate-C",
+            "available_tick": 1,
+            "finding": "A hypothetical new service adds maintenance costs relative to a bounded worker change."
+          },
+          {
+            "id": "risk-note",
+            "source_revision": "fictional-r2",
+            "technical_sector": "queue",
+            "origin_group": "risk-analysis-D",
+            "available_tick": 3,
+            "finding": "An unacknowledged delivery can be retried; completion needs an external acceptance probe."
+          }
+        ],
+        "reviews": [
+          {
+            "perspective": "ENGINEERING",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "unit-green"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "The local worker interface has a deterministic test but not a verified system-level outcome.",
+            "open_question": "",
+            "next_check": "Run the external delivery acceptance probe.",
+            "estimated_review_units": 2
+          },
+          {
+            "perspective": "RISK",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "CHALLENGE",
+            "source_ids": [
+              "risk-note",
+              "delivery-repeat"
+            ],
+            "counterevidence_ids": [
+              "delivery-repeat"
+            ],
+            "rationale": "The simulated risk review has no current contradictory observation in this packet.",
+            "open_question": "Does this local change alter downstream delivery integrity?",
+            "next_check": "Require explicit authorization and independent delivery validation.",
+            "estimated_review_units": 2
+          }
+        ]
+      },
+      "expected_status": "HOLD_CONTRADICTION",
+      "expected_marker": ""
+    },
+    {
+      "id": "CP10",
+      "label": "Causal time gap: source not available during lens review",
+      "packet": {
+        "schema": "workcoord.cognitive-perspectives/v0",
+        "issue": {
+          "id": "fictional-duplicate-notification",
+          "proposal_id": "retry-guard-local-adaptation",
+          "source_revision": "fictional-r2",
+          "question": "Does the proposed retry guard resolve one-delivery behavior economically and safely?",
+          "risk": "STRUCTURED",
+          "decision_tick": 20
+        },
+        "sources": [
+          {
+            "id": "unit-green",
+            "source_revision": "fictional-r2",
+            "technical_sector": "worker",
+            "origin_group": "unit-execution-A",
+            "available_tick": 2,
+            "finding": "Idempotency unit tests pass; the external notification behavior is not checked here."
+          },
+          {
+            "id": "delivery-repeat",
+            "source_revision": "fictional-r2",
+            "technical_sector": "delivery",
+            "origin_group": "end-to-end-check-B",
+            "available_tick": 4,
+            "finding": "The fictional delivery log still shows a duplicate after retry."
+          },
+          {
+            "id": "cost-notes",
+            "source_revision": "fictional-r2",
+            "technical_sector": "operations",
+            "origin_group": "design-estimate-C",
+            "available_tick": 1,
+            "finding": "A hypothetical new service adds maintenance costs relative to a bounded worker change."
+          },
+          {
+            "id": "risk-note",
+            "source_revision": "fictional-r2",
+            "technical_sector": "queue",
+            "origin_group": "risk-analysis-D",
+            "available_tick": 12,
+            "finding": "An unacknowledged delivery can be retried; completion needs an external acceptance probe."
+          }
+        ],
+        "reviews": [
+          {
+            "perspective": "RESEARCH",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "unit-green"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "The minimal hypothesis can be tested against the current unit trace.",
+            "open_question": "",
+            "next_check": "Reproduce the lost acknowledgement with a discriminating observation.",
+            "estimated_review_units": 2
+          },
+          {
+            "perspective": "ENGINEERING",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "unit-green"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "The local worker interface has a deterministic test but not a verified system-level outcome.",
+            "open_question": "",
+            "next_check": "Run the external delivery acceptance probe.",
+            "estimated_review_units": 2
+          },
+          {
+            "perspective": "EFFICIENCY",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "cost-notes"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "Reuse of the existing worker appears less complex than a new service in this fictional estimate.",
+            "open_question": "",
+            "next_check": "Check the recurring cost assumption and rollback burden.",
+            "estimated_review_units": 2
+          },
+          {
+            "perspective": "RISK",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "risk-note"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "The simulated risk review has no current contradictory observation in this packet.",
+            "open_question": "",
+            "next_check": "Require explicit authorization and independent delivery validation.",
+            "estimated_review_units": 2
+          }
+        ]
+      },
+      "expected_status": "HOLD_SOURCE_GAP",
+      "expected_marker": "SOURCE_UNAVAILABLE_AT_REVIEW"
+    },
+    {
+      "id": "CP11",
+      "label": "Declared origins can collide without proving independent evidence",
+      "packet": {
+        "schema": "workcoord.cognitive-perspectives/v0",
+        "issue": {
+          "id": "fictional-duplicate-notification",
+          "proposal_id": "retry-guard-local-adaptation",
+          "source_revision": "fictional-r2",
+          "question": "Does the proposed retry guard resolve one-delivery behavior economically and safely?",
+          "risk": "STRUCTURED",
+          "decision_tick": 20
+        },
+        "sources": [
+          {
+            "id": "unit-green",
+            "source_revision": "fictional-r2",
+            "technical_sector": "worker",
+            "origin_group": "unit-execution-A",
+            "available_tick": 2,
+            "finding": "Idempotency unit tests pass; the external notification behavior is not checked here."
+          },
+          {
+            "id": "delivery-repeat",
+            "source_revision": "fictional-r2",
+            "technical_sector": "delivery",
+            "origin_group": "end-to-end-check-B",
+            "available_tick": 4,
+            "finding": "The fictional delivery log still shows a duplicate after retry."
+          },
+          {
+            "id": "cost-notes",
+            "source_revision": "fictional-r2",
+            "technical_sector": "operations",
+            "origin_group": "design-estimate-C",
+            "available_tick": 1,
+            "finding": "A hypothetical new service adds maintenance costs relative to a bounded worker change."
+          },
+          {
+            "id": "risk-note",
+            "source_revision": "fictional-r2",
+            "technical_sector": "queue",
+            "origin_group": "unit-execution-A",
+            "available_tick": 3,
+            "finding": "An unacknowledged delivery can be retried; completion needs an external acceptance probe."
+          }
+        ],
+        "reviews": [
+          {
+            "perspective": "RESEARCH",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "unit-green"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "The minimal hypothesis can be tested against the current unit trace.",
+            "open_question": "",
+            "next_check": "Reproduce the lost acknowledgement with a discriminating observation.",
+            "estimated_review_units": 2
+          },
+          {
+            "perspective": "ENGINEERING",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "unit-green"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "The local worker interface has a deterministic test but not a verified system-level outcome.",
+            "open_question": "",
+            "next_check": "Run the external delivery acceptance probe.",
+            "estimated_review_units": 2
+          },
+          {
+            "perspective": "EFFICIENCY",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "cost-notes"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "Reuse of the existing worker appears less complex than a new service in this fictional estimate.",
+            "open_question": "",
+            "next_check": "Check the recurring cost assumption and rollback burden.",
+            "estimated_review_units": 2
+          },
+          {
+            "perspective": "RISK",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "risk-note"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "The simulated risk review has no current contradictory observation in this packet.",
+            "open_question": "",
+            "next_check": "Require explicit authorization and independent delivery validation.",
+            "estimated_review_units": 2
+          }
+        ]
+      },
+      "expected_status": "ADVISORY_READY",
+      "expected_marker": ""
+    },
+    {
+      "id": "CP12",
+      "label": "More review cost alone does not justify higher authority",
+      "packet": {
+        "schema": "workcoord.cognitive-perspectives/v0",
+        "issue": {
+          "id": "fictional-duplicate-notification",
+          "proposal_id": "retry-guard-local-adaptation",
+          "source_revision": "fictional-r2",
+          "question": "Does the proposed retry guard resolve one-delivery behavior economically and safely?",
+          "risk": "STRUCTURED",
+          "decision_tick": 20
+        },
+        "sources": [
+          {
+            "id": "unit-green",
+            "source_revision": "fictional-r2",
+            "technical_sector": "worker",
+            "origin_group": "unit-execution-A",
+            "available_tick": 2,
+            "finding": "Idempotency unit tests pass; the external notification behavior is not checked here."
+          },
+          {
+            "id": "delivery-repeat",
+            "source_revision": "fictional-r2",
+            "technical_sector": "delivery",
+            "origin_group": "end-to-end-check-B",
+            "available_tick": 4,
+            "finding": "The fictional delivery log still shows a duplicate after retry."
+          },
+          {
+            "id": "cost-notes",
+            "source_revision": "fictional-r2",
+            "technical_sector": "operations",
+            "origin_group": "design-estimate-C",
+            "available_tick": 1,
+            "finding": "A hypothetical new service adds maintenance costs relative to a bounded worker change."
+          },
+          {
+            "id": "risk-note",
+            "source_revision": "fictional-r2",
+            "technical_sector": "queue",
+            "origin_group": "risk-analysis-D",
+            "available_tick": 3,
+            "finding": "An unacknowledged delivery can be retried; completion needs an external acceptance probe."
+          }
+        ],
+        "reviews": [
+          {
+            "perspective": "RESEARCH",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "unit-green"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "The minimal hypothesis can be tested against the current unit trace.",
+            "open_question": "",
+            "next_check": "Reproduce the lost acknowledgement with a discriminating observation.",
+            "estimated_review_units": 100
+          },
+          {
+            "perspective": "ENGINEERING",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "unit-green"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "The local worker interface has a deterministic test but not a verified system-level outcome.",
+            "open_question": "",
+            "next_check": "Run the external delivery acceptance probe.",
+            "estimated_review_units": 100
+          },
+          {
+            "perspective": "EFFICIENCY",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "cost-notes"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "Reuse of the existing worker appears less complex than a new service in this fictional estimate.",
+            "open_question": "",
+            "next_check": "Check the recurring cost assumption and rollback burden.",
+            "estimated_review_units": 100
+          },
+          {
+            "perspective": "RISK",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "risk-note"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "The simulated risk review has no current contradictory observation in this packet.",
+            "open_question": "",
+            "next_check": "Require explicit authorization and independent delivery validation.",
+            "estimated_review_units": 100
+          }
+        ]
+      },
+      "expected_status": "ADVISORY_READY",
+      "expected_marker": ""
+    },
+    {
+      "id": "CP13",
+      "label": "Without supporting lenses a challenge is still unresolved",
+      "packet": {
+        "schema": "workcoord.cognitive-perspectives/v0",
+        "issue": {
+          "id": "fictional-duplicate-notification",
+          "proposal_id": "retry-guard-local-adaptation",
+          "source_revision": "fictional-r2",
+          "question": "Does the proposed retry guard resolve one-delivery behavior economically and safely?",
+          "risk": "STRUCTURED",
+          "decision_tick": 20
+        },
+        "sources": [
+          {
+            "id": "unit-green",
+            "source_revision": "fictional-r2",
+            "technical_sector": "worker",
+            "origin_group": "unit-execution-A",
+            "available_tick": 2,
+            "finding": "Idempotency unit tests pass; the external notification behavior is not checked here."
+          },
+          {
+            "id": "delivery-repeat",
+            "source_revision": "fictional-r2",
+            "technical_sector": "delivery",
+            "origin_group": "end-to-end-check-B",
+            "available_tick": 4,
+            "finding": "The fictional delivery log still shows a duplicate after retry."
+          },
+          {
+            "id": "cost-notes",
+            "source_revision": "fictional-r2",
+            "technical_sector": "operations",
+            "origin_group": "design-estimate-C",
+            "available_tick": 1,
+            "finding": "A hypothetical new service adds maintenance costs relative to a bounded worker change."
+          },
+          {
+            "id": "risk-note",
+            "source_revision": "fictional-r2",
+            "technical_sector": "queue",
+            "origin_group": "risk-analysis-D",
+            "available_tick": 3,
+            "finding": "An unacknowledged delivery can be retried; completion needs an external acceptance probe."
+          }
+        ],
+        "reviews": [
+          {
+            "perspective": "RESEARCH",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "CHALLENGE",
+            "source_ids": [
+              "unit-green"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "The minimal hypothesis can be tested against the current unit trace.",
+            "open_question": "Which discriminating test would resolve this objection?",
+            "next_check": "Reproduce the lost acknowledgement with a discriminating observation.",
+            "estimated_review_units": 2
+          },
+          {
+            "perspective": "ENGINEERING",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "CHALLENGE",
+            "source_ids": [
+              "unit-green"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "The local worker interface has a deterministic test but not a verified system-level outcome.",
+            "open_question": "Which discriminating test would resolve this objection?",
+            "next_check": "Run the external delivery acceptance probe.",
+            "estimated_review_units": 2
+          },
+          {
+            "perspective": "EFFICIENCY",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "CHALLENGE",
+            "source_ids": [
+              "cost-notes"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "Reuse of the existing worker appears less complex than a new service in this fictional estimate.",
+            "open_question": "Which discriminating test would resolve this objection?",
+            "next_check": "Check the recurring cost assumption and rollback burden.",
+            "estimated_review_units": 2
+          },
+          {
+            "perspective": "RISK",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "CHALLENGE",
+            "source_ids": [
+              "risk-note"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "The simulated risk review has no current contradictory observation in this packet.",
+            "open_question": "Which discriminating test would resolve this objection?",
+            "next_check": "Require explicit authorization and independent delivery validation.",
+            "estimated_review_units": 2
+          }
+        ]
+      },
+      "expected_status": "HOLD_UNRESOLVED_CHALLENGE",
+      "expected_marker": ""
+    },
+    {
+      "id": "CP14",
+      "label": "Unknown evidence reference is exposed as a gap",
+      "packet": {
+        "schema": "workcoord.cognitive-perspectives/v0",
+        "issue": {
+          "id": "fictional-duplicate-notification",
+          "proposal_id": "retry-guard-local-adaptation",
+          "source_revision": "fictional-r2",
+          "question": "Does the proposed retry guard resolve one-delivery behavior economically and safely?",
+          "risk": "STRUCTURED",
+          "decision_tick": 20
+        },
+        "sources": [
+          {
+            "id": "unit-green",
+            "source_revision": "fictional-r2",
+            "technical_sector": "worker",
+            "origin_group": "unit-execution-A",
+            "available_tick": 2,
+            "finding": "Idempotency unit tests pass; the external notification behavior is not checked here."
+          },
+          {
+            "id": "delivery-repeat",
+            "source_revision": "fictional-r2",
+            "technical_sector": "delivery",
+            "origin_group": "end-to-end-check-B",
+            "available_tick": 4,
+            "finding": "The fictional delivery log still shows a duplicate after retry."
+          },
+          {
+            "id": "cost-notes",
+            "source_revision": "fictional-r2",
+            "technical_sector": "operations",
+            "origin_group": "design-estimate-C",
+            "available_tick": 1,
+            "finding": "A hypothetical new service adds maintenance costs relative to a bounded worker change."
+          },
+          {
+            "id": "risk-note",
+            "source_revision": "fictional-r2",
+            "technical_sector": "queue",
+            "origin_group": "risk-analysis-D",
+            "available_tick": 3,
+            "finding": "An unacknowledged delivery can be retried; completion needs an external acceptance probe."
+          }
+        ],
+        "reviews": [
+          {
+            "perspective": "RESEARCH",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "unit-green"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "The minimal hypothesis can be tested against the current unit trace.",
+            "open_question": "",
+            "next_check": "Reproduce the lost acknowledgement with a discriminating observation.",
+            "estimated_review_units": 2
+          },
+          {
+            "perspective": "ENGINEERING",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "unit-green"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "The local worker interface has a deterministic test but not a verified system-level outcome.",
+            "open_question": "",
+            "next_check": "Run the external delivery acceptance probe.",
+            "estimated_review_units": 2
+          },
+          {
+            "perspective": "EFFICIENCY",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "cost-notes"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "Reuse of the existing worker appears less complex than a new service in this fictional estimate.",
+            "open_question": "",
+            "next_check": "Check the recurring cost assumption and rollback burden.",
+            "estimated_review_units": 2
+          },
+          {
+            "perspective": "RISK",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "phantom-risk-observation"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "The simulated risk review has no current contradictory observation in this packet.",
+            "open_question": "",
+            "next_check": "Require explicit authorization and independent delivery validation.",
+            "estimated_review_units": 2
+          }
+        ]
+      },
+      "expected_status": "HOLD_SOURCE_GAP",
+      "expected_marker": "UNKNOWN_SOURCE_REFERENCE"
+    },
+    {
+      "id": "CP15",
+      "label": "A lens without cited evidence cannot count as evidence-supported",
+      "packet": {
+        "schema": "workcoord.cognitive-perspectives/v0",
+        "issue": {
+          "id": "fictional-duplicate-notification",
+          "proposal_id": "retry-guard-local-adaptation",
+          "source_revision": "fictional-r2",
+          "question": "Does the proposed retry guard resolve one-delivery behavior economically and safely?",
+          "risk": "STRUCTURED",
+          "decision_tick": 20
+        },
+        "sources": [
+          {
+            "id": "unit-green",
+            "source_revision": "fictional-r2",
+            "technical_sector": "worker",
+            "origin_group": "unit-execution-A",
+            "available_tick": 2,
+            "finding": "Idempotency unit tests pass; the external notification behavior is not checked here."
+          },
+          {
+            "id": "delivery-repeat",
+            "source_revision": "fictional-r2",
+            "technical_sector": "delivery",
+            "origin_group": "end-to-end-check-B",
+            "available_tick": 4,
+            "finding": "The fictional delivery log still shows a duplicate after retry."
+          },
+          {
+            "id": "cost-notes",
+            "source_revision": "fictional-r2",
+            "technical_sector": "operations",
+            "origin_group": "design-estimate-C",
+            "available_tick": 1,
+            "finding": "A hypothetical new service adds maintenance costs relative to a bounded worker change."
+          },
+          {
+            "id": "risk-note",
+            "source_revision": "fictional-r2",
+            "technical_sector": "queue",
+            "origin_group": "risk-analysis-D",
+            "available_tick": 3,
+            "finding": "An unacknowledged delivery can be retried; completion needs an external acceptance probe."
+          }
+        ],
+        "reviews": [
+          {
+            "perspective": "RESEARCH",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "unit-green"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "The minimal hypothesis can be tested against the current unit trace.",
+            "open_question": "",
+            "next_check": "Reproduce the lost acknowledgement with a discriminating observation.",
+            "estimated_review_units": 2
+          },
+          {
+            "perspective": "ENGINEERING",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "unit-green"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "The local worker interface has a deterministic test but not a verified system-level outcome.",
+            "open_question": "",
+            "next_check": "Run the external delivery acceptance probe.",
+            "estimated_review_units": 2
+          },
+          {
+            "perspective": "EFFICIENCY",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [],
+            "counterevidence_ids": [],
+            "rationale": "Reuse of the existing worker appears less complex than a new service in this fictional estimate.",
+            "open_question": "",
+            "next_check": "Check the recurring cost assumption and rollback burden.",
+            "estimated_review_units": 2
+          },
+          {
+            "perspective": "RISK",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "risk-note"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "The simulated risk review has no current contradictory observation in this packet.",
+            "open_question": "",
+            "next_check": "Require explicit authorization and independent delivery validation.",
+            "estimated_review_units": 2
+          }
+        ]
+      },
+      "expected_status": "HOLD_SOURCE_GAP",
+      "expected_marker": "NO_CITED_EVIDENCE"
+    },
+    {
+      "id": "CP16",
+      "label": "Review after decision time is not causally admissible",
+      "packet": {
+        "schema": "workcoord.cognitive-perspectives/v0",
+        "issue": {
+          "id": "fictional-duplicate-notification",
+          "proposal_id": "retry-guard-local-adaptation",
+          "source_revision": "fictional-r2",
+          "question": "Does the proposed retry guard resolve one-delivery behavior economically and safely?",
+          "risk": "STRUCTURED",
+          "decision_tick": 20
+        },
+        "sources": [
+          {
+            "id": "unit-green",
+            "source_revision": "fictional-r2",
+            "technical_sector": "worker",
+            "origin_group": "unit-execution-A",
+            "available_tick": 2,
+            "finding": "Idempotency unit tests pass; the external notification behavior is not checked here."
+          },
+          {
+            "id": "delivery-repeat",
+            "source_revision": "fictional-r2",
+            "technical_sector": "delivery",
+            "origin_group": "end-to-end-check-B",
+            "available_tick": 4,
+            "finding": "The fictional delivery log still shows a duplicate after retry."
+          },
+          {
+            "id": "cost-notes",
+            "source_revision": "fictional-r2",
+            "technical_sector": "operations",
+            "origin_group": "design-estimate-C",
+            "available_tick": 1,
+            "finding": "A hypothetical new service adds maintenance costs relative to a bounded worker change."
+          },
+          {
+            "id": "risk-note",
+            "source_revision": "fictional-r2",
+            "technical_sector": "queue",
+            "origin_group": "risk-analysis-D",
+            "available_tick": 3,
+            "finding": "An unacknowledged delivery can be retried; completion needs an external acceptance probe."
+          }
+        ],
+        "reviews": [
+          {
+            "perspective": "RESEARCH",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "unit-green"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "The minimal hypothesis can be tested against the current unit trace.",
+            "open_question": "",
+            "next_check": "Reproduce the lost acknowledgement with a discriminating observation.",
+            "estimated_review_units": 2
+          },
+          {
+            "perspective": "ENGINEERING",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "unit-green"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "The local worker interface has a deterministic test but not a verified system-level outcome.",
+            "open_question": "",
+            "next_check": "Run the external delivery acceptance probe.",
+            "estimated_review_units": 2
+          },
+          {
+            "perspective": "EFFICIENCY",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "cost-notes"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "Reuse of the existing worker appears less complex than a new service in this fictional estimate.",
+            "open_question": "",
+            "next_check": "Check the recurring cost assumption and rollback burden.",
+            "estimated_review_units": 2
+          },
+          {
+            "perspective": "RISK",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 25,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "risk-note"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "The simulated risk review has no current contradictory observation in this packet.",
+            "open_question": "",
+            "next_check": "Require explicit authorization and independent delivery validation.",
+            "estimated_review_units": 2
+          }
+        ]
+      },
+      "expected_status": "HOLD_SOURCE_GAP",
+      "expected_marker": "REVIEW_AFTER_DECISION"
+    },
+    {
+      "id": "CP17",
+      "label": "Quick local uncertainty results in HOLD without excessive lenses",
+      "packet": {
+        "schema": "workcoord.cognitive-perspectives/v0",
+        "issue": {
+          "id": "fictional-duplicate-notification",
+          "proposal_id": "retry-guard-local-adaptation",
+          "source_revision": "fictional-r2",
+          "question": "Does the proposed retry guard resolve one-delivery behavior economically and safely?",
+          "risk": "QUICK",
+          "decision_tick": 20
+        },
+        "sources": [
+          {
+            "id": "unit-green",
+            "source_revision": "fictional-r2",
+            "technical_sector": "worker",
+            "origin_group": "unit-execution-A",
+            "available_tick": 2,
+            "finding": "Idempotency unit tests pass; the external notification behavior is not checked here."
+          },
+          {
+            "id": "delivery-repeat",
+            "source_revision": "fictional-r2",
+            "technical_sector": "delivery",
+            "origin_group": "end-to-end-check-B",
+            "available_tick": 4,
+            "finding": "The fictional delivery log still shows a duplicate after retry."
+          },
+          {
+            "id": "cost-notes",
+            "source_revision": "fictional-r2",
+            "technical_sector": "operations",
+            "origin_group": "design-estimate-C",
+            "available_tick": 1,
+            "finding": "A hypothetical new service adds maintenance costs relative to a bounded worker change."
+          },
+          {
+            "id": "risk-note",
+            "source_revision": "fictional-r2",
+            "technical_sector": "queue",
+            "origin_group": "risk-analysis-D",
+            "available_tick": 3,
+            "finding": "An unacknowledged delivery can be retried; completion needs an external acceptance probe."
+          }
+        ],
+        "reviews": [
+          {
+            "perspective": "ENGINEERING",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "UNCERTAIN",
+            "source_ids": [
+              "unit-green"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "The local worker interface has a deterministic test but not a verified system-level outcome.",
+            "open_question": "What confirms external delivery behavior?",
+            "next_check": "Run the external delivery acceptance probe.",
+            "estimated_review_units": 1
+          }
+        ]
+      },
+      "expected_status": "HOLD_UNRESOLVED_UNCERTAINTY",
+      "expected_marker": ""
+    },
+    {
+      "id": "CP18",
+      "label": "Support and challenge remain visible despite an absent engineering lens",
+      "packet": {
+        "schema": "workcoord.cognitive-perspectives/v0",
+        "issue": {
+          "id": "fictional-duplicate-notification",
+          "proposal_id": "retry-guard-local-adaptation",
+          "source_revision": "fictional-r2",
+          "question": "Does the proposed retry guard resolve one-delivery behavior economically and safely?",
+          "risk": "STRUCTURED",
+          "decision_tick": 20
+        },
+        "sources": [
+          {
+            "id": "unit-green",
+            "source_revision": "fictional-r2",
+            "technical_sector": "worker",
+            "origin_group": "unit-execution-A",
+            "available_tick": 2,
+            "finding": "Idempotency unit tests pass; the external notification behavior is not checked here."
+          },
+          {
+            "id": "delivery-repeat",
+            "source_revision": "fictional-r2",
+            "technical_sector": "delivery",
+            "origin_group": "end-to-end-check-B",
+            "available_tick": 4,
+            "finding": "The fictional delivery log still shows a duplicate after retry."
+          },
+          {
+            "id": "cost-notes",
+            "source_revision": "fictional-r2",
+            "technical_sector": "operations",
+            "origin_group": "design-estimate-C",
+            "available_tick": 1,
+            "finding": "A hypothetical new service adds maintenance costs relative to a bounded worker change."
+          },
+          {
+            "id": "risk-note",
+            "source_revision": "fictional-r2",
+            "technical_sector": "queue",
+            "origin_group": "risk-analysis-D",
+            "available_tick": 3,
+            "finding": "An unacknowledged delivery can be retried; completion needs an external acceptance probe."
+          }
+        ],
+        "reviews": [
+          {
+            "perspective": "RESEARCH",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "unit-green"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "The minimal hypothesis can be tested against the current unit trace.",
+            "open_question": "",
+            "next_check": "Reproduce the lost acknowledgement with a discriminating observation.",
+            "estimated_review_units": 2
+          },
+          {
+            "perspective": "EFFICIENCY",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "cost-notes"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "Reuse of the existing worker appears less complex than a new service in this fictional estimate.",
+            "open_question": "",
+            "next_check": "Check the recurring cost assumption and rollback burden.",
+            "estimated_review_units": 2
+          },
+          {
+            "perspective": "RISK",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "CHALLENGE",
+            "source_ids": [
+              "risk-note",
+              "delivery-repeat"
+            ],
+            "counterevidence_ids": [
+              "delivery-repeat"
+            ],
+            "rationale": "The simulated risk review has no current contradictory observation in this packet.",
+            "open_question": "Can we exclude replay duplicates?",
+            "next_check": "Require explicit authorization and independent delivery validation.",
+            "estimated_review_units": 2
+          }
+        ]
+      },
+      "expected_status": "HOLD_MISSING_PERSPECTIVE",
+      "expected_marker": "has_support_challenge_conflict"
+    },
+    {
+      "id": "CP19",
+      "label": "All reviews inspect one issue even when technical sectors differ",
+      "packet": {
+        "schema": "workcoord.cognitive-perspectives/v0",
+        "issue": {
+          "id": "fictional-duplicate-notification",
+          "proposal_id": "retry-guard-local-adaptation",
+          "source_revision": "fictional-r2",
+          "question": "Does the proposed retry guard resolve one-delivery behavior economically and safely?",
+          "risk": "STRUCTURED",
+          "decision_tick": 20
+        },
+        "sources": [
+          {
+            "id": "unit-green",
+            "source_revision": "fictional-r2",
+            "technical_sector": "worker",
+            "origin_group": "unit-execution-A",
+            "available_tick": 2,
+            "finding": "Idempotency unit tests pass; the external notification behavior is not checked here."
+          },
+          {
+            "id": "delivery-repeat",
+            "source_revision": "fictional-r2",
+            "technical_sector": "delivery",
+            "origin_group": "end-to-end-check-B",
+            "available_tick": 4,
+            "finding": "The fictional delivery log still shows a duplicate after retry."
+          },
+          {
+            "id": "cost-notes",
+            "source_revision": "fictional-r2",
+            "technical_sector": "operations",
+            "origin_group": "design-estimate-C",
+            "available_tick": 1,
+            "finding": "A hypothetical new service adds maintenance costs relative to a bounded worker change."
+          },
+          {
+            "id": "risk-note",
+            "source_revision": "fictional-r2",
+            "technical_sector": "api",
+            "origin_group": "risk-analysis-D",
+            "available_tick": 3,
+            "finding": "An unacknowledged delivery can be retried; completion needs an external acceptance probe."
+          }
+        ],
+        "reviews": [
+          {
+            "perspective": "RESEARCH",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "unit-green"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "The minimal hypothesis can be tested against the current unit trace.",
+            "open_question": "",
+            "next_check": "Reproduce the lost acknowledgement with a discriminating observation.",
+            "estimated_review_units": 2
+          },
+          {
+            "perspective": "ENGINEERING",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "unit-green"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "The local worker interface has a deterministic test but not a verified system-level outcome.",
+            "open_question": "",
+            "next_check": "Run the external delivery acceptance probe.",
+            "estimated_review_units": 2
+          },
+          {
+            "perspective": "EFFICIENCY",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "cost-notes"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "Reuse of the existing worker appears less complex than a new service in this fictional estimate.",
+            "open_question": "",
+            "next_check": "Check the recurring cost assumption and rollback burden.",
+            "estimated_review_units": 2
+          },
+          {
+            "perspective": "RISK",
+            "issue_id": "fictional-duplicate-notification",
+            "proposal_id": "retry-guard-local-adaptation",
+            "source_revision": "fictional-r2",
+            "review_tick": 10,
+            "stance": "SUPPORT",
+            "source_ids": [
+              "risk-note"
+            ],
+            "counterevidence_ids": [],
+            "rationale": "The simulated risk review has no current contradictory observation in this packet.",
+            "open_question": "",
+            "next_check": "Require explicit authorization and independent delivery validation.",
+            "estimated_review_units": 2
+          }
+        ]
+      },
+      "expected_status": "ADVISORY_READY",
+      "expected_marker": ""
+    }
+  ]
+}
