@@ -107,7 +107,8 @@ def main():
             try:
                 run = subprocess.run(
                     [sys.executable, "-m", "unittest", "discover",
-                     "-s", "tests", "-p", "test_knowledge_genealogy.py", "-v"],
+                     "-s", "tests", "-p", "test_knowledge_genealogy.py",
+                     "-v", "-k", expected_test],
                     cwd=folder, env=env, capture_output=True,
                     text=True, timeout=45,
                 )
