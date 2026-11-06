@@ -56,7 +56,7 @@ MUTANTS = (
     ),
     (
         'M24_promote_stale_source',
-        'if ev_revision != revision or source_class == "historical":',
+        'if role == "basis" and (ev_revision != revision or source_class == "historical"):',
         'if False:',
         'test_stale_historical_source_never_promoted_as_current',
     ),

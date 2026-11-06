@@ -32,7 +32,7 @@ MUTANTS = {
     "M6_ignore_budget": (
         'if self.total_chars() + len(doc["body"]) > self.max_chars:',
         "if False:",
-        "test_budget_exclusions_explicitly_include_contradictions",
+        "test_budget_exclusions_explicit_without_unread_stance",
     ),
     "M7_drop_counterevidence": (
         'contradict[name].append(doc["id"])',

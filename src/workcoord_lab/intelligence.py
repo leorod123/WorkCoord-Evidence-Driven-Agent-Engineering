@@ -109,10 +109,8 @@ class ContextNavigator:
         gap = {
             "no_matching_source": not bool(match),
             "unread_due_to_budget": budget_excluded,
-            "potential_counterevidence_unread": [
-                identifier for identifier in budget_excluded
-                if "contradicts" in self.documents[identifier]["signals"].values()
-            ],
+            # Do not disclose stance/signals of evidence excluded by budget.
+            # Unread source IDs are observable metadata, not an answer key.
             "dependency_sectors_not_visited": linked,
         }
         step = {
