@@ -33,3 +33,7 @@ A [demonstração executável](docs/intelligence-walkthrough.md) começa por um 
 ## Comparação de contexto — três estratégias
 
 O [experimento sintético](docs/context-comparison-v0.md) compara corpus completo, setor local e expansão por dependências com o mesmo avaliador, inclusive casos em que a seleção perde informação decisiva. Mede recuperação de contraprovas e caracteres consultados, com diagnóstico provisório por regras anotadas manualmente. **Ainda não mede a qualidade das decisões de agentes reais nem ganhos de custo ou tokens.**
+
+## Próxima prova: expandir, aprofundar, permanecer ou suspender
+
+O [ensaio adaptativo sintético](docs/adaptive-evidence-v0.md) testa `STAY`, `DEEPEN`, `EXPAND` e `HOLD`, incluindo um HOLD **evitável** e dois mundos com a mesma informação disponível mas causas ocultas distintas. A avaliação não premia desistências indevidas nem confunde uma hipótese plausível com evidência completa. O avaliador continua público e todos os sinais são fictícios: **não se trata de benchmark com agentes reais**.
