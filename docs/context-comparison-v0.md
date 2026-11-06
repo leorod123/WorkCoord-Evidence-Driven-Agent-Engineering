@@ -10,11 +10,11 @@ The experiment uses **the same fictional FlowDesk source pool, evaluator, heuris
 
 | Strategy | What it reads | Structural trade-off |
 | --- | --- | --- |
-| `full_corpus` | Every document, including off-topic ones, if the **entire pool** fits | Highest source-body reading cost; reference source availability |
-| `local_sector` | Only the starting sector/perspective/depth | Fewer characters; possible missing counterevidence |
-| `dependency_expand` | Identical start, followed by at most two **declared** dependency links at `focused` depth | Recovers linked evidence; misses unlinked or too-deep sources |
+| \`full_corpus\` | Every document, including off-topic ones, if the **entire pool** fits | Highest source-body reading cost; reference source availability |
+| \`local_sector\` | Only the starting sector/perspective/depth | Fewer characters; possible missing counterevidence |
+| \`dependency_expand\` | Identical start, followed by at most two **declared** dependency links at \`focused\` depth | Recovers linked evidence; misses unlinked or too-deep sources |
 
-The evaluator is a **published development oracle**, stored in `evals/context_oracle_v0.json`; it is not secret or hidden from a future agent reading this repository. Source-selection functions do **not** receive gold source IDs or the expected hypothesis.
+The evaluator is a **published development oracle**, stored in \`evals/context_oracle_v0.json\`; it is not secret or hidden from a future agent reading this repository. Source-selection functions do **not** receive gold source IDs or the expected hypothesis.
 
 ## Four deliberately nonrepresentative cases
 
@@ -23,11 +23,11 @@ The evaluator is a **published development oracle**, stored in `evals/context_or
 | CTX01 | Current worker observation is available at the starting focused depth | Local retrieval can retain decisive evidence with less reading |
 | CTX02 | Stale worker guide conflicts with linked queue and API observations | Dependency expansion can recover contrary evidence |
 | CTX03 | Worker dependency link is missing from **all arms' case inputs** | Both selective arms can miss essential API evidence |
-| CTX04 | Required queue trace is at `deep` depth, while expansion stops at `focused` | A plausible diagnosis can lack decisive supporting proof |
+| CTX04 | Required queue trace is at \`deep\` depth, while expansion stops at \`focused\` | A plausible diagnosis can lack decisive supporting proof |
 
 ## Independent-of-selection public grading contract
 
-Every strategy receives the **same deterministic, human-annotated hypothesis reader**. This is not an LLM and cannot infer natural-language causal relations. The reader uses the existing synthetic `signals` labels, including old/current maturity weighting.
+Every strategy receives the **same deterministic, human-annotated hypothesis reader**. This is not an LLM and cannot infer natural-language causal relations. The reader uses the existing synthetic \`signals\` labels, including old/current maturity weighting.
 
 After selection, a common public rubric grades **decisive evidence recall**, **counterevidence recall**, **whether the provisional label matches a fixture label**, and a stricter **evidence-supported provisional label** (matching label *and* all required sources read). A plausible hypothesis with missing required sources is reported separately rather than treated as a validated outcome.
 
@@ -39,30 +39,14 @@ Every case records source IDs, navigation steps, explicit gaps, unique source-bo
 
 Python 3.10+ and standard library, in repository root:
 
-```bash
+\`\`\`bash
 PYTHONPATH=src python -m workcoord_lab.context_comparison --output artifacts/context-comparison-v0.json
 PYTHONPATH=src python -m unittest discover -s tests -v
-```
+\`\`\`
 
 GitHub Actions runs the three arms on Python 3.10, 3.11, 3.13 and uploads the deterministic JSON evaluation receipt. It includes SHA-256 of the input fixture, case manifest, and rubric, without a dynamic timestamp.
 
 Input files: [cases](../evals/context_cases_v0.json), [development oracle](../evals/context_oracle_v0.json), [source corpus](../examples/flowdesk-context.json).
-
-## Observed synthetic development results
-
-The first public CI reproduction at [run 42155904485](https://github.com/leorod123/WorkCoord-Evidence-Driven-Agent-Engineering/actions/runs/42155904485) passed 77 deterministic tests in Python 3.10, 3.11 and 3.13. The exact per-run JSON is archived as a GitHub Actions artifact, including SHA-256 of the fixed inputs.
-
-Across the **four hand-designed cases**:
-
-| Arm | Total unique source-body chars read | Mean decisive evidence recall | Matching provisional fixture labels | Evidence-supported provisional labels |
-| --- | ---: | ---: | ---: | ---: |
-| Full corpus | 6,024 | 100% | 4/4 | 4/4 |
-| Local sector | 774 | 25% | 1/4 | 1/4 |
-| Dependency expansion | 2,457 | 50% | 3/4 | 2/4 |
-
-Dependency expansion produced one *correct-sounding but insufficiently supported* provisional answer. Thus reduced reading is not by itself a success metric.
-
-See [result interpretation](context-comparison-results-v0.md).
 
 ## Interpretation limits and next experiment
 

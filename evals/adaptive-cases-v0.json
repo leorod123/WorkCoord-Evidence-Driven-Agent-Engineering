@@ -1,0 +1,130 @@
+{
+  "schema": "workcoord.adaptive-cases/v0",
+  "status": "PUBLIC_DEVELOPMENT_ONLY",
+  "strategies": [
+    "full_corpus",
+    "local_sector",
+    "dependency_expand",
+    "adaptive_policy"
+  ],
+  "default_fixture": "flowdesk",
+  "cases": [
+    {
+      "id": "AD01",
+      "name": "Local sufficient evidence",
+      "world": "flowdesk",
+      "start": {
+        "sector": "worker",
+        "perspective": "reliability",
+        "depth": "focused"
+      },
+      "max_access_depth": "focused",
+      "max_chars": 2400,
+      "max_hops": 2,
+      "max_actions": 7,
+      "remove_dependencies_from": [
+        "worker-guide-r0",
+        "worker-log-r2"
+      ],
+      "purpose": "Stay after one current double-sided observation with no pending dependency."
+    },
+    {
+      "id": "AD02",
+      "name": "Follow queue to API",
+      "world": "flowdesk",
+      "start": {
+        "sector": "worker",
+        "perspective": "reliability",
+        "depth": "overview"
+      },
+      "max_access_depth": "focused",
+      "max_chars": 2400,
+      "max_hops": 2,
+      "max_actions": 7,
+      "remove_dependencies_from": [],
+      "purpose": "Expand from stale worker guide to current cross-sector counterevidence."
+    },
+    {
+      "id": "AD03",
+      "name": "Missing outgoing dependency",
+      "world": "flowdesk",
+      "start": {
+        "sector": "worker",
+        "perspective": "reliability",
+        "depth": "overview"
+      },
+      "max_access_depth": "focused",
+      "max_chars": 2400,
+      "max_hops": 2,
+      "max_actions": 7,
+      "remove_dependencies_from": [
+        "worker-guide-r0"
+      ],
+      "purpose": "Fail to search an available broader source and flag the hold as avoidable."
+    },
+    {
+      "id": "AD04",
+      "name": "Deeper queue evidence",
+      "world": "flowdesk",
+      "start": {
+        "sector": "worker",
+        "perspective": "reliability",
+        "depth": "overview"
+      },
+      "max_access_depth": "deep",
+      "max_chars": 2400,
+      "max_hops": 2,
+      "max_actions": 7,
+      "remove_dependencies_from": [],
+      "purpose": "Deeper source requires an explicit second navigation call."
+    },
+    {
+      "id": "AD05A",
+      "name": "Indistinguishable pair: producer",
+      "world": "world-producer",
+      "start": {
+        "sector": "worker",
+        "perspective": "reliability",
+        "depth": "focused"
+      },
+      "max_access_depth": "focused",
+      "max_chars": 2400,
+      "max_hops": 0,
+      "max_actions": 5,
+      "remove_dependencies_from": [],
+      "purpose": "Deep discriminating test not in the authorized view; HOLD must not guess."
+    },
+    {
+      "id": "AD05B",
+      "name": "Indistinguishable pair: retry",
+      "world": "world-retry",
+      "start": {
+        "sector": "worker",
+        "perspective": "reliability",
+        "depth": "focused"
+      },
+      "max_access_depth": "focused",
+      "max_chars": 2400,
+      "max_hops": 0,
+      "max_actions": 5,
+      "remove_dependencies_from": [],
+      "purpose": "Same accessible inputs as AD05A, opposite inaccessible cause."
+    },
+    {
+      "id": "AD06",
+      "name": "Hard reading cap",
+      "world": "flowdesk",
+      "start": {
+        "sector": "worker",
+        "perspective": "reliability",
+        "depth": "overview"
+      },
+      "max_access_depth": "focused",
+      "max_chars": 210,
+      "max_hops": 2,
+      "max_actions": 7,
+      "remove_dependencies_from": [],
+      "purpose": "A hard budget blocks decisive evidence; do not overstate a resource-limited hold."
+    }
+  ]
+}

@@ -1,0 +1,119 @@
+{
+  "schema": "workcoord.adaptive-paired-worlds/v0",
+  "status": "FICTIONAL_PUBLIC_DEVELOPMENT_FIXTURE",
+  "current_revision": "demo-r2",
+  "issue_tags": [
+    "duplicate-notification"
+  ],
+  "hypotheses": [
+    "producer-duplicates",
+    "ack-retry"
+  ],
+  "shared_visible_documents": [
+    {
+      "id": "paired-overview",
+      "title": "Shared incident overview",
+      "sector": "worker",
+      "perspectives": [
+        "reliability"
+      ],
+      "depth": "overview",
+      "revision": "demo-r2",
+      "maturity": "observed",
+      "tags": [
+        "duplicate-notification"
+      ],
+      "depends_on": [],
+      "body": "Two plausible explanations fit the currently available notification symptoms.",
+      "signals": {}
+    },
+    {
+      "id": "paired-producer-observation",
+      "title": "Current producer-oriented trace",
+      "sector": "worker",
+      "perspectives": [
+        "reliability"
+      ],
+      "depth": "focused",
+      "revision": "demo-r2",
+      "maturity": "observed",
+      "tags": [
+        "duplicate-notification"
+      ],
+      "depends_on": [],
+      "body": "Observed one of two plausible paths; the trace does not exclude a queue retry.",
+      "signals": {
+        "producer-duplicates": "supports"
+      }
+    },
+    {
+      "id": "paired-queue-observation",
+      "title": "Current queue-oriented trace",
+      "sector": "worker",
+      "perspectives": [
+        "reliability"
+      ],
+      "depth": "focused",
+      "revision": "demo-r2",
+      "maturity": "observed",
+      "tags": [
+        "duplicate-notification"
+      ],
+      "depends_on": [],
+      "body": "Observed another plausible path; the trace does not exclude producer duplication.",
+      "signals": {
+        "ack-retry": "supports"
+      }
+    }
+  ],
+  "worlds": [
+    {
+      "id": "world-producer",
+      "true_cause": "producer-duplicates",
+      "hidden_deep_document": {
+        "id": "paired-deep-test",
+        "title": "Unavailable discriminating test",
+        "sector": "worker",
+        "perspectives": [
+          "reliability"
+        ],
+        "depth": "deep",
+        "revision": "demo-r2",
+        "maturity": "observed",
+        "tags": [
+          "duplicate-notification"
+        ],
+        "depends_on": [],
+        "body": "At deep access level, the discriminating trace resolves the hypothetical incident.",
+        "signals": {
+          "producer-duplicates": "supports",
+          "ack-retry": "contradicts"
+        }
+      }
+    },
+    {
+      "id": "world-retry",
+      "true_cause": "ack-retry",
+      "hidden_deep_document": {
+        "id": "paired-deep-test",
+        "title": "Unavailable discriminating test",
+        "sector": "worker",
+        "perspectives": [
+          "reliability"
+        ],
+        "depth": "deep",
+        "revision": "demo-r2",
+        "maturity": "observed",
+        "tags": [
+          "duplicate-notification"
+        ],
+        "depends_on": [],
+        "body": "At deep access level, the discriminating trace resolves the hypothetical incident.",
+        "signals": {
+          "producer-duplicates": "contradicts",
+          "ack-retry": "supports"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "schema": "workcoord.adaptive-oracle/v0",
+  "status": "PUBLIC_DEVELOPMENT_ORACLE_NOT_HELD_OUT",
+  "warning": "This file is public, not independent from a code-reading agent. It is never passed to selection policy. No real-agent success claim.",
+  "cases": [
+    {
+      "id": "AD01",
+      "expected_label": "ack-retry",
+      "required_sources": [
+        "worker-log-r2"
+      ],
+      "outcome_class": "RESOLVABLE_WITH_PERMITTED_ACCESS"
+    },
+    {
+      "id": "AD02",
+      "expected_label": "ack-retry",
+      "required_sources": [
+        "queue-ack-r2",
+        "api-events-r2"
+      ],
+      "outcome_class": "RESOLVABLE_WITH_PERMITTED_ACCESS"
+    },
+    {
+      "id": "AD03",
+      "expected_label": "ack-retry",
+      "required_sources": [
+        "api-events-r2"
+      ],
+      "outcome_class": "RESOLVABLE_WITH_PERMITTED_ACCESS"
+    },
+    {
+      "id": "AD04",
+      "expected_label": "ack-retry",
+      "required_sources": [
+        "queue-deep-r2"
+      ],
+      "outcome_class": "RESOLVABLE_WITH_PERMITTED_ACCESS"
+    },
+    {
+      "id": "AD05A",
+      "expected_label": "producer-duplicates",
+      "required_sources": [
+        "paired-deep-test"
+      ],
+      "outcome_class": "INDETERMINATE_UNDER_ALLOWED_DEPTH",
+      "paired_with": "AD05B"
+    },
+    {
+      "id": "AD05B",
+      "expected_label": "ack-retry",
+      "required_sources": [
+        "paired-deep-test"
+      ],
+      "outcome_class": "INDETERMINATE_UNDER_ALLOWED_DEPTH",
+      "paired_with": "AD05A"
+    },
+    {
+      "id": "AD06",
+      "expected_label": "ack-retry",
+      "required_sources": [
+        "queue-ack-r2"
+      ],
+      "outcome_class": "BUDGET_INSUFFICIENT"
+    }
+  ]
+}
