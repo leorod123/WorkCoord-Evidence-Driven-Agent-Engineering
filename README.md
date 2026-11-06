@@ -67,7 +67,19 @@ PYTHONPATH=src python -m workcoord_lab.context_comparison
 
 Metrics are **evidence recall**, a shared hand-annotated provisional hypothesis *proxy*, and **source-body characters read**. This is **not** a held-out agent benchmark or demonstrated productivity/token savings.
 
-In four public toy cases, the **full corpus** recovered all required sources while reading **6,024** source-body characters; **local selection** read **774** with **25%** mean decisive-evidence recall; **dependency expansion** read **2,457** with **50%** mean recall. Expansion missed evidence when a dependency link was absent or the decisive source required a deeper pass. These figures are descriptive only; see [auditable synthetic results](docs/context-comparison-results-v0.md), not real-agent performance.
+## Adaptive evidence escalation (development candidate)
+
+A fourth scripted strategy builds on the prior [retrieval comparison](docs/context-comparison-v0.md): choose **STAY**, **DEEPEN**, **EXPAND**, or **HOLD** depending on current evidence, declared links, permitted depth and a preassigned risk tier.
+
+The [adaptive study](docs/adaptive-evidence-v0.md) includes a deliberately **avoidable HOLD** (missing dependency) and an indistinguishable **paired-world** test where guessing either cause would be unjustified.
+
+```bash
+PYTHONPATH=src python -m workcoord_lab.adaptive_eval
+```
+
+Its evaluator is **separate from the selectors but public in this repository**. These are hand-authored test scenarios, not a protected held-out study or a claim of intelligent reasoning.
+
+On the seven public development cases, the adaptive policy produced **three evidence-supported provisional labels**, **two justified access-limited HOLDs**, **one avoidable HOLD** and **one budget-limited HOLD**. It read **3,161** source-body characters versus **2,522** for fixed dependency expansion and **6,001** for the full corpus comparator. See the [case-by-case results and negative findings](docs/adaptive-evidence-results-v0.md). These are *not* measures of intelligence or total agent cost.
 
 ## What we will measure
 
@@ -100,6 +112,7 @@ We will report valid repairs, justified abstentions, invalid completions, time, 
 | [Architecture](docs/architecture.md) | Boundaries and contracts | Design |
 | [Intelligence walkthrough](docs/intelligence-walkthrough.md) | Synthetic sector/perspective/depth navigation | Executable draft |
 | [Retrieval comparison](docs/context-comparison-v0.md) | Full/local/expanded context and negative cases | Public development fixture |
+| [Adaptive escalation](docs/adaptive-evidence-v0.md) | Stay / deepen / expand / HOLD, paired-world counterfactuals | Synthetic development fixture |
 | [Research method](docs/research-method.md) | Hypotheses, falsifiers and evidence | Design |
 | [Experimental design](docs/experimental-design.md) | Comparison plan, metrics and validity threats | Draft, not preregistered |
 | [Scenario catalog](evals/scenarios-v0.json) | Eight fictional scenario families | Draft |
@@ -118,6 +131,6 @@ For discussion in Portuguese, see [README-pt.md](README-pt.md).
 
 ## Status and next milestone
 
-This draft PR stack contains the fictional Python + SQLite coordinator and a **sectorized context-navigation walkthrough**. Both have deterministic tests, but neither demonstrates production security, authenticated real-world sources or improved agent performance. Next: move from public development-fixture retrieval metrics to real-agent decision evaluation on fresh held-out cases, including missing counterevidence and total cost. See the [adversarial review response](docs/reviews/adversarial-response-v0.md).
+This draft PR stack contains the fictional Python + SQLite coordinator and a **sectorized context-navigation walkthrough**. Both have deterministic tests, but neither demonstrates production security, authenticated real-world sources or improved agent performance. Next: review the adaptive policy's explicit false stops and undecidable worlds, then design independently held-out real-agent decision tests with total costs and no gold-data leakage. See the [adversarial review response](docs/reviews/adversarial-response-v0.md).
 
 **License:** To be selected by the repository owner before redistribution is explicitly permitted.

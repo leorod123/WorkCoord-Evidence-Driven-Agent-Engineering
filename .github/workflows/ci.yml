@@ -46,6 +46,20 @@ jobs:
           name: context-eval-py-${{ matrix.python-version }}
           path: artifacts/context-comparison-v0.json
           if-no-files-found: error
+      - name: Detect adaptive policy and evaluator regressions
+        env:
+          PYTHONPATH: src
+        run: python scripts/verify_adaptive_mutations.py
+      - name: Run adaptive evidence development evaluation
+        env:
+          PYTHONPATH: src
+        run: python -m workcoord_lab.adaptive_eval --output artifacts/adaptive-eval-v0.json
+      - name: Upload deterministic adaptive evaluation receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: adaptive-eval-py-${{ matrix.python-version }}
+          path: artifacts/adaptive-eval-v0.json
+          if-no-files-found: error
       - name: Run synthetic demo
         env:
           PYTHONPATH: src
