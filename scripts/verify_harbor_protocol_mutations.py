@@ -30,7 +30,8 @@ MUTANTS = (
         "M109_infrastructure_error_removed_from_denominator",
         'assigned = len(tasks) * attempts',
         'assigned = len(tasks) * attempts - sum('
-        'r["verifier_status"] == "HARNESS_ERROR" for r in observed)',
+        'r["verifier_status"] == "HARNESS_ERROR" for r in seen.values() '
+        'if r["arm"] == arm)',
         "test_harness_errors_counted_as_nonsuccess",
     ),
     (
