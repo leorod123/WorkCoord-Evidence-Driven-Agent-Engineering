@@ -245,8 +245,14 @@ class Ledger:
             and receipt["passed"] is bool(evidence["passed"])
         )
 
-    def independent_evidence(self, evidence_ids, required=2):
-        if len(set(evidence_ids)) != len(evidence_ids):
+    def has_distinct_declared_groups(self, evidence_ids, required=2):
+        """Count only caller-supplied origin labels, NOT true independence."""
+        if type(required) is not int or required <= 0:
+            raise GateError("required declared groups must be a positive integer")
+        if not isinstance(evidence_ids, (list, tuple)) or any(
+                not isinstance(eid, str) or not eid for eid in evidence_ids):
+            raise GateError("evidence ids must be a sequence of nonempty strings")
+        if len(evidence_ids) < required or len(set(evidence_ids)) != len(evidence_ids):
             return False
         groups = set()
         for evidence_id in evidence_ids:

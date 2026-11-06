@@ -7,7 +7,7 @@
 - **RQ1:** Does evidence-gated two-agent coordination reduce invalid completions relative to basic two-agent collaboration?
 - **RQ2:** Does it improve valid outcomes per measured cost when source identity and dependency complexity matter?
 - **RQ3:** When is a simpler single-agent or lightweight workflow preferable?
-- **RQ4:** Which component contributes: context selection, investigation protocol, or exclusive ownership?
+- **RQ4 (DEFERRED):** Which component contributes: context selection, investigation protocol, or exclusive ownership? The initial A/B/C study cannot identify individual effects because the integrated arm changes several mechanisms at once. A future experiment must predefine ablations.
 
 Null results and measured overhead are acceptable findings.
 
@@ -38,15 +38,27 @@ Descriptions are public **families**, not evaluation-instance solution keys. Pub
 - **B — Basic two-agent:** basic shared task board, no evidence gate.
 - **C — Integrated two-agent:** governed discovery, structured investigation, fenced claims and evidence gate.
 
-The primary contrast is **C vs B**. C vs A is secondary. A proposed exploratory pilot uses **8 scenarios × 3 configurations × 3 repetitions = 72 planned runs**. Three repetitions per condition are not sufficient for strong inference.
+The primary contrast is **C vs B** for the complete integrated package only. C vs A is secondary and also varies agent count. No improvement should be attributed specifically to context selection, research or fencing without controlled ablations. A proposed exploratory pilot uses **8 scenarios × 3 configurations × 3 repetitions = 72 planned runs**. Three repetitions per condition are not sufficient for strong inference.
 
 Budget caps (not yet frozen): 900 seconds wall time, 60 calls, 60,000 input tokens and 12,000 output tokens **per full run**, shared by collaborating agents. Freeze model version, prompts, seeds, run order, scoring and spending limits before collecting results.
 
 ## Deterministic gate (D01–D15)
 
-D01 concurrent exclusive ownership; D02 stale generation fencing; D03 stale-owner closure rejection; D04 dependency cycles rejected; D05 revision changes invalidate prior evidence; D06 idempotent completion; D07 recovery; D08 unauthorized action denial; D09 confidence-only promotion rejected; D10 historical context does not become current authority; D11 correlated evidence does not count as independent; D12 evaluator-only data is inaccessible; D13 duplicate-delivery oracle distinguishes bug from fix; D14 unjustified HOLD is not rewarded; D15 incomplete test artifact is not validation.
+D01 concurrent exclusive ownership; D02 stale generation fencing; D03 stale-owner closure rejection (now with isolated controls and M1/M2 mutations); D04 dependency cycles rejected; D05 revision changes invalidate prior evidence; D06 idempotent completion; D07 recovery; D08 unauthorized action denial; D09 confidence-only promotion rejected; D10 historical context does not become current authority; D11 distinct declared provenance groups do not constitute independently proven evidence; D12 evaluator-only data is inaccessible; D13 duplicate-delivery oracle distinguishes bug from fix; D14 unjustified HOLD is not rewarded by a toy labeler; external review is required; D15 incomplete test artifact is not validation.
 
 These probes must be implemented and pass before real-agent comparison. **Passing a reference fixture test is not a proof of a production security boundary or empirical AI improvement.**
+
+## Common external evaluator — required before real-agent runs
+
+**Unit and denominator:** one preassigned scenario × arm × repetition run. The primary result is the proportion of **externally validated correct outcomes** among all preassigned runs, including failures and timeouts. A valid repair passes the **same independent held-out behavioral acceptance tests** across A, B and C; a valid abstention must satisfy an access-aware rubric and identify specific missing discriminating information. A blank HOLD earns no credit. Report correct repairs and abstentions separately as well as the combined rate.
+
+**Attempt versus gate:** capture the proposed diagnosis/patch, independent correctness, each unjustified declaration of completion, whether the arm's gate accepted or rejected it, subsequent recovery, and the final external outcome. Blocking every completion cannot yield a successful experiment. An erroneous attempted closure remains an erroneous attempt even if C blocks it.
+
+**Harness errors and retries:** define shared infrastructure/evaluator faults *without seeing the candidate's correctness*. Include original assigned runs in the primary denominator as not externally validated, report them separately and show an eligibility-restricted sensitivity analysis. Arm-specific crashes count as INCOMPLETE. Permit at most one same-seed replacement for an independently established common harness error, preserve both records, and prohibit outcome-driven reruns.
+
+**Cost and stopping:** stop on external acceptance, per-run tool/token/wall-time cap, or a defined irreversible policy block. Account for total cost of *all assigned runs*, including failed attempts and coordination overhead. Cost per valid outcome is undefined/infinite if there are no valid outcomes; never silently report zero. Retain each scenario's distribution, do not rely on aggregate rates alone.
+
+**Status:** DRAFT, not frozen. Model, prompts, seeds, hidden instances, external evaluator, budget and run order must be fixed before any agent efficacy claim. RQ4, context selection benefit and adaptive process depth remain separate untested hypotheses.
 
 ## Outcome classes
 

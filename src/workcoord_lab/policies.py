@@ -41,10 +41,14 @@ class FakeSandbox:
         return "edit allowed in synthetic sandbox only"
 
 
-def score_decision(resolvable, decision):
-    """A HOLD is correct only when the available case is underdetermined."""
+def preliminary_decision_label(resolvable, decision):
+    """Toy routing label, not an external semantic benchmark scorer.
+
+    Neither a HOLD nor a repair receives a final validity grade from this
+    function. 'resolvable' is only illustrative synthetic fixture metadata.
+    """
     if decision == "HOLD":
-        return "VALID_ABSTENTION" if not resolvable else "INCOMPLETE"
+        return "INCOMPLETE" if resolvable else "REQUIRES_ABSTENTION_REVIEW"
     if decision == "REPAIR":
-        return "REQUIRES_INDEPENDENT_TEST" if resolvable else "INVALID_COMPLETION"
+        return "REQUIRES_INDEPENDENT_TEST"
     return "INCOMPLETE"

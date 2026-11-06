@@ -50,5 +50,42 @@
   "seed_commitment": null,
   "artifact_hashes": null,
   "experimental_results": null,
-  "confirmatory_claims_allowed": false
+  "confirmatory_claims_allowed": false,
+  "primary_outcome": {
+    "name": "externally_valid_outcome_rate",
+    "unit": "assigned_scenario_arm_repetition",
+    "denominator": "all_assigned_runs_including_timeout_and_external_harness_error",
+    "numerator": "independent_acceptance_valid_repair_or_reviewed_valid_abstention",
+    "correct_repair": "same_hidden_acceptance_in_A_B_C",
+    "correct_abstention": "missing_discriminating_information_required",
+    "report_repair_and_abstention_separately": true
+  },
+  "secondary_measures": [
+    "unjustified_completion_attempts",
+    "gate_rejections_of_invalid_attempts",
+    "invalid_final_completion",
+    "post_rejection_recovery",
+    "all_assigned_cost",
+    "time_and_tool_calls",
+    "rework"
+  ],
+  "harness_error_policy": {
+    "external_common_fault": "record_as_not_valid_in_primary_and_report_separately",
+    "arm_specific_failure": "INCOMPLETE",
+    "same_seed_replacement_limit": 1,
+    "preserve_original_and_replacement": true,
+    "eligibility_sensitivity_analysis": true
+  },
+  "stopping_rules": [
+    "independent_external_acceptance",
+    "declared_wall_time_or_tool_or_token_budget",
+    "defined_irreversible_policy_block"
+  ],
+  "cost_per_valid_outcome": {
+    "numerator": "all_assigned_cost_including_failed_runs",
+    "denominator": "externally_valid_outcomes",
+    "zero_successes": "undefined_or_infinite"
+  },
+  "rq4_attribution": "DEFERRED_TO_COMPONENT_CONTROLLED_ABLATIONS",
+  "draft_note": "Proposed clarification after adversarial review; this is not a sealed preregistration"
 }

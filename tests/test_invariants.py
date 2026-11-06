@@ -6,7 +6,7 @@ import unittest
 
 from workcoord_lab.ledger import Ledger, GateError
 from workcoord_lab.evaluator import issue_delivery_attestation
-from workcoord_lab.policies import FakeSandbox, discover, score_decision
+from workcoord_lab.policies import FakeSandbox, discover, preliminary_decision_label
 from workcoord_lab.simulator import deliver, semantic_oracle
 
 
@@ -123,8 +123,8 @@ class InvariantTests(unittest.TestCase):
         self.db.record_evidence("a", "rev-a", "observation", independent_group="one-log")
         self.db.record_evidence("b", "rev-a", "observation", independent_group="one-log")
         self.db.record_evidence("c", "rev-a", "observation", independent_group="second-log")
-        self.assertFalse(self.db.independent_evidence(["a","b"]))
-        self.assertTrue(self.db.independent_evidence(["a","c"]))
+        self.assertFalse(self.db.has_distinct_declared_groups(["a","b"]))
+        self.assertTrue(self.db.has_distinct_declared_groups(["a","c"]))
 
     def test_D12_evaluator_excluded_in_virtual_interface(self):
         sandbox = FakeSandbox({"src/app.py":"pass","oracle/answers.json":"demo-hidden"})
@@ -138,8 +138,19 @@ class InvariantTests(unittest.TestCase):
         self.assertTrue(semantic_oracle(events, deliver(events, idempotent=True)))
 
     def test_D14_unnecessary_abstention(self):
-        self.assertEqual(score_decision(True, "HOLD"), "INCOMPLETE")
-        self.assertEqual(score_decision(False, "HOLD"), "VALID_ABSTENTION")
+        self.assertEqual(preliminary_decision_label(True, "HOLD"), "INCOMPLETE")
+        self.assertEqual(preliminary_decision_label(False, "HOLD"), "REQUIRES_ABSTENTION_REVIEW")
+        self.assertEqual(preliminary_decision_label(False, "REPAIR"), "REQUIRES_INDEPENDENT_TEST")
+
+    def test_declared_group_counter_has_no_independence_authority(self):
+        self.db.record_evidence("h1", "rev-a", "hypothesis", independent_group="A")
+        self.db.record_evidence("h2", "rev-a", "hypothesis", independent_group="B")
+        self.assertTrue(self.db.has_distinct_declared_groups(["h1", "h2"]))
+        self.assertFalse(self.db.has_distinct_declared_groups(["h1", "h1"]))
+        self.assertFalse(self.db.has_distinct_declared_groups([]))
+        for required in (0, False, -1):
+            with self.subTest(required=required), self.assertRaises(GateError):
+                self.db.has_distinct_declared_groups(["h1", "h2"], required=required)
 
     def test_D15_no_artifact_no_submission(self):
         gen = self.db.claim("one", "a", 1, 20)

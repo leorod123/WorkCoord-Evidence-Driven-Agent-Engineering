@@ -32,6 +32,8 @@ The D01–D15 probes are **reference tests for narrow example behavior**. Additi
 - The artifact digest and HMAC detect malformed or modified reference receipts without the key; they cannot establish that the source code really ran in an isolated environment.
 - New tests cover multiple SQLite client processes, two interruption points, isolated fencing/expiry transitions and revision revalidation; they do not establish distributed linearizability, host-clock reliability, power-loss durability, hostile-client safety, or general crash recovery.
 - Changing an unfinished unit's revision invalidates submitted evidence and reviewer approval while preserving its current claim. This revision change is a **synthetic administrative signal** without actor authentication; owners must still submit a valid new proof.
+- `has_distinct_declared_groups` counts unverified labels supplied by callers, **not independently verified evidence**, and is not used to approve completion.
+- `preliminary_decision_label` does not award final repair or abstention validity. The delivery simulator only deduplicates **inside one call**, not across restarts.
 - This lab does not invoke language models, evaluate real agents, or provide evidence of speed/cost improvement.
 - Python source and tests are new public examples, not adapted private project files.
 
