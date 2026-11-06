@@ -49,3 +49,7 @@ A [demonstração executável](docs/problem-decision-v0.md) separa o mapa hierá
 ## Cognitive Perspectives v0 — quatro perspectivas, um problema
 
 A [demonstração pública](docs/cognitive-perspectives-v0.md) usa quatro perspectivas **consultivas** (Pesquisa, Engenharia, Eficiência e Risco) sobre o mesmo problema, com um checkpoint canônico. Diferencia setores técnicos de perguntas cognitivas, preserva contraprovas e bloqueia consenso fictício, mesmo quando três perspectivas apoiam e apenas uma contesta. A rota `QUICK` evita a obrigatoriedade de quatro análises em tarefas simples. As perspectivas são registros escritos no cenário fictício, **não quatro agentes, revisão independente ou autorização para executar**.
+
+## Knowledge & Learning v0 — conclusões têm genealogia
+
+A [prova executável](docs/knowledge-genealogy-v0.md) preserva revisões de fonte, observações favoráveis e contrárias, retrações com justificativa e dependências entre conclusões. Uma conclusão antes consultivamente admissível volta para `HOLD` quando a sua fonte é substituída; um novo arquivo ou uma nova observação não restauram a validade sem revisão explícita. A cadeia de hashes e o replay permitem comparar cortes históricos, **mas não autenticam fontes nem realizam aprendizado de modelo**. São 19 casos fictícios públicos, sem agentes reais.

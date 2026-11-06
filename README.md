@@ -121,6 +121,18 @@ All **19 scenarios are public, fictional, human-authored development fixtures**.
 
 The [executed synthetic-development results](docs/cognitive-perspectives-results-v0.md) include explicit disagreement, missing and stale evidence, low-risk shortcut cases and the required external-review boundary.
 
+## Knowledge & Learning v0 — source changes must invalidate conclusions
+
+A new [self-contained fictional knowledge genealogy](docs/knowledge-genealogy-v0.md) preserves **immutable source revisions, negative evidence, claim dependencies and review receipts** in one hash-chained, replayable event history.
+
+Its central case makes the boundary visible: an advisory conclusion was once eligible at revision `r1`, but when the source is explicitly superseded by `r2`, it becomes **HOLD_STALE_BASIS**. New positive evidence does not silently restore it; an explicit new review is required. Dependent conclusions can also become invalid even after upstream evidence is repaired.
+
+```bash
+PYTHONPATH=src python -m workcoord_lab.knowledge_genealogy_suite
+```
+
+The 19 cases are **public authored toy examples**, not proof of real agent learning, source authenticity or improved outcomes. Hashes detect content changes relative to the supplied chain; they are **not third-party signatures** or independent proof.
+
 ## What we will measure
 
 | Comparison | Purpose |
@@ -157,6 +169,7 @@ We will report valid repairs, justified abstentions, invalid completions, time, 
 | [Research Quality v0](docs/research-quality-v0.md) | Typed advisory admission, failure domains and negative controls | Synthetic draft |
 | [Problem & Decision v0](docs/problem-decision-v0.md) | Required outcomes, semantic evidence gaps and alternatives costs | Synthetic draft |
 | [Cognitive Perspectives v0](docs/cognitive-perspectives-v0.md) | Four advisory lenses, contradictions and one common checkpoint | Synthetic draft |
+| [Knowledge & Learning v0](docs/knowledge-genealogy-v0.md) | Append-only revision, negative evidence and dependent claim invalidation | Synthetic draft |
 | [Experimental design](docs/experimental-design.md) | Comparison plan, metrics and validity threats | Draft, not preregistered |
 | [Scenario catalog](evals/scenarios-v0.json) | Eight fictional scenario families | Draft |
 | [Preregistration](evals/preregistration-v0.json) | Proposed experimental parameters | Draft, not sealed |
@@ -174,6 +187,6 @@ For discussion in Portuguese, see [README-pt.md](README-pt.md).
 
 ## Status and next milestone
 
-The draft PR stack contains small independent public reference modules for work coordination, context selection, adaptive investigation, research admission, semantic problem closure and cognitive perspective checkpoints. These are **deterministic synthetic fixtures**, not proof of production security or agent productivity. Next: a separate **Knowledge & Learning** study of source lineage, invalidation and negative findings, then held-out real-agent evaluation with full cost accounting. See the [adversarial review response](docs/reviews/adversarial-response-v0.md).
+The draft PR stack contains small independent public reference modules for work coordination, context selection, adaptive investigation, research admission, semantic problem closure and cognitive perspective checkpoints. These are **deterministic synthetic fixtures**, not proof of production security or agent productivity. Next: challenge the complete synthetic reference stack with independent source and evaluator isolation, then compare real-agent decisions with baselines and full cost accounting. See the [adversarial review response](docs/reviews/adversarial-response-v0.md).
 
 **License:** To be selected by the repository owner before redistribution is explicitly permitted.

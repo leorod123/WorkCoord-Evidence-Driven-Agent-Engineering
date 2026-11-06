@@ -102,6 +102,20 @@ jobs:
           name: cognitive-perspectives-py-${{ matrix.python-version }}
           path: artifacts/cognitive-perspectives-v0.json
           if-no-files-found: error
+      - name: Verify knowledge genealogy regression mutations (M54-M70)
+        env:
+          PYTHONPATH: src
+        run: python scripts/verify_genealogy_mutations.py
+      - name: Evaluate public knowledge genealogy development cases
+        env:
+          PYTHONPATH: src
+        run: python -m workcoord_lab.knowledge_genealogy_suite --output artifacts/knowledge-genealogy-v0.json
+      - name: Upload deterministic knowledge genealogy receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: knowledge-genealogy-py-${{ matrix.python-version }}
+          path: artifacts/knowledge-genealogy-v0.json
+          if-no-files-found: error
       - name: Run synthetic demo
         env:
           PYTHONPATH: src

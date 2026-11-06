@@ -84,3 +84,7 @@ See [machine-readable scenario catalog](../evals/scenarios-v0.json) and [draft p
 ## Public cognitive-perspective development probe
 
 The [Cognitive Perspectives v0 cases](cognitive-perspectives-v0.md) are a **published, deterministic reference demonstration** of cross-perspective disagreement and a shared checkpoint. Their authored opinions, expected outputs and invented review costs are not hidden from any agent inspecting the repository and **must not** be reused as independent confirmatory evaluation instances. A future empirical study must record actual human/agent effort, source retrieval and errors, including cases where four-lens review adds cost without improving the outcome.
+
+## Public knowledge-history development probe
+
+The [Knowledge & Learning v0 fixture](knowledge-genealogy-v0.md) includes time-cut replay, source supersession, contradiction/retraction, dependent claim invalidation and recovery. Its public expected labels and source texts are written by the experiment authors, so this is a deterministic interface demonstration **not an independent test of an agent's ability to learn, generalize or avoid stale sources**. Any confirmatory evaluation must use separately held-out source histories and score final outcomes rather than confidence or log length; full revision/review overhead belongs in the cost denominator.

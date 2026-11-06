@@ -270,6 +270,12 @@ class KnowledgeGenealogyTests(unittest.TestCase):
         with self.assertRaises(GenealogyError):
             evaluate_actions(actions)
 
+    def test_future_source_registration_rejected_even_if_unreferenced(self):
+        actions = self.actions("KG01")[:1]
+        actions[0]["data"]["available_tick"] = 99
+        with self.assertRaises(GenealogyError):
+            evaluate_actions(actions)
+
     def test_cannot_supersede_across_unrelated_lineages(self):
         actions = self.actions("KG13")
         actions[-1]["data"]["old_source_id"] = "worker-r1"
