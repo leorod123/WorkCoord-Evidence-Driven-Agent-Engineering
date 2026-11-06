@@ -20,7 +20,12 @@ PATTERNS = {
     "aws_access_key_id": re.compile(rb"\b(?:AKIA|ASIA)[A-Z0-9]{16}\b"),
     "google_api_key": re.compile(rb"\bAIza[0-9A-Za-z_-]{35}\b"),
     "slack_like_token": re.compile(rb"\bxox[baprs]-[A-Za-z0-9-]{20,}\b"),
-    "pem_private_key": re.compile(rb"-----BEGIN (?:RSA |EC |OPENSSH |DSA )?PRIVATE KEY-----"),
+    "pem_private_key": re.compile(
+        rb"-----BEGIN ((?:RSA |EC |OPENSSH |DSA |ENCRYPTED )?PRIVATE KEY)-----\r?\n"
+        rb"(?:[A-Za-z0-9-]+:[^\r\n]{1,100}\r?\n){0,5}"
+        rb"(?:\r?\n)?(?:[A-Za-z0-9+/=]{16,}\r?\n){1,500}"
+        rb"-----END \1-----"),
+
     "credentialed_url": re.compile(rb"https?://[^\s/@:]+:[^\s/@]+@[A-Za-z0-9.-]+"),
 }
 
@@ -45,8 +50,12 @@ def self_test() -> None:
     assert "openai_like_token" in scan_blob(b"prefix sk-" + b"A" * 26)
     assert "github_classic_token" in scan_blob(b"ghp_" + b"B" * 36)
     assert "aws_access_key_id" in scan_blob(b"AKIA" + b"Q" * 16)
-    assert "pem_private_key" in scan_blob(
-        b"-----BEGIN PRIVATE KEY-----\nsynthetic\n")
+    # Construct a complete synthetic PEM in memory, never a real private key.
+    # An isolated educational BEGIN marker must not trigger a history-wide alarm.
+    begin = b"-----BEGIN " + b"PRIVATE KEY-----"
+    end = b"-----END " + b"PRIVATE KEY-----"
+    assert "pem_private_key" in scan_blob(begin + b"\n" + b"A" * 64 + b"\n" + end)
+    assert "pem_private_key" not in scan_blob(begin + b"\nsynthetic\n")
     assert scan_blob(b"ordinary synthetic source without credentials") == []
     print("Hygiene pattern self-tests PASS")
 
