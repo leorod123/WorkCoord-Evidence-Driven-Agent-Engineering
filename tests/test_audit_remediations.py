@@ -77,7 +77,7 @@ class AuditRemediationTests(unittest.TestCase):
         db.create("case", "r1")
         db.claim("case", "holder", 2, 10)
         with self.assertRaises(GateError):
-            db.claim("case", "outsider", 1000, 1)
+            db.submit("case", "outsider", 1, 1000, "no-proof")
         events = [
             json.loads(e[0]) for e in db.db.execute(
                 "SELECT payload FROM events ORDER BY seq")
