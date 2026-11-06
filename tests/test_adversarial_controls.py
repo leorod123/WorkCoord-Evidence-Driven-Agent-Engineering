@@ -4,6 +4,7 @@ An unrelated error must not make a fencing regression test pass.
 The expected failure path leaves work state and event count unchanged.
 """
 import json
+import threading
 import tempfile
 from pathlib import Path
 import unittest
@@ -104,7 +105,7 @@ class AdversarialControlTests(unittest.TestCase):
                 self.assertEqual(len(receipt), 64)
                 self.assertEqual(db.get("work")["status"], "DONE")
 
-    def test_time_cannot_rollback_after_expired_rejection(self):
+    def test_rejected_expiry_does_not_advance_clock_or_disable_valid_owner(self):
         db = Ledger(verification_key=KEY)
         self.addCleanup(db.close)
         db.create("work", "r1")
@@ -115,9 +116,38 @@ class AdversarialControlTests(unittest.TestCase):
         db.submit("work", "owner", gen, 109, "p")
         self.reject_unchanged(db, lambda: db.verify("work", "owner", gen, 110))
         self.reject_unchanged(db, lambda: db.verify("work", "owner", gen, 0))
-        self.reject_unchanged(db, lambda: db.verify("work", "owner", gen, 109))
         self.reject_unchanged(db, lambda: db.verify("work", "owner", gen, -1))
+        self.assertEqual(db.db.execute("SELECT tick FROM logical_clock WHERE id=1").fetchone()[0], 109)
+        db.verify("work", "owner", gen, 109)
+        self.assertEqual(db.get("work")["status"], "VERIFIED")
+
+    def test_rejected_actor_cannot_advance_lease_clock(self):
+        db, generation = self.fixture(stage="CLAIMED", ttl=110)
+        previous = db.db.execute("SELECT tick FROM logical_clock WHERE id=1").fetchone()[0]
+        self.reject_unchanged(
+            db, lambda: db.submit("work", "impostor", generation, 1000, "proof-1")
+        )
+        current = db.db.execute("SELECT tick FROM logical_clock WHERE id=1").fetchone()[0]
+        self.assertEqual(current, previous)
+        db.submit("work", "owner", generation, 2, "proof-1")
         self.assertEqual(db.get("work")["status"], "SUBMITTED")
+        self.assertTrue(db.verify_event_chain())
+
+    def test_injected_time_source_ignores_untrusted_actor_now(self):
+        tick = [100]
+        db = Ledger(time_source=lambda: tick[0])
+        self.addCleanup(db.close)
+        db.create("work", "r1")
+        first = db.claim("work", "owner", now=999999, ttl=10)
+        self.assertEqual(first, 1)
+        self.assertEqual(db.db.execute("SELECT tick FROM logical_clock WHERE id=1").fetchone()[0], 100)
+        self.reject_unchanged(
+            db, lambda: db.claim("work", "intruder", now=1000000, ttl=10)
+        )
+        tick[0] = 110
+        self.assertEqual(db.claim("work", "next-owner", now=0, ttl=10), 2)
+        self.assertEqual(db.db.execute("SELECT tick FROM logical_clock WHERE id=1").fetchone()[0], 110)
+        self.assertTrue(db.verify_event_chain())
 
     def test_clock_persists_across_sqlite_reopen(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -154,9 +184,14 @@ class AdversarialControlTests(unittest.TestCase):
             events = [json.loads(r["payload"]) for r in db.db.execute("SELECT payload FROM events ORDER BY seq")]
             hashes = [r["event_hash"] for r in db.db.execute("SELECT event_hash FROM events ORDER BY seq")]
             self.assertEqual(events[0]["authority"], "REVIEW_REQUIRED")
-            self.assertEqual(events[1]["issued_at"], 1)
-            self.assertEqual(events[1]["expires_at"], 1 + ttl)
-            self.assertEqual(events[1]["ttl"], ttl)
+            claim_event = next(e for e in events if e["type"] == "claim")
+            clock_events = [e for e in events if e["type"] == "clock_advance"]
+            self.assertEqual(len(clock_events), 1)
+            self.assertEqual(clock_events[0]["previous_tick"], -1)
+            self.assertEqual(clock_events[0]["tick"], 1)
+            self.assertEqual(claim_event["issued_at"], 1)
+            self.assertEqual(claim_event["expires_at"], 1 + ttl)
+            self.assertEqual(claim_event["ttl"], ttl)
             histories.append(hashes)
             db.close()
         self.assertNotEqual(histories[0], histories[1])
@@ -174,6 +209,51 @@ class AdversarialControlTests(unittest.TestCase):
             self.assertEqual(len(by_type[name]["artifact_sha256"]), 64)
         self.assertEqual(by_type["attested_evidence"]["work_id"], "work")
         self.assertEqual(len(by_type["attested_evidence"]["receipt_mac"]), 64)
+
+    def test_get_does_not_expose_uncommitted_write_on_shared_connection(self):
+        db = Ledger()
+        self.addCleanup(db.close)
+        db.create("work", "r1")
+        written = threading.Event()
+        release = threading.Event()
+        reading = threading.Event()
+        result = []
+        errors = []
+
+        def writer():
+            try:
+                with db._transaction():
+                    db.db.execute("UPDATE work SET revision='not-yet-committed' WHERE id='work'")
+                    written.set()
+                    if not release.wait(5):
+                        raise AssertionError("test writer timed out")
+            except BaseException as exc:
+                errors.append(exc)
+
+        def reader():
+            reading.set()
+            try:
+                result.append(db.get("work")["revision"])
+            except BaseException as exc:
+                errors.append(exc)
+
+        producer = threading.Thread(target=writer)
+        observer = threading.Thread(target=reader)
+        producer.start()
+        self.assertTrue(written.wait(3))
+        observer.start()
+        try:
+            self.assertTrue(reading.wait(3))
+            observer.join(timeout=0.1)
+            self.assertTrue(observer.is_alive())
+        finally:
+            release.set()
+            producer.join(timeout=3)
+            observer.join(timeout=3)
+        self.assertFalse(producer.is_alive())
+        self.assertFalse(observer.is_alive())
+        self.assertEqual(errors, [])
+        self.assertEqual(result, ["not-yet-committed"])
 
     def test_revision_noop_and_ready_case(self):
         db = Ledger()

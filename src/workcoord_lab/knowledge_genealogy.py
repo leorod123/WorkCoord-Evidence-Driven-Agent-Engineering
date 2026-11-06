@@ -174,8 +174,12 @@ def _claim_statuses(claims: dict, evidence: dict, sources: dict) -> dict:
 
 
 def replay_events(records: list, *, at_seq: int | None = None) -> dict:
-    """Verify the complete supplied chain, then evaluate its requested prefix."""
-    verified_head = verify_chain(records)
+    """Verify the full supplied chain, then evaluate a prefix-only checkpoint.
+
+    Caller may separately call verify_chain(records) to audit the whole log.
+    That *future* head must never enter an as-of checkpoint identity.
+    """
+    verify_chain(records)
     if at_seq is None:
         at_seq = len(records)
     if type(at_seq) is not int or not 0 <= at_seq <= len(records):
@@ -375,7 +379,6 @@ def replay_events(records: list, *, at_seq: int | None = None) -> dict:
         "schema": "workcoord.knowledge-genealogy-checkpoint/v0",
         "status": "PUBLIC_SYNTHETIC_DECLARATIONS_ONLY",
         "event_count": at_seq,
-        "verified_supplied_chain_head_sha256": verified_head,
         "prefix_head_sha256": (
             records[at_seq - 1]["event_sha256"] if at_seq else ZERO_HASH
         ),

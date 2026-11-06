@@ -33,6 +33,8 @@ The `CRITICAL` mode always returns `REQUIRES_EXTERNAL_REVIEW` when all local che
 
 **Important:** `origin_group`, revisions, authorizations and timestamps are plain fields in a fictional JSON packet. The module checks their internal consistency, not their authenticity. `DESIGN_ADMISSIBLE` is **not** `RESEARCH_CORRECT`.
 
+**Audit refinement A04:** An evidence record has an optional caller-declared `role` of `basis` (default) or `background`. An old or causally unavailable **background** source is retained in `background_warnings`, not used as current admissible evidence and not allowed to count toward declared corroboration. A hypothesis that cites it as its basis is blocked by `HYPOTHESIS_REFERENCES_BACKGROUND_EVIDENCE`. `QUICK` still requires a current basis observation. This does not independently authenticate the declared role.
+
 ## Fourteen development cases
 
 The [public catalog](../examples/research-quality-cases-v0.json) contains a simple valid local investigation, a structured falsifiable plan, a valid pre-outcome lock, an externally unreviewed critical study, plus adversarial cases for late freezes, post-decision observations, duplicated provenance groups, proxy validity, absent controls, stale notes, and unsupported promotion.

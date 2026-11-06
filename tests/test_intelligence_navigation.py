@@ -88,14 +88,13 @@ class IntelligenceNavigationTests(unittest.TestCase):
         self.assertIn("queue", step["gaps"]["dependency_sectors_not_visited"])
         self.assertNotIn("queue-ack-r2", step["new_sources"])
 
-    def test_budget_exclusions_explicitly_include_contradictions(self):
+    def test_budget_exclusions_explicit_without_unread_stance(self):
         nav = self.nav(max_chars=1)
         step = nav.navigate(sector="queue", perspective="reliability", depth="focused",
                             reason="tiny budget")
         self.assertEqual(step["new_sources"], [])
         self.assertIn("queue-ack-r2", step["gaps"]["unread_due_to_budget"])
-        self.assertIn("queue-ack-r2",
-                      step["gaps"]["potential_counterevidence_unread"])
+        self.assertNotIn("potential_counterevidence_unread", step["gaps"])
         self.assertEqual(step["cumulative_unique_chars"], 0)
 
     def test_source_costs_measured_in_characters_not_tokens(self):

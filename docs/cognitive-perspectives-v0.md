@@ -36,6 +36,8 @@ Any additional perspective voluntarily supplied for a `QUICK` issue is still eva
 
 A review record contains the same `issue_id` and `proposal_id`, perspective, stance (`SUPPORT`, `CHALLENGE`, `UNCERTAIN`), source revision and logical review tick, cited evidence IDs, counterevidence references, rationale, open question, suggested next discriminating test and **declared** review effort.
 
+**Audit refinement A05:** A `SUPPORT` perspective that cites a counterexample can no longer silently reach `ADVISORY_READY`. Counterexamples are `OPEN` unless explicitly included in typed `counterevidence_resolutions` with `state=RESOLVED`, nonempty justification and a **different, cited non-counterexample** `basis_source_id`. Unresolved counterexamples cause `HOLD_UNRESOLVED_COUNTEREVIDENCE`; declared dispositions remain in the checkpoint. These are still unauthenticated declarations, not independently validated resolutions. A CHALLENGE stance remains an objection.
+
 ## Shared checkpoint and conflict rules
 
 The reader checks a declared revision and **source availability at the review tick**. For each referenced document it records the technical sector, declared origin group, revision, availability tick and SHA-256 of the literal cited *finding text*. An unknown, old or not-yet-available source creates an explicit gap. A stale lens cannot silently be treated as current after a revision change.

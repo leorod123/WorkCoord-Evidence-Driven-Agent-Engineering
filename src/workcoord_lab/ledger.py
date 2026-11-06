@@ -1,6 +1,7 @@
 """Small SQLite reference state machine, not an execution authority.
 
-Caller-supplied ticks are checked against a durable ledger-local nondecreasing clock.
+Caller-supplied ticks are a synthetic fixture clock unless a trusted time_source
+is explicitly injected by the host. Rejected transitions never advance time.
 A fence token is (work_id, generation). This is not a trusted distributed clock.
 No API here executes code, edits a repository, or grants production permissions.
 """
@@ -21,8 +22,11 @@ def _canonical(value):
 
 
 class Ledger:
-    def __init__(self, path=":memory:", *, verification_key=None):
+    def __init__(self, path=":memory:", *, verification_key=None, time_source=None):
         self._verification_key = verification_key
+        if time_source is not None and not callable(time_source):
+            raise GateError("time_source must be a callable clock authority")
+        self._time_source = time_source
         self.db = sqlite3.connect(path, isolation_level=None, timeout=5, check_same_thread=False)
         self.db.row_factory = sqlite3.Row
         self.db.execute("PRAGMA busy_timeout=5000")
@@ -52,7 +56,8 @@ class Ledger:
             self.db.execute("ALTER TABLE evidence ADD COLUMN work_id TEXT")
 
     def close(self):
-        self.db.close()
+        with self._lock:
+            self.db.close()
 
     @contextmanager
     def _transaction(self):
@@ -65,23 +70,28 @@ class Ledger:
                 self.db.execute("ROLLBACK")
                 raise
 
-    def _observe_tick(self, now):
-        """Persist even a rejected call's observed time, preventing rollback of time.
+    def _resolve_tick(self, supplied_now):
+        """Host-injected clock overrides untrusted actor-supplied synthetic ticks.
 
-        Two transactions are intentional: a failed work transition must not
-        erase the logical time already observed by the ledger.
+        A callable's identity/trust is a responsibility of the embedding host.
+        No production-clock authentication is claimed by this reference.
         """
+        now = self._time_source() if self._time_source is not None else supplied_now
         if type(now) is not int or now < 0:
             raise GateError("logical tick must be a nonnegative integer")
-        with self._transaction():
-            previous = self.db.execute(
-                "SELECT tick FROM logical_clock WHERE id=1"
-            ).fetchone()[0]
-            if now < previous:
-                raise GateError("logical clock cannot move backwards")
-            self.db.execute(
-                "UPDATE logical_clock SET tick=? WHERE id=1", (now,)
-            )
+        return now
+
+    def _commit_tick(self, now, *, cause, work_id):
+        """Advance time only WITH an accepted transition, in its transaction."""
+        last = self.db.execute(
+            "SELECT tick FROM logical_clock WHERE id=1"
+        ).fetchone()[0]
+        if now < last:
+            raise GateError("logical clock cannot move backwards")
+        if now > last:
+            self.db.execute("UPDATE logical_clock SET tick=? WHERE id=1", (now,))
+            self._event("clock_advance", previous_tick=last, tick=now,
+                        cause=cause, work_id=work_id)
 
     def _require_current_tick(self, now):
         last = self.db.execute(
@@ -97,7 +107,10 @@ class Ledger:
         return row
 
     def get(self, work_id):
-        return dict(self._row(work_id))
+        # The shared SQLite connection must not expose an in-flight write
+        # from another thread using the same Ledger instance.
+        with self._lock:
+            return dict(self._row(work_id))
 
     def _event(self, name, **details):
         item = _canonical({"type": name, **details})
@@ -110,16 +123,18 @@ class Ledger:
         )
 
     def verify_event_chain(self):
-        previous = "0" * 64
-        for row in self.db.execute("SELECT * FROM events ORDER BY seq"):
-            expected = hashlib.sha256((previous + row["payload"]).encode()).hexdigest()
-            if row["previous_hash"] != previous or row["event_hash"] != expected:
-                return False
-            previous = expected
-        return True
+        with self._lock:
+            previous = "0" * 64
+            for row in self.db.execute("SELECT * FROM events ORDER BY seq"):
+                expected = hashlib.sha256((previous + row["payload"]).encode()).hexdigest()
+                if row["previous_hash"] != previous or row["event_hash"] != expected:
+                    return False
+                previous = expected
+            return True
 
     def event_count(self):
-        return self.db.execute("SELECT COUNT(*) FROM events").fetchone()[0]
+        with self._lock:
+            return self.db.execute("SELECT COUNT(*) FROM events").fetchone()[0]
 
     def create(self, work_id, revision, authority="EDIT_SANDBOX"):
         if not work_id or not revision:
@@ -166,8 +181,8 @@ class Ledger:
     def claim(self, work_id, agent, now, ttl):
         if not agent or type(ttl) is not int or ttl <= 0:
             raise GateError("invalid lease parameters")
-        self._observe_tick(now)
         with self._transaction():
+            now = self._resolve_tick(now)
             self._require_current_tick(now)
             item = self._row(work_id)
             if item["status"] == "DONE":
@@ -180,6 +195,7 @@ class Ledger:
                 "evidence_id=NULL,approved_by=NULL,receipt=NULL WHERE id=?",
                 (agent, generation, now + ttl, work_id),
             )
+            self._commit_tick(now, cause="claim", work_id=work_id)
             self._event("claim", work_id=work_id, agent=agent, generation=generation,
                         issued_at=now, ttl=ttl, expires_at=now + ttl,
                         revision=item["revision"])
@@ -254,17 +270,18 @@ class Ledger:
             raise GateError("evidence ids must be a sequence of nonempty strings")
         if len(evidence_ids) < required or len(set(evidence_ids)) != len(evidence_ids):
             return False
-        groups = set()
-        for evidence_id in evidence_ids:
-            row = self.db.execute("SELECT * FROM evidence WHERE id=?", (evidence_id,)).fetchone()
-            if row is None or not row["independent_group"]:
-                return False
-            groups.add(row["independent_group"])
-        return len(groups) >= required
+        with self._lock:
+            groups = set()
+            for evidence_id in evidence_ids:
+                row = self.db.execute("SELECT * FROM evidence WHERE id=?", (evidence_id,)).fetchone()
+                if row is None or not row["independent_group"]:
+                    return False
+                groups.add(row["independent_group"])
+            return len(groups) >= required
 
     def submit(self, work_id, agent, generation, now, evidence_id):
-        self._observe_tick(now)
         with self._transaction():
+            now = self._resolve_tick(now)
             item = self._row(work_id)
             self._fenced(item, agent, generation, now, "CLAIMED")
             ev = self.db.execute("SELECT * FROM evidence WHERE id=?", (evidence_id,)).fetchone()
@@ -272,13 +289,14 @@ class Ledger:
                     or not ev["passed"] or not ev["artifact"] or not self._valid_attestation(ev)):
                 raise GateError("missing passing revision-bound test artifact")
             self.db.execute("UPDATE work SET status='SUBMITTED',evidence_id=? WHERE id=?", (evidence_id, work_id))
+            self._commit_tick(now, cause="submit", work_id=work_id)
             self._event("submit", work_id=work_id, agent=agent, generation=generation,
                         at_tick=now, revision=item["revision"], evidence_id=evidence_id,
                         artifact_sha256=ev["artifact"])
 
     def verify(self, work_id, agent, generation, now):
-        self._observe_tick(now)
         with self._transaction():
+            now = self._resolve_tick(now)
             item = self._row(work_id)
             self._fenced(item, agent, generation, now, "SUBMITTED")
             for dep in json.loads(item["deps"]):
@@ -289,6 +307,7 @@ class Ledger:
                     or not ev["artifact"] or not self._valid_attestation(ev)):
                 raise GateError("evidence no longer valid")
             self.db.execute("UPDATE work SET status='VERIFIED' WHERE id=?", (work_id,))
+            self._commit_tick(now, cause="verify", work_id=work_id)
             self._event("verify", work_id=work_id, agent=agent, generation=generation,
                         at_tick=now, revision=item["revision"],
                         evidence_id=item["evidence_id"], artifact_sha256=ev["artifact"])
@@ -334,8 +353,8 @@ class Ledger:
             )
 
     def complete(self, work_id, agent, generation, now):
-        self._observe_tick(now)
         with self._transaction():
+            now = self._resolve_tick(now)
             item = self._row(work_id)
             if item["status"] == "DONE" and item["owner"] == agent and item["generation"] == generation:
                 return item["receipt"]
@@ -351,6 +370,7 @@ class Ledger:
                 "evidence_id": item["evidence_id"], "artifact": ev["artifact"],
             }).encode()).hexdigest()
             self.db.execute("UPDATE work SET status='DONE',receipt=? WHERE id=?", (receipt, work_id))
+            self._commit_tick(now, cause="complete", work_id=work_id)
             self._event("complete", work_id=work_id, agent=agent, generation=generation,
                         at_tick=now, revision=item["revision"], authority=item["authority"],
                         evidence_id=item["evidence_id"], artifact_sha256=ev["artifact"],

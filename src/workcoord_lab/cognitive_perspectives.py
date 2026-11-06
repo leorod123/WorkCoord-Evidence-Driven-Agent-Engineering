@@ -123,6 +123,32 @@ def evaluate_perspectives(packet: dict[str, Any]) -> dict[str, Any]:
         counterrefs = _ids(review.get("counterevidence_ids"), "review.counterevidence_ids")
         if not set(counterrefs).issubset(refs):
             raise InvalidPerspectivePacket("counterevidence must be among cited sources")
+        dispositions: dict[str, dict] = {}
+        for raw_disposition in _list(
+                review.get("counterevidence_resolutions", []),
+                "review.counterevidence_resolutions"):
+            item = _dict(raw_disposition, "counterevidence_resolution")
+            if set(item) != {"source_id", "state", "justification", "basis_source_id"}:
+                raise InvalidPerspectivePacket("counterevidence resolution has invalid fields")
+            item_id = _text(item["source_id"], "counterevidence_resolution.source_id")
+            if item_id not in counterrefs or item_id in dispositions:
+                raise InvalidPerspectivePacket("resolution must reference one unique cited counterexample")
+            state = _enum(item["state"], ("OPEN", "RESOLVED"),
+                          "counterevidence_resolution.state")
+            reason = _text(item["justification"], "counterevidence_resolution.justification")
+            basis = item["basis_source_id"]
+            if state == "RESOLVED":
+                if (not isinstance(basis, str) or basis not in refs
+                        or basis in counterrefs or basis == item_id):
+                    raise InvalidPerspectivePacket(
+                        "resolved counterevidence needs a distinct cited non-counter basis")
+            elif basis is not None:
+                raise InvalidPerspectivePacket(
+                    "open counterevidence cannot assert a resolution basis")
+            dispositions[item_id] = {
+                "source_id": item_id, "state": state,
+                "justification": reason, "basis_source_id": basis,
+            }
         rationale = _text(review.get("rationale"), "review.rationale")
         next_check = _text(review.get("next_check"), "review.next_check")
         question = _text(review.get("open_question", ""), "review.open_question",
@@ -136,7 +162,15 @@ def evaluate_perspectives(packet: dict[str, Any]) -> dict[str, Any]:
                                      "review.source_revision"),
             "review_tick": _tick(review.get("review_tick"), "review.review_tick"),
             "stance": stance, "source_ids": refs,
-            "counterevidence_ids": counterrefs, "rationale": rationale,
+            "counterevidence_ids": counterrefs,
+            "counterevidence_resolutions": [
+                dispositions[key] for key in sorted(dispositions)
+            ],
+            "unresolved_counterevidence_ids": [
+                key for key in sorted(counterrefs)
+                if key not in dispositions or dispositions[key]["state"] == "OPEN"
+            ],
+            "rationale": rationale,
             "open_question": question, "next_check": next_check,
             "estimated_review_units": _tick(review.get("estimated_review_units"),
                                             "review.estimated_review_units"),
@@ -148,6 +182,7 @@ def evaluate_perspectives(packet: dict[str, Any]) -> dict[str, Any]:
     source_gaps: list[dict] = []
     cited_ids = set()
     notes = []
+    unresolved_counterevidence = set()
     for lens in LENSES:
         if lens not in reviews:
             continue
@@ -160,6 +195,7 @@ def evaluate_perspectives(packet: dict[str, Any]) -> dict[str, Any]:
             })
         if invalid_review:
             stale.append(lens)
+        unresolved_counterevidence.update(review["unresolved_counterevidence_ids"])
         for source_id in review["source_ids"]:
             cited_ids.add(source_id)
             src = sources.get(source_id)
@@ -188,6 +224,10 @@ def evaluate_perspectives(packet: dict[str, Any]) -> dict[str, Any]:
             "perspective": lens, "stance": review["stance"],
             "focus": review["focus"], "source_ids": list(review["source_ids"]),
             "counterevidence_ids": list(review["counterevidence_ids"]),
+            "counterevidence_resolutions": list(review["counterevidence_resolutions"]),
+            "unresolved_counterevidence_ids": list(
+                review["unresolved_counterevidence_ids"]
+            ),
             "open_question": review["open_question"],
             "next_check": review["next_check"],
             "rationale": review["rationale"],
@@ -215,6 +255,8 @@ def evaluate_perspectives(packet: dict[str, Any]) -> dict[str, Any]:
         status = "HOLD_MISSING_PERSPECTIVE"
     elif conflict:
         status = "HOLD_CONTRADICTION"
+    elif unresolved_counterevidence:
+        status = "HOLD_UNRESOLVED_COUNTEREVIDENCE"
     elif challenged:
         status = "HOLD_UNRESOLVED_CHALLENGE"
     elif uncertain:
@@ -254,6 +296,7 @@ def evaluate_perspectives(packet: dict[str, Any]) -> dict[str, Any]:
         "uncertain_perspectives": uncertain,
         "has_support_challenge_conflict": conflict,
         "counterevidence_ids": counterevidence_ids,
+        "unresolved_counterevidence_ids": sorted(unresolved_counterevidence),
         "cited_source_manifest": source_manifest,
         "declared_origin_groups": sorted({sources[item]["origin"] for item in cited_ids
                                          if item in sources}),

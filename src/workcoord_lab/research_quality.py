@@ -87,6 +87,8 @@ def evaluate_research(packet: dict[str, Any]) -> dict[str, Any]:
     controls = _dict(packet.get("controls", {}), "controls")
     evaluation = _dict(packet.get("evaluation", {}), "evaluation")
     issue_index: dict[str, list[str]] = {key: [] for key in FAMILIES}
+    background_warnings: list[dict[str, str]] = []
+    background_ids: set[str] = set()
 
     def fail(family: str, issue: str) -> None:
         if issue not in issue_index[family]:
@@ -103,6 +105,11 @@ def evaluate_research(packet: dict[str, Any]) -> dict[str, Any]:
         ids.add(label)
         ev_revision = _require_text(item.get("revision"), "evidence.revision")
         origin = _require_text(item.get("origin_group"), "evidence.origin_group")
+        role = item.get("role", "basis")
+        if type(role) is not str or role not in ("basis", "background"):
+            raise InvalidResearchPacket("evidence.role: basis or background required")
+        if role == "background":
+            background_ids.add(label)
         source_class = item.get("source_class")
         if not isinstance(source_class, str) or source_class not in SOURCE_CLASSES:
             raise InvalidResearchPacket("evidence.source_class: unknown")
@@ -112,14 +119,30 @@ def evaluate_research(packet: dict[str, Any]) -> dict[str, Any]:
         _require_text(item.get("finding"), "evidence.finding")
         temporal_ok = True
         if observed > available or available > read:
-            fail("chronology", "INVALID_OBSERVATION_AVAILABILITY_READ_ORDER")
+            if role == "basis":
+                fail("chronology", "INVALID_OBSERVATION_AVAILABILITY_READ_ORDER")
+            else:
+                background_warnings.append({
+                    "id": label, "code": "BACKGROUND_OBSERVATION_CHRONOLOGY_UNVERIFIED",
+                })
             temporal_ok = False
         if available > proposed_at or read > proposed_at:
-            fail("time_of_knowledge", "SOURCE_NOT_AVAILABLE_AT_DECISION")
+            if role == "basis":
+                fail("time_of_knowledge", "SOURCE_NOT_AVAILABLE_AT_DECISION")
+            else:
+                background_warnings.append({
+                    "id": label, "code": "BACKGROUND_NOT_AVAILABLE_AT_DECISION",
+                })
             temporal_ok = False
-        if ev_revision != revision or source_class == "historical":
+        if role == "basis" and (ev_revision != revision or source_class == "historical"):
             fail("source_integrity", "CURRENT_CONCLUSION_USES_STALE_OR_HISTORICAL_SOURCE")
-        if temporal_ok and ev_revision == revision and source_class != "historical":
+        elif role == "background" and (
+                ev_revision != revision or source_class == "historical"):
+            background_warnings.append({
+                "id": label, "code": "UNCITED_HISTORICAL_BACKGROUND_ONLY",
+            })
+        if (role == "basis" and temporal_ok and ev_revision == revision
+                and source_class != "historical"):
             eligible.add(label)
             groups.add(origin)
 
@@ -140,9 +163,11 @@ def evaluate_research(packet: dict[str, Any]) -> dict[str, Any]:
             raise InvalidResearchPacket("hypothesis evidence IDs invalid or duplicated")
         if any(ref not in ids for ref in refs):
             fail("source_integrity", "HYPOTHESIS_REFERENCES_UNKNOWN_EVIDENCE")
+        if any(ref in background_ids for ref in refs):
+            fail("source_integrity", "HYPOTHESIS_REFERENCES_BACKGROUND_EVIDENCE")
     if risk == "QUICK":
-        if not evidence:
-            fail("source_integrity", "QUICK_NEEDS_ONE_OBSERVATION")
+        if not eligible:
+            fail("source_integrity", "QUICK_NEEDS_ONE_CURRENT_BASIS_OBSERVATION")
         if not isinstance(packet.get("next_test"), str) or not packet["next_test"].strip():
             fail("alternative_tests", "NEXT_CHECK_NOT_SPECIFIED")
     else:
@@ -208,6 +233,9 @@ def evaluate_research(packet: dict[str, Any]) -> dict[str, Any]:
         "issues": {family: issue_index[family] for family in FAMILIES if issue_index[family]},
         "issue_count": len(flat),
         "eligible_evidence_ids": sorted(eligible),
+        "background_warnings": sorted(
+            background_warnings, key=lambda x: (x["id"], x["code"])
+        ),
         "declared_origin_groups": sorted(groups),
         "execution_authority": "NONE",
         "knowledge_promotion": "NOT_GRANTED",
