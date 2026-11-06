@@ -32,6 +32,16 @@ jobs:
         env:
           PYTHONPATH: src
         run: python -m workcoord_lab.intelligence_demo
+      - name: Run three-arm context comparison (public synthetic fixture)
+        env:
+          PYTHONPATH: src
+        run: python -m workcoord_lab.context_comparison --output artifacts/context-comparison-v0.json
+      - name: Upload deterministic context evaluation receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: context-eval-py-${{ matrix.python-version }}
+          path: artifacts/context-comparison-v0.json
+          if-no-files-found: error
       - name: Run synthetic demo
         env:
           PYTHONPATH: src

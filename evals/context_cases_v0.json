@@ -1,0 +1,79 @@
+{
+  "schema": "workcoord.context-retrieval-cases/v0",
+  "status": "PUBLIC_SYNTHETIC_DEVELOPMENT_ONLY",
+  "fixture_path": "examples/flowdesk-context.json",
+  "design_note": "All arms receive the same per-case documents and total character budget. The baseline reads the complete source pool; selector methods can read a subset. Human-authored source signals make the diagnostic proxy non-blind. No model or held-out evaluation.",
+  "strategies": [
+    "full_corpus",
+    "local_sector",
+    "dependency_expand"
+  ],
+  "cases": [
+    {
+      "id": "CTX01",
+      "name": "Local current trace",
+      "start": {
+        "sector": "worker",
+        "perspective": "reliability",
+        "depth": "focused"
+      },
+      "expansion": {
+        "depth": "focused",
+        "max_hops": 2
+      },
+      "max_chars": 2400,
+      "remove_dependencies_from": [],
+      "purpose": "A local selector should save reading chars without losing local counterevidence."
+    },
+    {
+      "id": "CTX02",
+      "name": "Linked cross-sector contradiction",
+      "start": {
+        "sector": "worker",
+        "perspective": "reliability",
+        "depth": "overview"
+      },
+      "expansion": {
+        "depth": "focused",
+        "max_hops": 2
+      },
+      "max_chars": 2400,
+      "remove_dependencies_from": [],
+      "purpose": "Expanding from worker to queue to API should recover cross-sector evidence."
+    },
+    {
+      "id": "CTX03",
+      "name": "Missing dependency counterexample",
+      "start": {
+        "sector": "worker",
+        "perspective": "reliability",
+        "depth": "overview"
+      },
+      "expansion": {
+        "depth": "focused",
+        "max_hops": 2
+      },
+      "max_chars": 2400,
+      "remove_dependencies_from": [
+        "worker-guide-r0"
+      ],
+      "purpose": "With missing links the selective methods miss a decisive API source; full corpus must retain it."
+    },
+    {
+      "id": "CTX04",
+      "name": "Deep evidence beyond fixed expansion",
+      "start": {
+        "sector": "worker",
+        "perspective": "reliability",
+        "depth": "overview"
+      },
+      "expansion": {
+        "depth": "focused",
+        "max_hops": 2
+      },
+      "max_chars": 2400,
+      "remove_dependencies_from": [],
+      "purpose": "Focused dependency expansion may suggest the right diagnosis but omit the deep decisive trace."
+    }
+  ]
+}

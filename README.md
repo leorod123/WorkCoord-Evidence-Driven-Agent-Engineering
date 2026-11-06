@@ -57,6 +57,16 @@ PYTHONPATH=src python -m workcoord_lab.intelligence_demo
 
 The trace exposes source revision, maturity, sector, perspective, depth, gaps, conflicting observations and reading characters. Its diagnostic signals are **human-authored annotations**, not inference by an AI model. The exercise demonstrates inspectability, not a measured reasoning or productivity improvement.
 
+## Three-way retrieval comparison (synthetic)
+
+The [retrieval comparison](docs/context-comparison-v0.md) tests **full corpus**, **local sector** and **dependency expansion** with the same published development rubric. Four designed cases include missing links and depth limits where selective reading fails.
+
+```bash
+PYTHONPATH=src python -m workcoord_lab.context_comparison
+```
+
+Metrics are **evidence recall**, a shared hand-annotated provisional hypothesis *proxy*, and **source-body characters read**. This is **not** a held-out agent benchmark or demonstrated productivity/token savings.
+
 ## What we will measure
 
 | Comparison | Purpose |
@@ -87,6 +97,7 @@ We will report valid repairs, justified abstentions, invalid completions, time, 
 | --- | --- | --- |
 | [Architecture](docs/architecture.md) | Boundaries and contracts | Design |
 | [Intelligence walkthrough](docs/intelligence-walkthrough.md) | Synthetic sector/perspective/depth navigation | Executable draft |
+| [Retrieval comparison](docs/context-comparison-v0.md) | Full/local/expanded context and negative cases | Public development fixture |
 | [Research method](docs/research-method.md) | Hypotheses, falsifiers and evidence | Design |
 | [Experimental design](docs/experimental-design.md) | Comparison plan, metrics and validity threats | Draft, not preregistered |
 | [Scenario catalog](evals/scenarios-v0.json) | Eight fictional scenario families | Draft |
@@ -105,6 +116,6 @@ For discussion in Portuguese, see [README-pt.md](README-pt.md).
 
 ## Status and next milestone
 
-This draft PR stack contains the fictional Python + SQLite coordinator and a **sectorized context-navigation walkthrough**. Both have deterministic tests, but neither demonstrates production security, authenticated real-world sources or improved agent performance. Next: design a common external evaluation of context relevance, missed counterevidence, outcomes and measured cost before real-agent experiments. See the [adversarial review response](docs/reviews/adversarial-response-v0.md).
+This draft PR stack contains the fictional Python + SQLite coordinator and a **sectorized context-navigation walkthrough**. Both have deterministic tests, but neither demonstrates production security, authenticated real-world sources or improved agent performance. Next: move from public development-fixture retrieval metrics to real-agent decision evaluation on fresh held-out cases, including missing counterevidence and total cost. See the [adversarial review response](docs/reviews/adversarial-response-v0.md).
 
 **License:** To be selected by the repository owner before redistribution is explicitly permitted.
