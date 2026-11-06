@@ -71,7 +71,7 @@ The agent may return **HOLD** when evidence cannot support a sound conclusion. H
 }
 ```
 
-The eventual reference implementation will use a caller-provided logical clock for reproducible tests and a small transactional store for claims. This is a reference design, not a distributed transaction coordinator.
+The reference Ledger uses SQLite transactions and a **synthetic caller-provided logical clock**, with an optional host-injected `time_source`. Only **accepted transitions** advance the persisted clock; a rejected actor cannot expire another valid lease by supplying a future tick. This is not distributed clock authority, authenticated reviewer identity or a production coordinator. See the [audit remediation notes](reviews/independent-audit-remediation-v0.md).
 
 ## Problem closure is not task completion
 

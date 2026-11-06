@@ -25,7 +25,7 @@ The D01–D15 probes are **reference tests for narrow example behavior**. Additi
 
 ## Limits
 
-- Caller-controlled logical ticks are checked against a SQLite-persisted, nondecreasing ledger-local clock. The clock can advance on a rejected request and cannot be rolled back by later requests. This is **not** a trusted source of time or a safe production/distributed lease clock.
+- Rejected work transitions **do not** advance the SQLite-persisted logical clock. An accepted transition records an auditable clock change **in the same transaction**. An optional `time_source` callable lets the embedding host supply time independently of the actor's tick. The default fallback is still a synthetic, **untrusted** caller tick; accepted hostile requests may still provide extreme values without a trusted clock authority. This is not production-safe distributed time or authenticated agents.
 - The fake sandbox is an in-memory interface, **not an OS security boundary**.
 - The hash-linked ledger detects accidental event history edits when verified and now records lease issuance, expiry and other decision-relevant metadata. It is still not a complete replay oracle, a signed record or an independently anchored tamper-proof audit log.
 - A small synthetic oracle now recomputes results independently from a caller-supplied `passed` flag, using HMAC-tagged receipts. Directly asserted PASS is not enough for task closure. The published demonstration key is deliberately public; this is **not** production authentication. Real deployments would need independently controlled evaluator credentials, authorization and source provenance.

@@ -29,6 +29,8 @@ The event model is intentionally small:
 
 Every event has a contiguous sequence, unique event ID, monotonic *logical* tick, predecessor SHA-256 and digest of its canonical JSON bytes. Replay checks the complete supplied hash chain before evaluating a prefix. Historical snapshots are requested with `at_seq`.
 
+**Audit refinement A02:** The identity of an `at_seq` checkpoint contains **only events available in that prefix**; the former `verified_supplied_chain_head_sha256` field was removed from the historical receipt. Call `verify_chain(records)` separately to verify and retrieve the **entire supplied chain** head. Later replay of the prefix is deterministic, but without an independently trusted anchor it is **not evidence that the checkpoint was actually anchored at that earlier time**.
+
 The digest provides **internal tamper evidence relative to a trusted head**; an attacker able to rewrite and rehash the entire log can forge a new chain. No independent anchor, signature, trusted clock, source retrieval or external reviewer identity is provided here.
 
 ## The central negative demonstration

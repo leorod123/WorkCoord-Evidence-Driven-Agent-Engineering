@@ -41,7 +41,7 @@ The walkthrough is not an agent benchmark. The expected hypothesis shift is buil
 - **Revision:** old validated documentation remains readable **as historical context**, never promoted to validation of the current revision.
 - **Maturity:** draft, historical, observed, validated; observations remain usable to **investigate**, never granted completion authority.
 - **Dependencies and contradictions:** linked sectors are surfaced as suggestions. Supporting and contradicting references remain visible in the final assessment.
-- **Cost and gaps:** real \`len(body)\` character counts are tracked with a hard cumulative cap; over-budget documents and potential counterevidence are explicitly reported.
+- **Cost and gaps:** real `len(body)` character counts are tracked with a hard cumulative cap. Over-budget **source IDs** and budget exclusions are reported, but **not the diagnostic stance of documents that were not read**. Counterexamples become visible only after the sources are selected; an external evaluator may still measure missed counterevidence without leaking it to the selector.
 
 A status of \`PROVISIONAL_INVESTIGATION_ONLY\` is invariant. Neither the selector nor its assessment can authorize a production action or mark a diagnosis as externally proven.
 

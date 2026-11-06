@@ -57,3 +57,7 @@ A [prova executável](docs/knowledge-genealogy-v0.md) preserva revisões de font
 ## Cadeia vertical de evidências v0 — contraprova tardia bloqueia
 
 O [exemplo integrado público](docs/vertical-evidence-v0.md) compõe os quatro avaliadores já existentes sobre o mesmo problema, remédio, revisão de fonte e hash do texto citado. Um checkpoint inicial é consultivamente favorável; depois, uma contraprova adicionada ao histórico produz `HOLD_KNOWLEDGE`, mesmo com testes técnicos verdes. Mudar a revisão da fonte bloqueia o reaproveitamento das análises anteriores. Sem serviços novos, agentes reais, autenticação de fontes, autorização de execução ou prova empírica de eficiência.
+
+## Correções da auditoria adversarial (A01-A05)
+
+A [resposta técnica](docs/reviews/independent-audit-remediation-v0.md) trata avanço indevido do relógio de leases, identidade histórica dependente de eventos futuros, vazamento de orientação das fontes não lidas, bloqueio excessivo por referências históricas de contexto e contraprovas cognitivas não resolvidas. O CI usa permissões mínimas e Actions fixadas por SHA. Isso **não comprova segurança de produção nem ganho com agentes reais**. A API do Codex não foi usada nesta etapa e nenhuma chave foi adicionada.

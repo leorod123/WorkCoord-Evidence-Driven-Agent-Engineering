@@ -88,7 +88,7 @@ The CI receipt includes the public catalog SHA-256, per-phase checkpoint SHA-256
 ## Cost and security limits
 
 - The stage inputs and all accepted event bytes are fictional, user-authored records. Hash equality proves byte agreement **relative to this input**, not that a file was authored or observed by a trusted entity.
-- The per-stage revisions and genealogy ticks do not establish a globally trusted causal clock. The history cut applies **only** to the genealogy; the earlier stage results are pinned unchanged and must be refreshed in an actual future implementation. Source revision changes trigger a conservative re-evaluation requirement.
+- The per-stage revisions and genealogy ticks do not establish a globally trusted causal clock. The history cut applies **only** to the genealogy; the earlier stage results are pinned unchanged and must be refreshed in an actual future implementation. Source revision changes trigger a conservative re-evaluation requirement. After audit fix A02, the genealogy receipt used in the vertical hash is **prefix-only**: adding future events cannot change the hash of an earlier history cut. This is not a trusted historical timestamp.
 - The output records estimated cognitive review units and declared remedy-cost tables, **not measured total costs**. It cannot optimize cost or compare the quality of real agents.
 - SHA-256 is not a digital signature. A party who can rewrite and reseal a log without an independent trusted head can forge a new history. Neither this module nor the public genealogy claims otherwise.
 - The prototype does not authorize work, access operational stores, issue payments, run background services, interpret private source systems or prove a scientifically valid final outcome.

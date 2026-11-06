@@ -149,6 +149,17 @@ There is **no new coordinator, service, database or agent**. The examples are op
 
 See the [executed synthetic integration results](docs/vertical-evidence-results-v0.md) for the 21 historical-cut classifications, exact CI receipts, regression tests and remaining scientific limitations.
 
+## Independent audit remediation (A01-A05)
+
+The [adversarial audit response](docs/reviews/independent-audit-remediation-v0.md) fixes five concrete contract gaps: rejected actors must not poison a lease clock; historical receipts must not depend on future events; unread sources must not reveal their diagnostic stance; unused historical background must not trigger unnecessary HOLDs; and a supporting perspective cannot silently hide unresolved counterevidence.
+
+Shared-SQLite reads are locked; CI uses least-privilege permissions and official Actions pinned to verified SHAs. A host may inject a trusted clock source; the caller-supplied fallback remains **synthetic and untrusted**. These are deterministic reference fixes, **not** production security or demonstrated agent advantage.
+
+```bash
+PYTHONPATH=src python -m unittest discover -s tests -v
+python scripts/verify_audit_mutations.py
+```
+
 ## What we will measure
 
 | Comparison | Purpose |
@@ -187,6 +198,7 @@ We will report valid repairs, justified abstentions, invalid completions, time, 
 | [Cognitive Perspectives v0](docs/cognitive-perspectives-v0.md) | Four advisory lenses, contradictions and one common checkpoint | Synthetic draft |
 | [Knowledge & Learning v0](docs/knowledge-genealogy-v0.md) | Append-only revision, negative evidence and dependent claim invalidation | Synthetic draft |
 | [Vertical evidence chain v0](docs/vertical-evidence-v0.md) | Four existing advisory contracts on one case; late negative invalidation | Synthetic draft |
+| [Independent audit remediation](docs/reviews/independent-audit-remediation-v0.md) | Directed A01-A05 tests, reader isolation and pinned CI Actions | Synthetic draft |
 | [Experimental design](docs/experimental-design.md) | Comparison plan, metrics and validity threats | Draft, not preregistered |
 | [Scenario catalog](evals/scenarios-v0.json) | Eight fictional scenario families | Draft |
 | [Preregistration](evals/preregistration-v0.json) | Proposed experimental parameters | Draft, not sealed |
