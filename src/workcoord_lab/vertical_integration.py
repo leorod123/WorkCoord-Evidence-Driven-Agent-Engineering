@@ -152,10 +152,18 @@ def _validate_common(packet: dict) -> tuple[dict, list]:
     ]:
         if not isinstance(body, str) or _source_sha(body) != digest:
             raise VerticalInputError(f"{label}: shared body hash is not identical")
-    if manifest["risk"] != "QUICK" and manifest["claim_id"] not in {
-            h.get("id") for h in rq.get("hypotheses", [])
-            if isinstance(h, dict)}:
-        raise VerticalInputError("research does not describe the knowledge claim")
+    if manifest["risk"] != "QUICK":
+        primary_hypothesis = _one(
+            rq.get("hypotheses", []), manifest["claim_id"], "id",
+            "research.hypotheses"
+        )
+        opened = _one(
+            [a["data"] for a in actions
+             if isinstance(a, dict) and a.get("kind") == "CLAIM_OPEN"],
+            manifest["claim_id"], "claim_id", "knowledge.claim",
+        )
+        if primary_hypothesis.get("claim") != opened.get("statement"):
+            raise VerticalInputError("knowledge claim and researched hypothesis text differ")
     if not any(
         isinstance(a, dict) and a.get("kind") == "CLAIM_OPEN"
         and isinstance(a.get("data"), dict)
@@ -163,26 +171,14 @@ def _validate_common(packet: dict) -> tuple[dict, list]:
         for a in actions
     ):
         raise VerticalInputError("knowledge claim is missing from the shared investigation")
-    if not any(
-        isinstance(w, dict) and w.get("id") == shared
-        and w.get("revision") == manifest["source_revision"]
-        for w in pd.get("evidence", [])
-    ):
-        # Missing this cross-module witness is not an input-shape exception.
-        # The problem module below will classify the missing witness itself.
-        pass
-    elif not any(
-        isinstance(w, dict) and w.get("id") == shared
-        and w.get("revision") == manifest["source_revision"]
-        for w in pd["evidence"]
-    ):
+    problem_witness = _one(pd.get("evidence"), shared, "id", "problem.evidence")
+    if problem_witness.get("revision") != manifest["source_revision"]:
         raise VerticalInputError("problem witness does not match shared revision")
     if not any(
         isinstance(rev, dict) and shared in rev.get("source_ids", [])
         for rev in cp.get("reviews", [])
     ):
-        # The native cognitive evaluator will handle missing review coverage.
-        pass
+        raise VerticalInputError("primary source is not cited by any cognitive perspective")
     return manifest, actions
 
 

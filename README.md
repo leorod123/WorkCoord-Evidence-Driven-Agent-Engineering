@@ -135,6 +135,18 @@ The 19 cases are **public authored toy examples**, not proof of real agent learn
 
 The [executed synthetic-development results](docs/knowledge-genealogy-results-v0.md) report both advisory recoveries and deliberately unresolved states; they do not measure learned model behavior or net efficiency.
 
+## Minimal vertical evidence chain — late counterevidence still blocks
+
+The [integrated fictional walkthrough](docs/vertical-evidence-v0.md) now calls the **existing** Research Quality, Problem & Decision, Cognitive Perspectives and Knowledge Genealogy evaluators over **the same issue, proposed remedy, source revision and body digest**.
+
+At an initial historical cut, all four stages can be locally favorable and the technical tests green; a later source-linked negative observation changes the result to **HOLD_KNOWLEDGE**. A subsequent source revision requires **all** earlier stages to be reconsidered even if Genealogy alone is re-reviewed. No real task closure, source authentication, production authorization or agent performance benefit is claimed.
+
+```bash
+PYTHONPATH=src python -m workcoord_lab.vertical_integration_suite
+```
+
+There is **no new coordinator, service, database or agent**. The examples are open, synthetic fixtures with deliberately negative cases and a low-overhead QUICK path.
+
 ## What we will measure
 
 | Comparison | Purpose |
@@ -172,6 +184,7 @@ We will report valid repairs, justified abstentions, invalid completions, time, 
 | [Problem & Decision v0](docs/problem-decision-v0.md) | Required outcomes, semantic evidence gaps and alternatives costs | Synthetic draft |
 | [Cognitive Perspectives v0](docs/cognitive-perspectives-v0.md) | Four advisory lenses, contradictions and one common checkpoint | Synthetic draft |
 | [Knowledge & Learning v0](docs/knowledge-genealogy-v0.md) | Append-only revision, negative evidence and dependent claim invalidation | Synthetic draft |
+| [Vertical evidence chain v0](docs/vertical-evidence-v0.md) | Four existing advisory contracts on one case; late negative invalidation | Synthetic draft |
 | [Experimental design](docs/experimental-design.md) | Comparison plan, metrics and validity threats | Draft, not preregistered |
 | [Scenario catalog](evals/scenarios-v0.json) | Eight fictional scenario families | Draft |
 | [Preregistration](evals/preregistration-v0.json) | Proposed experimental parameters | Draft, not sealed |
@@ -189,6 +202,6 @@ For discussion in Portuguese, see [README-pt.md](README-pt.md).
 
 ## Status and next milestone
 
-The draft PR stack contains small independent public reference modules for work coordination, context selection, adaptive investigation, research admission, semantic problem closure and cognitive perspective checkpoints. These are **deterministic synthetic fixtures**, not proof of production security or agent productivity. Next: challenge the complete synthetic reference stack with independent source and evaluator isolation, then compare real-agent decisions with baselines and full cost accounting. See the [adversarial review response](docs/reviews/adversarial-response-v0.md).
+The draft PR stack contains independent public reference modules for coordination, context, investigation, scientific admission, semantic problem closure, cognitive review and knowledge genealogy, plus a minimal four-module **vertical composition**. These are **deterministic synthetic fixtures**, not production integration or proof of agent productivity. Next: independent architecture/confidentiality review and license/PR stack decision, followed by a genuinely held-out evaluation with total cost accounting. See the [adversarial review response](docs/reviews/adversarial-response-v0.md).
 
 **License:** To be selected by the repository owner before redistribution is explicitly permitted.

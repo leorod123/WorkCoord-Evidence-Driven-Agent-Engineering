@@ -51,3 +51,7 @@ The [Cognitive Perspectives v0 demo](cognitive-perspectives-v0.md) applies four 
 ## Preserve negative findings and changed assumptions
 
 [Knowledge & Learning v0](knowledge-genealogy-v0.md) shows how an append-only fictional evidence history can preserve supporting and challenging observations while a source revision or parent review becomes outdated. Rejected hypotheses and explicit retractions remain visible; restored advisory readiness requires a new review bound to current source IDs. A hash-chained log supports deterministic replay and change detection, **not authenticated fact, independent reviewer identity or model training**.
+
+## Vertical falsification barrier (development example)
+
+The [minimal vertical chain](vertical-evidence-v0.md) reuses all four existing evaluators instead of copying their scientific or evidential rules. A single fictional issue and revision binds the research packet, problem witness, cognitive citations and append-only genealogy observation. Later contradicting evidence blocks the final advisory recommendation even when earlier test and study records stay unchanged. These are authored contract tests, **not** authenticated independent observations or a model benchmark.

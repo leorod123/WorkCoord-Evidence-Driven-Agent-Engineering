@@ -85,6 +85,12 @@ The [Knowledge & Learning v0 reference](knowledge-genealogy-v0.md) makes each so
 
 A new source revision is *staged* until an explicit supersession event; a revised basis cannot silently re-enable a claim. A later independently unverified review can restore **advisory temporal currency**, not scientific truth or production authorization. SHA-256 links synthetic event bytes but is not an external attestation or signed, trusted clock.
 
+## Minimal vertical composition (advisory only)
+
+The [vertical evidence-chain example](vertical-evidence-v0.md) calls the **original** Research Quality, Problem & Decision, Cognitive Perspectives and Knowledge Genealogy functions in sequence on one fictional source identity. A shared manifest binds issue, remedy, primary observation, source revision and body hash across stage inputs. Mismatches fail closed.
+
+An observation appearing **after** an earlier history cut may invalidate its advisory conclusion without changing the earlier technical test results. Superseding a primary source revision also blocks promotion until all four earlier stages are reconsidered. No new coordinator, persistence layer, external access or permission system is created; the integrated checkpoint remains advisory.
+
 ## Decision and completion gates
 
 1. A unit can be claimed only with an unexpired, uniquely fenced lease.

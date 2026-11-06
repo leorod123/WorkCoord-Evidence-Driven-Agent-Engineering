@@ -88,3 +88,7 @@ The [Cognitive Perspectives v0 cases](cognitive-perspectives-v0.md) are a **publ
 ## Public knowledge-history development probe
 
 The [Knowledge & Learning v0 fixture](knowledge-genealogy-v0.md) includes time-cut replay, source supersession, contradiction/retraction, dependent claim invalidation and recovery. Its public expected labels and source texts are written by the experiment authors, so this is a deterministic interface demonstration **not an independent test of an agent's ability to learn, generalize or avoid stale sources**. Any confirmatory evaluation must use separately held-out source histories and score final outcomes rather than confidence or log length; full revision/review overhead belongs in the cost denominator.
+
+## Integrated public development case (not held out)
+
+The [vertical evidence chain v0](vertical-evidence-v0.md) tests cross-stage identity, staged historical cuts and late adverse observations. The same catalog publishes its source bodies, outcome labels and patch operations. It is **not independent ground truth** and **must not** become a confirmatory or unseen benchmark. A future real-agent protocol must compare identical source-availability schedules across arms, count skipped/avoidable HOLDs and all control overhead, and use independently sealed evaluator data.
