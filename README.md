@@ -107,6 +107,20 @@ PYTHONPATH=src python -m workcoord_lab.problem_decision_suite
 
 Passing this check can at most create a *candidate for independent acceptance*; it never validates external evidence, authorizes a change or proves the repair worked.
 
+## Cognitive Perspectives v0 — one problem, four consultative lenses
+
+A new [executable fictional cognitive review](docs/cognitive-perspectives-v0.md) separates **technical sectors** (where evidence was generated) from **cognitive perspectives** (which question it answers). Research, Engineering, Efficiency and Risk all inspect the **same issue and proposal**, producing one source-linked checkpoint.
+
+One challenging lens cannot be outvoted by three supporters. Stale or missing reviews, unavailable sources and unresolved questions produce an explicit **HOLD**, never an invented consensus. Low-risk `QUICK` work can avoid mandatory four-lens overhead.
+
+```bash
+PYTHONPATH=src python -m workcoord_lab.cognitive_perspectives_suite
+```
+
+All **19 scenarios are public, fictional, human-authored development fixtures**. No four-agent system, independently verified evidence, measured model benefit, or execution authority is claimed.
+
+The [executed synthetic-development results](docs/cognitive-perspectives-results-v0.md) include explicit disagreement, missing and stale evidence, low-risk shortcut cases and the required external-review boundary.
+
 ## What we will measure
 
 | Comparison | Purpose |
@@ -142,6 +156,7 @@ We will report valid repairs, justified abstentions, invalid completions, time, 
 | [Research method](docs/research-method.md) | Hypotheses, falsifiers and evidence | Design |
 | [Research Quality v0](docs/research-quality-v0.md) | Typed advisory admission, failure domains and negative controls | Synthetic draft |
 | [Problem & Decision v0](docs/problem-decision-v0.md) | Required outcomes, semantic evidence gaps and alternatives costs | Synthetic draft |
+| [Cognitive Perspectives v0](docs/cognitive-perspectives-v0.md) | Four advisory lenses, contradictions and one common checkpoint | Synthetic draft |
 | [Experimental design](docs/experimental-design.md) | Comparison plan, metrics and validity threats | Draft, not preregistered |
 | [Scenario catalog](evals/scenarios-v0.json) | Eight fictional scenario families | Draft |
 | [Preregistration](evals/preregistration-v0.json) | Proposed experimental parameters | Draft, not sealed |
@@ -159,6 +174,6 @@ For discussion in Portuguese, see [README-pt.md](README-pt.md).
 
 ## Status and next milestone
 
-This draft PR stack contains the fictional Python + SQLite coordinator and a **sectorized context-navigation walkthrough**. Both have deterministic tests, but neither demonstrates production security, authenticated real-world sources or improved agent performance. Next: review the adaptive policy's explicit false stops and undecidable worlds, then design independently held-out real-agent decision tests with total costs and no gold-data leakage. See the [adversarial review response](docs/reviews/adversarial-response-v0.md).
+The draft PR stack contains small independent public reference modules for work coordination, context selection, adaptive investigation, research admission, semantic problem closure and cognitive perspective checkpoints. These are **deterministic synthetic fixtures**, not proof of production security or agent productivity. Next: a separate **Knowledge & Learning** study of source lineage, invalidation and negative findings, then held-out real-agent evaluation with full cost accounting. See the [adversarial review response](docs/reviews/adversarial-response-v0.md).
 
 **License:** To be selected by the repository owner before redistribution is explicitly permitted.
