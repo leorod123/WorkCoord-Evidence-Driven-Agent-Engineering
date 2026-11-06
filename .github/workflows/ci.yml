@@ -60,6 +60,20 @@ jobs:
           name: adaptive-eval-py-${{ matrix.python-version }}
           path: artifacts/adaptive-eval-v0.json
           if-no-files-found: error
+      - name: Detect research admission regressions (M17-M24)
+        env:
+          PYTHONPATH: src
+        run: python scripts/verify_research_mutations.py
+      - name: Run public research admission development cases
+        env:
+          PYTHONPATH: src
+        run: python -m workcoord_lab.research_quality_suite --output artifacts/research-quality-v0.json
+      - name: Upload deterministic research admission receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: research-quality-py-${{ matrix.python-version }}
+          path: artifacts/research-quality-v0.json
+          if-no-files-found: error
       - name: Run synthetic demo
         env:
           PYTHONPATH: src

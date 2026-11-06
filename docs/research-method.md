@@ -33,3 +33,9 @@ The fictional simulator will let users reproduce a visible incident. The future 
 ## What counts as progress?
 
 An actionable, falsifiable observation, a correctly scoped rejection, or a verified repair can all be useful. Increasing the number of agents, generated documents, task closures, or tokens is not itself a measure of progress.
+
+## Executable research-admission companion (draft)
+
+The [Research Quality v0 reference](research-quality-v0.md) checks eight *generic* scientific-error domains in public fictional packets. It separates source availability from observation time, requires falsifiable alternatives and negative controls for nontrivial tasks, flags late outcome freezes, and prevents a declaration of `TESTED` or `VALIDATED` from being treated as external proof.
+
+It is **advisory and schema-level only**: no source authentication, causal inference, independent scientific review, benchmark or action permission is implemented. A lightweight `QUICK` case has no unnecessary hypothesis-grid/baseline requirement.

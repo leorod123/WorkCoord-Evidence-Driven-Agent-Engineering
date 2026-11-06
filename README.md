@@ -81,6 +81,18 @@ Its evaluator is **separate from the selectors but public in this repository**. 
 
 On the seven public development cases, the adaptive policy produced **three evidence-supported provisional labels**, **two justified access-limited HOLDs**, **one avoidable HOLD** and **one budget-limited HOLD**. It read **3,161** source-body characters versus **2,522** for fixed dependency expansion and **6,001** for the full corpus comparator. See the [case-by-case results and negative findings](docs/adaptive-evidence-results-v0.md). These are *not* measures of intelligence or total agent cost.
 
+## Research Quality v0 — scientific admission without overclaiming
+
+A new [executable, independent research-admission check](docs/research-quality-v0.md) evaluates **eight general failure domains**: source and time integrity, outcome leakage, proxy validity, falsification, evidence origin dependence, and unsupported claim promotion.
+
+It keeps small `QUICK` investigations lightweight, while `STRUCTURED` and `CRITICAL` studies require progressively stronger evidence. A successful check means only **DESIGN_ADMISSIBLE**, **not** a scientifically validated hypothesis, independent review, or execution authority.
+
+```bash
+PYTHONPATH=src python -m workcoord_lab.research_quality_suite
+```
+
+The **14 fictional public cases** include late preregistration, unavailable evidence, stale notes, duplicate source groups, negative controls and a simple low-risk example where additional process would be unnecessary. These are *development fixtures*, not empirical agent-performance results.
+
 ## What we will measure
 
 | Comparison | Purpose |
@@ -114,6 +126,7 @@ We will report valid repairs, justified abstentions, invalid completions, time, 
 | [Retrieval comparison](docs/context-comparison-v0.md) | Full/local/expanded context and negative cases | Public development fixture |
 | [Adaptive escalation](docs/adaptive-evidence-v0.md) | Stay / deepen / expand / HOLD, paired-world counterfactuals | Synthetic development fixture |
 | [Research method](docs/research-method.md) | Hypotheses, falsifiers and evidence | Design |
+| [Research Quality v0](docs/research-quality-v0.md) | Typed advisory admission, failure domains and negative controls | Synthetic draft |
 | [Experimental design](docs/experimental-design.md) | Comparison plan, metrics and validity threats | Draft, not preregistered |
 | [Scenario catalog](evals/scenarios-v0.json) | Eight fictional scenario families | Draft |
 | [Preregistration](evals/preregistration-v0.json) | Proposed experimental parameters | Draft, not sealed |

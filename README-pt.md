@@ -37,3 +37,7 @@ O [experimento sintético](docs/context-comparison-v0.md) compara corpus complet
 ## Próxima prova: expandir, aprofundar, permanecer ou suspender
 
 O [ensaio adaptativo sintético](docs/adaptive-evidence-v0.md) testa `STAY`, `DEEPEN`, `EXPAND` e `HOLD`, incluindo um HOLD **evitável** e dois mundos com a mesma informação disponível mas causas ocultas distintas. A avaliação não premia desistências indevidas nem confunde uma hipótese plausível com evidência completa. O avaliador continua público e todos os sinais são fictícios: **não se trata de benchmark com agentes reais**.
+
+## Research Quality v0 — rigor científico proporcional
+
+Uma [verificação consultiva de pesquisa](docs/research-quality-v0.md) identifica problemas de proveniência, disponibilidade temporal, observação posterior à decisão, controles ausentes, métricas que não comprovam a hipótese e promoção indevida de conclusões. As modalidades `QUICK`, `STRUCTURED` e `CRITICAL` mantêm o rigor proporcional ao risco. Há 14 cenários fictícios públicos; uma aprovação significa **desenho admissível**, nunca hipótese cientificamente validada, autorização de ação ou ganho de desempenho comprovado.
