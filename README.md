@@ -147,6 +147,8 @@ PYTHONPATH=src python -m workcoord_lab.vertical_integration_suite
 
 There is **no new coordinator, service, database or agent**. The examples are open, synthetic fixtures with deliberately negative cases and a low-overhead QUICK path.
 
+See the [executed synthetic integration results](docs/vertical-evidence-results-v0.md) for the 21 historical-cut classifications, exact CI receipts, regression tests and remaining scientific limitations.
+
 ## What we will measure
 
 | Comparison | Purpose |
