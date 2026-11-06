@@ -1,0 +1,791 @@
+{
+  "schema": "workcoord.research-case-catalog/v0",
+  "status": "PUBLIC_FICTIONAL_DEVELOPMENT_FIXTURES",
+  "warning": "Case expectations are public and not valid as an independent agent benchmark.",
+  "cases": [
+    {
+      "case_id": "RQ01",
+      "label": "Quick local check with no unnecessary requirements",
+      "packet": {
+        "schema": "workcoord.research-admission/v0",
+        "risk": "QUICK",
+        "question": "Which operation caused the fictional notification duplication?",
+        "source": {
+          "id": "flowdesk-simulator",
+          "revision": "fictional-r2"
+        },
+        "decision_at": "2026-08-11T11:00:00+00:00",
+        "requested_knowledge_state": "HYPOTHESIS",
+        "evidence": [
+          {
+            "id": "queue-observation",
+            "revision": "fictional-r2",
+            "origin_group": "queue-simulator",
+            "source_class": "synthetic",
+            "observed_at": "2026-08-11T10:00:00+00:00",
+            "available_at": "2026-08-11T10:01:00+00:00",
+            "read_at": "2026-08-11T10:02:00+00:00",
+            "finding": "A simulated retry was recorded after an acknowledgement loss."
+          }
+        ],
+        "hypotheses": [],
+        "controls": {},
+        "next_test": "Inspect one bounded local trace.",
+        "evaluation": {
+          "outcome_bearing": false
+        }
+      },
+      "expected_status": "DESIGN_ADMISSIBLE",
+      "expected_issue_codes": []
+    },
+    {
+      "case_id": "RQ02",
+      "label": "Structured falsifiable design",
+      "packet": {
+        "schema": "workcoord.research-admission/v0",
+        "risk": "STRUCTURED",
+        "question": "Which operation caused the fictional notification duplication?",
+        "source": {
+          "id": "flowdesk-simulator",
+          "revision": "fictional-r2"
+        },
+        "decision_at": "2026-08-11T11:00:00+00:00",
+        "requested_knowledge_state": "HYPOTHESIS",
+        "evidence": [
+          {
+            "id": "queue-observation",
+            "revision": "fictional-r2",
+            "origin_group": "queue-simulator",
+            "source_class": "synthetic",
+            "observed_at": "2026-08-11T10:00:00+00:00",
+            "available_at": "2026-08-11T10:01:00+00:00",
+            "read_at": "2026-08-11T10:02:00+00:00",
+            "finding": "A simulated retry was recorded after an acknowledgement loss."
+          }
+        ],
+        "hypotheses": [
+          {
+            "id": "H-retry",
+            "claim": "A queue retry created a duplicate.",
+            "falsifier": "Show delivery only after two independent producer sends.",
+            "evidence_ids": [
+              "queue-observation"
+            ]
+          },
+          {
+            "id": "H-producer",
+            "claim": "Two producers sent the same event.",
+            "falsifier": "Show one producer send followed by a retried delivery.",
+            "evidence_ids": []
+          }
+        ],
+        "controls": {
+          "baseline": "A synthetic delivery without acknowledgement loss.",
+          "negative_control": "A different event that should not be duplicated.",
+          "construct_fit": true
+        },
+        "next_test": "Replay the event with the lost ACK and inspect the delivery IDs.",
+        "evaluation": {
+          "outcome_bearing": false
+        }
+      },
+      "expected_status": "DESIGN_ADMISSIBLE",
+      "expected_issue_codes": []
+    },
+    {
+      "case_id": "RQ03",
+      "label": "Outcome inspected before the plan was frozen",
+      "packet": {
+        "schema": "workcoord.research-admission/v0",
+        "risk": "STRUCTURED",
+        "question": "Which operation caused the fictional notification duplication?",
+        "source": {
+          "id": "flowdesk-simulator",
+          "revision": "fictional-r2"
+        },
+        "decision_at": "2026-08-11T11:00:00+00:00",
+        "requested_knowledge_state": "HYPOTHESIS",
+        "evidence": [
+          {
+            "id": "queue-observation",
+            "revision": "fictional-r2",
+            "origin_group": "queue-simulator",
+            "source_class": "synthetic",
+            "observed_at": "2026-08-11T10:00:00+00:00",
+            "available_at": "2026-08-11T10:01:00+00:00",
+            "read_at": "2026-08-11T10:02:00+00:00",
+            "finding": "A simulated retry was recorded after an acknowledgement loss."
+          }
+        ],
+        "hypotheses": [
+          {
+            "id": "H-retry",
+            "claim": "A queue retry created a duplicate.",
+            "falsifier": "Show delivery only after two independent producer sends.",
+            "evidence_ids": [
+              "queue-observation"
+            ]
+          },
+          {
+            "id": "H-producer",
+            "claim": "Two producers sent the same event.",
+            "falsifier": "Show one producer send followed by a retried delivery.",
+            "evidence_ids": []
+          }
+        ],
+        "controls": {
+          "baseline": "A synthetic delivery without acknowledgement loss.",
+          "negative_control": "A different event that should not be duplicated.",
+          "construct_fit": true
+        },
+        "next_test": "Replay the event with the lost ACK and inspect the delivery IDs.",
+        "evaluation": {
+          "outcome_bearing": true,
+          "plan_frozen_at": "2026-08-11T10:59:00Z",
+          "outcome_observed_at": "2026-08-11T10:56:00Z",
+          "pass_criterion": "Exactly one notification per event"
+        }
+      },
+      "expected_status": "NEEDS_RESEARCH",
+      "expected_issue_codes": [
+        "PLAN_NOT_FROZEN_BEFORE_OUTCOME"
+      ]
+    },
+    {
+      "case_id": "RQ04",
+      "label": "Source only became available after decision",
+      "packet": {
+        "schema": "workcoord.research-admission/v0",
+        "risk": "STRUCTURED",
+        "question": "Which operation caused the fictional notification duplication?",
+        "source": {
+          "id": "flowdesk-simulator",
+          "revision": "fictional-r2"
+        },
+        "decision_at": "2026-08-11T11:00:00+00:00",
+        "requested_knowledge_state": "HYPOTHESIS",
+        "evidence": [
+          {
+            "id": "queue-observation",
+            "revision": "fictional-r2",
+            "origin_group": "queue-simulator",
+            "source_class": "synthetic",
+            "observed_at": "2026-08-11T10:00:00+00:00",
+            "available_at": "2026-08-11T11:05:00Z",
+            "read_at": "2026-08-11T11:06:00Z",
+            "finding": "A simulated retry was recorded after an acknowledgement loss."
+          }
+        ],
+        "hypotheses": [
+          {
+            "id": "H-retry",
+            "claim": "A queue retry created a duplicate.",
+            "falsifier": "Show delivery only after two independent producer sends.",
+            "evidence_ids": [
+              "queue-observation"
+            ]
+          },
+          {
+            "id": "H-producer",
+            "claim": "Two producers sent the same event.",
+            "falsifier": "Show one producer send followed by a retried delivery.",
+            "evidence_ids": []
+          }
+        ],
+        "controls": {
+          "baseline": "A synthetic delivery without acknowledgement loss.",
+          "negative_control": "A different event that should not be duplicated.",
+          "construct_fit": true
+        },
+        "next_test": "Replay the event with the lost ACK and inspect the delivery IDs.",
+        "evaluation": {
+          "outcome_bearing": false
+        }
+      },
+      "expected_status": "NEEDS_RESEARCH",
+      "expected_issue_codes": [
+        "SOURCE_NOT_AVAILABLE_AT_DECISION"
+      ]
+    },
+    {
+      "case_id": "RQ05",
+      "label": "Two reads of the same origin are not independent",
+      "packet": {
+        "schema": "workcoord.research-admission/v0",
+        "risk": "CRITICAL",
+        "question": "Which operation caused the fictional notification duplication?",
+        "source": {
+          "id": "flowdesk-simulator",
+          "revision": "fictional-r2"
+        },
+        "decision_at": "2026-08-11T11:00:00+00:00",
+        "requested_knowledge_state": "HYPOTHESIS",
+        "evidence": [
+          {
+            "id": "queue-observation",
+            "revision": "fictional-r2",
+            "origin_group": "queue-simulator",
+            "source_class": "synthetic",
+            "observed_at": "2026-08-11T10:00:00+00:00",
+            "available_at": "2026-08-11T10:01:00+00:00",
+            "read_at": "2026-08-11T10:02:00+00:00",
+            "finding": "A simulated retry was recorded after an acknowledgement loss."
+          },
+          {
+            "id": "queue-second-read",
+            "revision": "fictional-r2",
+            "origin_group": "queue-simulator",
+            "source_class": "synthetic",
+            "observed_at": "2026-08-11T10:00:00+00:00",
+            "available_at": "2026-08-11T10:01:00+00:00",
+            "read_at": "2026-08-11T10:02:00+00:00",
+            "finding": "A simulated retry was recorded after an acknowledgement loss."
+          }
+        ],
+        "hypotheses": [
+          {
+            "id": "H-retry",
+            "claim": "A queue retry created a duplicate.",
+            "falsifier": "Show delivery only after two independent producer sends.",
+            "evidence_ids": [
+              "queue-observation"
+            ]
+          },
+          {
+            "id": "H-producer",
+            "claim": "Two producers sent the same event.",
+            "falsifier": "Show one producer send followed by a retried delivery.",
+            "evidence_ids": []
+          }
+        ],
+        "controls": {
+          "baseline": "A synthetic delivery without acknowledgement loss.",
+          "negative_control": "A different event that should not be duplicated.",
+          "construct_fit": true
+        },
+        "next_test": "Replay the event with the lost ACK and inspect the delivery IDs.",
+        "evaluation": {
+          "outcome_bearing": false
+        },
+        "independent_review": "fictional-human-review-pending"
+      },
+      "expected_status": "NEEDS_RESEARCH",
+      "expected_issue_codes": [
+        "NO_INDEPENDENT_ORIGIN_GROUPS_DECLARED"
+      ]
+    },
+    {
+      "case_id": "RQ06",
+      "label": "Even a well formed critical packet requires external review",
+      "packet": {
+        "schema": "workcoord.research-admission/v0",
+        "risk": "CRITICAL",
+        "question": "Which operation caused the fictional notification duplication?",
+        "source": {
+          "id": "flowdesk-simulator",
+          "revision": "fictional-r2"
+        },
+        "decision_at": "2026-08-11T11:00:00+00:00",
+        "requested_knowledge_state": "HYPOTHESIS",
+        "evidence": [
+          {
+            "id": "queue-observation",
+            "revision": "fictional-r2",
+            "origin_group": "queue-simulator",
+            "source_class": "synthetic",
+            "observed_at": "2026-08-11T10:00:00+00:00",
+            "available_at": "2026-08-11T10:01:00+00:00",
+            "read_at": "2026-08-11T10:02:00+00:00",
+            "finding": "A simulated retry was recorded after an acknowledgement loss."
+          },
+          {
+            "id": "api-observation",
+            "revision": "fictional-r2",
+            "origin_group": "api-simulator",
+            "source_class": "synthetic",
+            "observed_at": "2026-08-11T10:00:00+00:00",
+            "available_at": "2026-08-11T10:01:00+00:00",
+            "read_at": "2026-08-11T10:02:00+00:00",
+            "finding": "A simulated retry was recorded after an acknowledgement loss."
+          }
+        ],
+        "hypotheses": [
+          {
+            "id": "H-retry",
+            "claim": "A queue retry created a duplicate.",
+            "falsifier": "Show delivery only after two independent producer sends.",
+            "evidence_ids": [
+              "queue-observation"
+            ]
+          },
+          {
+            "id": "H-producer",
+            "claim": "Two producers sent the same event.",
+            "falsifier": "Show one producer send followed by a retried delivery.",
+            "evidence_ids": []
+          }
+        ],
+        "controls": {
+          "baseline": "A synthetic delivery without acknowledgement loss.",
+          "negative_control": "A different event that should not be duplicated.",
+          "construct_fit": true
+        },
+        "next_test": "Replay the event with the lost ACK and inspect the delivery IDs.",
+        "evaluation": {
+          "outcome_bearing": false
+        },
+        "independent_review": "reviewer-appointment"
+      },
+      "expected_status": "REQUIRES_EXTERNAL_REVIEW",
+      "expected_issue_codes": []
+    },
+    {
+      "case_id": "RQ07",
+      "label": "Proxy metric not justified",
+      "packet": {
+        "schema": "workcoord.research-admission/v0",
+        "risk": "STRUCTURED",
+        "question": "Which operation caused the fictional notification duplication?",
+        "source": {
+          "id": "flowdesk-simulator",
+          "revision": "fictional-r2"
+        },
+        "decision_at": "2026-08-11T11:00:00+00:00",
+        "requested_knowledge_state": "HYPOTHESIS",
+        "evidence": [
+          {
+            "id": "queue-observation",
+            "revision": "fictional-r2",
+            "origin_group": "queue-simulator",
+            "source_class": "synthetic",
+            "observed_at": "2026-08-11T10:00:00+00:00",
+            "available_at": "2026-08-11T10:01:00+00:00",
+            "read_at": "2026-08-11T10:02:00+00:00",
+            "finding": "A simulated retry was recorded after an acknowledgement loss."
+          }
+        ],
+        "hypotheses": [
+          {
+            "id": "H-retry",
+            "claim": "A queue retry created a duplicate.",
+            "falsifier": "Show delivery only after two independent producer sends.",
+            "evidence_ids": [
+              "queue-observation"
+            ]
+          },
+          {
+            "id": "H-producer",
+            "claim": "Two producers sent the same event.",
+            "falsifier": "Show one producer send followed by a retried delivery.",
+            "evidence_ids": []
+          }
+        ],
+        "controls": {
+          "baseline": "A synthetic delivery without acknowledgement loss.",
+          "negative_control": "A different event that should not be duplicated.",
+          "construct_fit": false
+        },
+        "next_test": "Replay the event with the lost ACK and inspect the delivery IDs.",
+        "evaluation": {
+          "outcome_bearing": false
+        }
+      },
+      "expected_status": "NEEDS_RESEARCH",
+      "expected_issue_codes": [
+        "MEASURE_DOES_NOT_ESTABLISH_TARGET"
+      ]
+    },
+    {
+      "case_id": "RQ08",
+      "label": "Self asserted validated result",
+      "packet": {
+        "schema": "workcoord.research-admission/v0",
+        "risk": "STRUCTURED",
+        "question": "Which operation caused the fictional notification duplication?",
+        "source": {
+          "id": "flowdesk-simulator",
+          "revision": "fictional-r2"
+        },
+        "decision_at": "2026-08-11T11:00:00+00:00",
+        "requested_knowledge_state": "VALIDATED",
+        "evidence": [
+          {
+            "id": "queue-observation",
+            "revision": "fictional-r2",
+            "origin_group": "queue-simulator",
+            "source_class": "synthetic",
+            "observed_at": "2026-08-11T10:00:00+00:00",
+            "available_at": "2026-08-11T10:01:00+00:00",
+            "read_at": "2026-08-11T10:02:00+00:00",
+            "finding": "A simulated retry was recorded after an acknowledgement loss."
+          }
+        ],
+        "hypotheses": [
+          {
+            "id": "H-retry",
+            "claim": "A queue retry created a duplicate.",
+            "falsifier": "Show delivery only after two independent producer sends.",
+            "evidence_ids": [
+              "queue-observation"
+            ]
+          },
+          {
+            "id": "H-producer",
+            "claim": "Two producers sent the same event.",
+            "falsifier": "Show one producer send followed by a retried delivery.",
+            "evidence_ids": []
+          }
+        ],
+        "controls": {
+          "baseline": "A synthetic delivery without acknowledgement loss.",
+          "negative_control": "A different event that should not be duplicated.",
+          "construct_fit": true
+        },
+        "next_test": "Replay the event with the lost ACK and inspect the delivery IDs.",
+        "evaluation": {
+          "outcome_bearing": false
+        }
+      },
+      "expected_status": "NEEDS_RESEARCH",
+      "expected_issue_codes": [
+        "CANNOT_PROMOTE_TO_TESTED_OR_VALIDATED_FROM_DECLARATIONS"
+      ]
+    },
+    {
+      "case_id": "RQ09",
+      "label": "No negative control",
+      "packet": {
+        "schema": "workcoord.research-admission/v0",
+        "risk": "STRUCTURED",
+        "question": "Which operation caused the fictional notification duplication?",
+        "source": {
+          "id": "flowdesk-simulator",
+          "revision": "fictional-r2"
+        },
+        "decision_at": "2026-08-11T11:00:00+00:00",
+        "requested_knowledge_state": "HYPOTHESIS",
+        "evidence": [
+          {
+            "id": "queue-observation",
+            "revision": "fictional-r2",
+            "origin_group": "queue-simulator",
+            "source_class": "synthetic",
+            "observed_at": "2026-08-11T10:00:00+00:00",
+            "available_at": "2026-08-11T10:01:00+00:00",
+            "read_at": "2026-08-11T10:02:00+00:00",
+            "finding": "A simulated retry was recorded after an acknowledgement loss."
+          }
+        ],
+        "hypotheses": [
+          {
+            "id": "H-retry",
+            "claim": "A queue retry created a duplicate.",
+            "falsifier": "Show delivery only after two independent producer sends.",
+            "evidence_ids": [
+              "queue-observation"
+            ]
+          },
+          {
+            "id": "H-producer",
+            "claim": "Two producers sent the same event.",
+            "falsifier": "Show one producer send followed by a retried delivery.",
+            "evidence_ids": []
+          }
+        ],
+        "controls": {
+          "baseline": "A synthetic delivery without acknowledgement loss.",
+          "construct_fit": true
+        },
+        "next_test": "Replay the event with the lost ACK and inspect the delivery IDs.",
+        "evaluation": {
+          "outcome_bearing": false
+        }
+      },
+      "expected_status": "NEEDS_RESEARCH",
+      "expected_issue_codes": [
+        "NEGATIVE_CONTROL_NOT_DEFINED"
+      ]
+    },
+    {
+      "case_id": "RQ10",
+      "label": "Prospective outcome lock recorded before observation",
+      "packet": {
+        "schema": "workcoord.research-admission/v0",
+        "risk": "STRUCTURED",
+        "question": "Which operation caused the fictional notification duplication?",
+        "source": {
+          "id": "flowdesk-simulator",
+          "revision": "fictional-r2"
+        },
+        "decision_at": "2026-08-11T11:00:00+00:00",
+        "requested_knowledge_state": "HYPOTHESIS",
+        "evidence": [
+          {
+            "id": "queue-observation",
+            "revision": "fictional-r2",
+            "origin_group": "queue-simulator",
+            "source_class": "synthetic",
+            "observed_at": "2026-08-11T10:00:00+00:00",
+            "available_at": "2026-08-11T10:01:00+00:00",
+            "read_at": "2026-08-11T10:02:00+00:00",
+            "finding": "A simulated retry was recorded after an acknowledgement loss."
+          }
+        ],
+        "hypotheses": [
+          {
+            "id": "H-retry",
+            "claim": "A queue retry created a duplicate.",
+            "falsifier": "Show delivery only after two independent producer sends.",
+            "evidence_ids": [
+              "queue-observation"
+            ]
+          },
+          {
+            "id": "H-producer",
+            "claim": "Two producers sent the same event.",
+            "falsifier": "Show one producer send followed by a retried delivery.",
+            "evidence_ids": []
+          }
+        ],
+        "controls": {
+          "baseline": "A synthetic delivery without acknowledgement loss.",
+          "negative_control": "A different event that should not be duplicated.",
+          "construct_fit": true
+        },
+        "next_test": "Replay the event with the lost ACK and inspect the delivery IDs.",
+        "evaluation": {
+          "outcome_bearing": true,
+          "plan_frozen_at": "2026-08-11T10:30:00Z",
+          "outcome_observed_at": "2026-08-11T10:56:00Z",
+          "pass_criterion": "Exactly one notification per event"
+        }
+      },
+      "expected_status": "DESIGN_ADMISSIBLE",
+      "expected_issue_codes": []
+    },
+    {
+      "case_id": "RQ11",
+      "label": "Historical note cannot establish current behavior",
+      "packet": {
+        "schema": "workcoord.research-admission/v0",
+        "risk": "STRUCTURED",
+        "question": "Which operation caused the fictional notification duplication?",
+        "source": {
+          "id": "flowdesk-simulator",
+          "revision": "fictional-r2"
+        },
+        "decision_at": "2026-08-11T11:00:00+00:00",
+        "requested_knowledge_state": "HYPOTHESIS",
+        "evidence": [
+          {
+            "id": "queue-observation",
+            "revision": "fictional-r0",
+            "origin_group": "queue-simulator",
+            "source_class": "historical",
+            "observed_at": "2026-08-11T10:00:00+00:00",
+            "available_at": "2026-08-11T10:01:00+00:00",
+            "read_at": "2026-08-11T10:02:00+00:00",
+            "finding": "A simulated retry was recorded after an acknowledgement loss."
+          }
+        ],
+        "hypotheses": [
+          {
+            "id": "H-retry",
+            "claim": "A queue retry created a duplicate.",
+            "falsifier": "Show delivery only after two independent producer sends.",
+            "evidence_ids": [
+              "queue-observation"
+            ]
+          },
+          {
+            "id": "H-producer",
+            "claim": "Two producers sent the same event.",
+            "falsifier": "Show one producer send followed by a retried delivery.",
+            "evidence_ids": []
+          }
+        ],
+        "controls": {
+          "baseline": "A synthetic delivery without acknowledgement loss.",
+          "negative_control": "A different event that should not be duplicated.",
+          "construct_fit": true
+        },
+        "next_test": "Replay the event with the lost ACK and inspect the delivery IDs.",
+        "evaluation": {
+          "outcome_bearing": false
+        }
+      },
+      "expected_status": "NEEDS_RESEARCH",
+      "expected_issue_codes": [
+        "CURRENT_CONCLUSION_USES_STALE_OR_HISTORICAL_SOURCE"
+      ]
+    },
+    {
+      "case_id": "RQ12",
+      "label": "No current source after old note",
+      "packet": {
+        "schema": "workcoord.research-admission/v0",
+        "risk": "STRUCTURED",
+        "question": "Which operation caused the fictional notification duplication?",
+        "source": {
+          "id": "flowdesk-simulator",
+          "revision": "fictional-r2"
+        },
+        "decision_at": "2026-08-11T11:00:00+00:00",
+        "requested_knowledge_state": "HYPOTHESIS",
+        "evidence": [
+          {
+            "id": "queue-observation",
+            "revision": "fictional-r0",
+            "origin_group": "queue-simulator",
+            "source_class": "historical",
+            "observed_at": "2026-08-11T10:00:00+00:00",
+            "available_at": "2026-08-11T10:01:00+00:00",
+            "read_at": "2026-08-11T10:02:00+00:00",
+            "finding": "A simulated retry was recorded after an acknowledgement loss."
+          }
+        ],
+        "hypotheses": [
+          {
+            "id": "H-retry",
+            "claim": "A queue retry created a duplicate.",
+            "falsifier": "Show delivery only after two independent producer sends.",
+            "evidence_ids": [
+              "queue-observation"
+            ]
+          },
+          {
+            "id": "H-producer",
+            "claim": "Two producers sent the same event.",
+            "falsifier": "Show one producer send followed by a retried delivery.",
+            "evidence_ids": []
+          }
+        ],
+        "controls": {
+          "baseline": "A synthetic delivery without acknowledgement loss.",
+          "negative_control": "A different event that should not be duplicated.",
+          "construct_fit": true
+        },
+        "next_test": "Replay the event with the lost ACK and inspect the delivery IDs.",
+        "evaluation": {
+          "outcome_bearing": false
+        }
+      },
+      "expected_status": "NEEDS_RESEARCH",
+      "expected_issue_codes": [
+        "NO_CURRENT_ADMISSIBLE_OBSERVATION"
+      ]
+    },
+    {
+      "case_id": "RQ13",
+      "label": "Unavailable observation despite valid current revision",
+      "packet": {
+        "schema": "workcoord.research-admission/v0",
+        "risk": "STRUCTURED",
+        "question": "Which operation caused the fictional notification duplication?",
+        "source": {
+          "id": "flowdesk-simulator",
+          "revision": "fictional-r2"
+        },
+        "decision_at": "2026-08-11T11:00:00+00:00",
+        "requested_knowledge_state": "HYPOTHESIS",
+        "evidence": [
+          {
+            "id": "queue-observation",
+            "revision": "fictional-r2",
+            "origin_group": "queue-simulator",
+            "source_class": "synthetic",
+            "observed_at": "2026-08-11T10:00:00+00:00",
+            "available_at": "2026-08-11T10:30:00Z",
+            "read_at": "2026-08-11T11:01:00Z",
+            "finding": "A simulated retry was recorded after an acknowledgement loss."
+          }
+        ],
+        "hypotheses": [
+          {
+            "id": "H-retry",
+            "claim": "A queue retry created a duplicate.",
+            "falsifier": "Show delivery only after two independent producer sends.",
+            "evidence_ids": [
+              "queue-observation"
+            ]
+          },
+          {
+            "id": "H-producer",
+            "claim": "Two producers sent the same event.",
+            "falsifier": "Show one producer send followed by a retried delivery.",
+            "evidence_ids": []
+          }
+        ],
+        "controls": {
+          "baseline": "A synthetic delivery without acknowledgement loss.",
+          "negative_control": "A different event that should not be duplicated.",
+          "construct_fit": true
+        },
+        "next_test": "Replay the event with the lost ACK and inspect the delivery IDs.",
+        "evaluation": {
+          "outcome_bearing": false
+        }
+      },
+      "expected_status": "NEEDS_RESEARCH",
+      "expected_issue_codes": [
+        "SOURCE_NOT_AVAILABLE_AT_DECISION"
+      ]
+    },
+    {
+      "case_id": "RQ14",
+      "label": "Hypothesis has no discriminating falsifier",
+      "packet": {
+        "schema": "workcoord.research-admission/v0",
+        "risk": "STRUCTURED",
+        "question": "Which operation caused the fictional notification duplication?",
+        "source": {
+          "id": "flowdesk-simulator",
+          "revision": "fictional-r2"
+        },
+        "decision_at": "2026-08-11T11:00:00+00:00",
+        "requested_knowledge_state": "HYPOTHESIS",
+        "evidence": [
+          {
+            "id": "queue-observation",
+            "revision": "fictional-r2",
+            "origin_group": "queue-simulator",
+            "source_class": "synthetic",
+            "observed_at": "2026-08-11T10:00:00+00:00",
+            "available_at": "2026-08-11T10:01:00+00:00",
+            "read_at": "2026-08-11T10:02:00+00:00",
+            "finding": "A simulated retry was recorded after an acknowledgement loss."
+          }
+        ],
+        "hypotheses": [
+          {
+            "id": "H-retry",
+            "claim": "A queue retry created a duplicate.",
+            "falsifier": "Show delivery only after two independent producer sends.",
+            "evidence_ids": [
+              "queue-observation"
+            ]
+          },
+          {
+            "id": "H-producer",
+            "claim": "Two producers sent the same event.",
+            "falsifier": "",
+            "evidence_ids": []
+          }
+        ],
+        "controls": {
+          "baseline": "A synthetic delivery without acknowledgement loss.",
+          "negative_control": "A different event that should not be duplicated.",
+          "construct_fit": true
+        },
+        "next_test": "Replay the event with the lost ACK and inspect the delivery IDs.",
+        "evaluation": {
+          "outcome_bearing": false
+        }
+      },
+      "expected_status": "NEEDS_RESEARCH",
+      "expected_issue_codes": [
+        "HYPOTHESIS_WITHOUT_FALSIFIER"
+      ]
+    }
+  ]
+}
