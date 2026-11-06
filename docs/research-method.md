@@ -39,3 +39,7 @@ An actionable, falsifiable observation, a correctly scoped rejection, or a verif
 The [Research Quality v0 reference](research-quality-v0.md) checks eight *generic* scientific-error domains in public fictional packets. It separates source availability from observation time, requires falsifiable alternatives and negative controls for nontrivial tasks, flags late outcome freezes, and prevents a declaration of `TESTED` or `VALIDATED` from being treated as external proof.
 
 It is **advisory and schema-level only**: no source authentication, causal inference, independent scientific review, benchmark or action permission is implemented. A lightweight `QUICK` case has no unnecessary hypothesis-grid/baseline requirement.
+
+## Problem closure is a separate check
+
+The [Problem & Decision v0 companion](problem-decision-v0.md) adds a hierarchical map of required versus optional acceptance criteria, distinguishes technical-test witnesses from observable behavior, and keeps remedy selection and application separate from problem closure. An apparently green implementation cannot close a mandatory outcome lacking the specified witness. Positive results are only candidates for independent acceptance, with no granted validation or authority.

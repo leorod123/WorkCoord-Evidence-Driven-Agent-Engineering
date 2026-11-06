@@ -93,6 +93,20 @@ PYTHONPATH=src python -m workcoord_lab.research_quality_suite
 
 The **14 fictional public cases** include late preregistration, unavailable evidence, stale notes, duplicate source groups, negative controls and a simple low-risk example where additional process would be unnecessary. These are *development fixtures*, not empirical agent-performance results.
 
+## Problem & Decision v0 — a green test is not semantic closure
+
+The [independent fictional problem-decision reference](docs/problem-decision-v0.md) separates the **problem definition**, its hierarchical **mandatory acceptance criteria**, the **choice of remedy**, the **implementation plan**, and **external proof**.
+
+In its core negative case, every declared technical test is green and the technical task says `DONE`, but a required behavior observation is missing. The result is **HOLD**, not a completed problem.
+
+The optional `QUICK` route avoids forcing a full alternatives matrix on simple work. For structured proposals, declared upfront, recurring, risk and rework costs are compared over the same horizon; a new component cannot silently bypass cheaper feasible reuse without an explanation. These are fictional cost assumptions, **not measured savings**.
+
+```bash
+PYTHONPATH=src python -m workcoord_lab.problem_decision_suite
+```
+
+Passing this check can at most create a *candidate for independent acceptance*; it never validates external evidence, authorizes a change or proves the repair worked.
+
 ## What we will measure
 
 | Comparison | Purpose |
@@ -127,6 +141,7 @@ We will report valid repairs, justified abstentions, invalid completions, time, 
 | [Adaptive escalation](docs/adaptive-evidence-v0.md) | Stay / deepen / expand / HOLD, paired-world counterfactuals | Synthetic development fixture |
 | [Research method](docs/research-method.md) | Hypotheses, falsifiers and evidence | Design |
 | [Research Quality v0](docs/research-quality-v0.md) | Typed advisory admission, failure domains and negative controls | Synthetic draft |
+| [Problem & Decision v0](docs/problem-decision-v0.md) | Required outcomes, semantic evidence gaps and alternatives costs | Synthetic draft |
 | [Experimental design](docs/experimental-design.md) | Comparison plan, metrics and validity threats | Draft, not preregistered |
 | [Scenario catalog](evals/scenarios-v0.json) | Eight fictional scenario families | Draft |
 | [Preregistration](evals/preregistration-v0.json) | Proposed experimental parameters | Draft, not sealed |

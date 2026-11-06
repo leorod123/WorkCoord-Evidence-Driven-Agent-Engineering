@@ -41,3 +41,7 @@ O [ensaio adaptativo sintético](docs/adaptive-evidence-v0.md) testa `STAY`, `DE
 ## Research Quality v0 — rigor científico proporcional
 
 Uma [verificação consultiva de pesquisa](docs/research-quality-v0.md) identifica problemas de proveniência, disponibilidade temporal, observação posterior à decisão, controles ausentes, métricas que não comprovam a hipótese e promoção indevida de conclusões. As modalidades `QUICK`, `STRUCTURED` e `CRITICAL` mantêm o rigor proporcional ao risco. Há 14 cenários fictícios públicos; uma aprovação significa **desenho admissível**, nunca hipótese cientificamente validada, autorização de ação ou ganho de desempenho comprovado.
+
+## Problem & Decision v0 — teste verde não fecha o problema
+
+A [demonstração executável](docs/problem-decision-v0.md) separa o mapa hierárquico de problemas, critérios obrigatórios, alternativas de solução, custos assumidos, aplicação e comprovação. O caso principal tem testes técnicos verdes e status de trabalho `DONE`, mas falta uma observação comportamental obrigatória: **a conclusão fica em HOLD**. A rota `QUICK` não exige matriz extensa de alternativas. Nenhum resultado concede autorização de execução ou validação científica; os cenários são fictícios e públicos.

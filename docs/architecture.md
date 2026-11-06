@@ -67,6 +67,12 @@ The agent may return **HOLD** when evidence cannot support a sound conclusion. H
 
 The eventual reference implementation will use a caller-provided logical clock for reproducible tests and a small transactional store for claims. This is a reference design, not a distributed transaction coordinator.
 
+## Problem closure is not task completion
+
+The [independent Problem & Decision reference](problem-decision-v0.md) models a **required hierarchy of problem and acceptance criteria** separately from work-unit states. The task may be `DONE` while a required behavior probe is missing; semantic closure remains blocked. An optional unknown node stays visible without automatically forcing a low-risk route into heavyweight governance.
+
+Alternatives are compared at a common assumed time horizon, and the application plan is distinct from choosing the remedy. This is a fictional advisory contract; the code does not independently inspect an operational system or grant a correct outcome.
+
 ## Decision and completion gates
 
 1. A unit can be claimed only with an unexpired, uniquely fenced lease.
