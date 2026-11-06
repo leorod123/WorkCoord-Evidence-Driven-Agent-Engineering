@@ -91,6 +91,12 @@ The [vertical evidence-chain example](vertical-evidence-v0.md) calls the **origi
 
 An observation appearing **after** an earlier history cut may invalidate its advisory conclusion without changing the earlier technical test results. Superseding a primary source revision also blocks promotion until all four earlier stages are reconsidered. No new coordinator, persistence layer, external access or permission system is created; the integrated checkpoint remains advisory.
 
+## Full synthetic context-to-Ledger path
+
+The [full Ledger-cycle demonstration](full-ledger-cycle-v0.md) combines the existing sectorized ContextNavigator, the four advisory evaluators and the existing SQLite Ledger **without a new coordinator**. It checks the same fictional issue, source revision and byte-level primary body digest before a synthetic delivery test is submitted.
+
+Late counterevidence blocks completion **in the study driver**; a source change clears the Ledger's prior proof and approval. A renewed review and revision-bound evaluator receipt are required to finish the fictional task. Importantly, **Ledger.complete() does not itself consult advisory checkpoints**. This reference demonstrates an explicit integration boundary and must not be treated as a secure runtime or authenticated reviewer.
+
 ## Decision and completion gates
 
 1. A unit can be claimed only with an unexpired, uniquely fenced lease.

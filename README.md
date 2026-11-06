@@ -160,6 +160,18 @@ PYTHONPATH=src python -m unittest discover -s tests -v
 python scripts/verify_audit_mutations.py
 ```
 
+## Complete synthetic Ledger cycle — original state machine, not a new coordinator
+
+The [full Ledger cycle v0 walkthrough](docs/full-ledger-cycle-v0.md) now composes **sectorized context selection**, four existing advisory checks, **exclusive fenced ownership in the original SQLite Ledger**, synthetic behavior evidence, independent-looking (but unauthenticated) review and revision-bound completion.
+
+Four public authored paths cover local success, late counterevidence, a failing external-behavior oracle and source revision `r2 → r3` requiring **new investigation + new evidence + new approval**. A critical limitation remains explicit: the *development driver* checks the advisory result before calling the Ledger, but the Ledger itself does **not** enforce advisory-state policy.
+
+```bash
+PYTHONPATH=src python -m workcoord_lab.full_ledger_cycle
+```
+
+These results are only deterministic synthetic tests, **not real-agent correctness or production access control**. No Codex API secret or live agent is involved.
+
 ## What we will measure
 
 | Comparison | Purpose |
@@ -199,6 +211,7 @@ We will report valid repairs, justified abstentions, invalid completions, time, 
 | [Knowledge & Learning v0](docs/knowledge-genealogy-v0.md) | Append-only revision, negative evidence and dependent claim invalidation | Synthetic draft |
 | [Vertical evidence chain v0](docs/vertical-evidence-v0.md) | Four existing advisory contracts on one case; late negative invalidation | Synthetic draft |
 | [Independent audit remediation](docs/reviews/independent-audit-remediation-v0.md) | Directed A01-A05 tests, reader isolation and pinned CI Actions | Synthetic draft |
+| [Full Ledger cycle v0](docs/full-ledger-cycle-v0.md) | Context → advisory → fenced claim → evaluated proof → revision-aware recheck → completion | Synthetic draft |
 | [Experimental design](docs/experimental-design.md) | Comparison plan, metrics and validity threats | Draft, not preregistered |
 | [Scenario catalog](evals/scenarios-v0.json) | Eight fictional scenario families | Draft |
 | [Preregistration](evals/preregistration-v0.json) | Proposed experimental parameters | Draft, not sealed |

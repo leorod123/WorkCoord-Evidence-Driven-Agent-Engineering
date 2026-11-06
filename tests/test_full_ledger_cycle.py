@@ -87,6 +87,71 @@ class FullLedgerCycleTests(unittest.TestCase):
         self.assertFalse(result["ledger_enforces_advisory_state"])
         self.assertTrue(result["event_chain_valid"])
 
+    def _verified_fixture_ledger(self, *, revision="fictional-r2"):
+        clock = [1]
+        db = Ledger(verification_key=FIXTURE_TEST_KEY, time_source=lambda: clock[0])
+        db.create(self.fixture["work_id"], revision, authority="REVIEW_REQUIRED")
+        g = db.claim(self.fixture["work_id"], self.fixture["synthetic_owner"], now=0, ttl=30)
+        db.record_attested_evidence(issue_delivery_attestation(
+            FIXTURE_TEST_KEY, "test-direct-" + revision, self.fixture["work_id"],
+            revision, ["event-42", "event-42"], ["event-42"]
+        ))
+        clock[0] = 2
+        db.submit(self.fixture["work_id"], self.fixture["synthetic_owner"], g, 0,
+                  "test-direct-" + revision)
+        clock[0] = 3
+        db.verify(self.fixture["work_id"], self.fixture["synthetic_owner"], g, 0)
+        db.approve(self.fixture["work_id"], self.fixture["synthetic_reviewer"])
+        return db, clock, g
+
+    def test_completion_helper_refuses_late_advisory_hold(self):
+        from workcoord_lab.full_ledger_cycle import _attempt_completion
+        db, clock, gen = self._verified_fixture_ledger()
+        try:
+            packet = self.packets["original"]
+            negative = investigate_and_evaluate(
+                packet, self.fixture["current_documents"], at_seq=6
+            )
+            self.assertEqual(negative["status"], "HOLD_KNOWLEDGE")
+            before = db.event_count()
+            outcome = _attempt_completion(db, packet, negative, self.fixture, gen, clock)
+            self.assertEqual(outcome, "HOLD_ADVISORY")
+            self.assertEqual(db.get(self.fixture["work_id"])["status"], "VERIFIED")
+            self.assertEqual(before, db.event_count())
+        finally:
+            db.close()
+
+    def test_completion_helper_refuses_outdated_advisory_revision(self):
+        from workcoord_lab.full_ledger_cycle import _attempt_completion
+        db, clock, gen = self._verified_fixture_ledger(revision="fictional-r3")
+        try:
+            packet = self.packets["original"]
+            old = investigate_and_evaluate(
+                packet, self.fixture["current_documents"], at_seq=4
+            )
+            self.assertEqual(old["status"], READY)
+            before = db.event_count()
+            outcome = _attempt_completion(db, packet, old, self.fixture, gen, clock)
+            self.assertEqual(outcome, "HOLD_REVISION_MISMATCH")
+            self.assertEqual(db.get(self.fixture["work_id"])["status"], "VERIFIED")
+            self.assertEqual(before, db.event_count())
+        finally:
+            db.close()
+
+    def test_external_oracle_computes_failure_from_delivery_trace(self):
+        from workcoord_lab.full_ledger_cycle import _make_attestation
+        good = _make_attestation(
+            self.fixture, revision="fictional-r2", evidence_id="good",
+            deliveries=self.fixture["declared_successful_deliveries"],
+        )
+        bad = _make_attestation(
+            self.fixture, revision="fictional-r2", evidence_id="bad",
+            deliveries=self.fixture["declared_failing_deliveries"],
+        )
+        self.assertTrue(good["passed"])
+        self.assertFalse(bad["passed"])
+        self.assertNotEqual(good["artifact_sha256"], bad["artifact_sha256"])
+
     def test_nonpassing_external_behavior_witness_blocks_even_after_advisory_green(self):
         result = run_case("behavior_failure")
         self.assertEqual(result["evaluations"][0]["status"], READY)

@@ -61,3 +61,7 @@ O [exemplo integrado público](docs/vertical-evidence-v0.md) compõe os quatro a
 ## Correções da auditoria adversarial (A01-A05)
 
 A [resposta técnica](docs/reviews/independent-audit-remediation-v0.md) trata avanço indevido do relógio de leases, identidade histórica dependente de eventos futuros, vazamento de orientação das fontes não lidas, bloqueio excessivo por referências históricas de contexto e contraprovas cognitivas não resolvidas. O CI usa permissões mínimas e Actions fixadas por SHA. Isso **não comprova segurança de produção nem ganho com agentes reais**. A API do Codex não foi usada nesta etapa e nenhuma chave foi adicionada.
+
+## Ciclo completo sintético do Ledger v0
+
+O [walkthrough executável](docs/full-ledger-cycle-v0.md) reutiliza ContextNavigator, os quatro avaliadores consultivos, o Ledger SQLite original e um avaliador sintético de entregas. Exercita sucesso fictício, contraprova tardia, falha da prova comportamental e supersessão de revisão `r2 → r3` com reavaliação e nova aprovação. O **driver de estudo** exige `ADVISORY_CANDIDATE_FOR_EXTERNAL_ACCEPTANCE` antes de chamar `complete()`; **o Ledger isolado não executa essa política consultiva**. Não são agentes reais nem verificação externa de segurança.

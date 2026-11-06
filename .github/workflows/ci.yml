@@ -139,6 +139,20 @@ jobs:
           name: vertical-evidence-py-${{ matrix.python-version }}
           path: artifacts/vertical-evidence-v0.json
           if-no-files-found: error
+      - name: Detect complete Ledger-cycle regressions (M96-M102)
+        env:
+          PYTHONPATH: src
+        run: python scripts/verify_full_cycle_mutations.py
+      - name: Execute public complete Ledger-cycle development fixtures
+        env:
+          PYTHONPATH: src
+        run: python -m workcoord_lab.full_ledger_cycle --output artifacts/full-ledger-cycle-v0.json
+      - name: Upload complete Ledger-cycle synthetic receipt
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: full-ledger-cycle-py-${{ matrix.python-version }}
+          path: artifacts/full-ledger-cycle-v0.json
+          if-no-files-found: error
       - name: Run synthetic demo
         env:
           PYTHONPATH: src
