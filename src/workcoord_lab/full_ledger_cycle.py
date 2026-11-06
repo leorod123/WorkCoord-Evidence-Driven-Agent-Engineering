@@ -292,8 +292,12 @@ def run_case(mode: str, *, fixture: dict | None = None,
             # New review packet and source documents must be supplied explicitly.
             # The public fixture's patch list is an authored *reinspection*, not
             # an automatic state promotion by the Ledger.
+            # A review may be pending at the intended final cut: evaluate
+            # only the available history prefix and HOLD rather than reading
+            # a future event or treating a missing review as acceptance.
+            available_cut = min(fixture["rechecked_cut"], len(new["knowledge_actions"]))
             rechecked = investigate_and_evaluate(
-                new, revised_documents, at_seq=fixture["rechecked_cut"],
+                new, revised_documents, at_seq=available_cut,
             )
             phases.append(dict(phase="fresh_explicit_recheck", **rechecked))
             if rechecked["status"] != READY:
