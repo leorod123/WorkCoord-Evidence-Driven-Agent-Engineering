@@ -1,0 +1,80 @@
+{
+  "schema": "workcoord.harbor-pilot-protocol/v0",
+  "status": "DRAFT_UNFROZEN",
+  "claim": "planned_external_evaluation_not_executed",
+  "benchmark": {
+    "harness": "Harbor",
+    "dataset": "terminal-bench@2.0",
+    "environment": "docker",
+    "harbor_git_commit": null,
+    "dataset_git_commit": null,
+    "task_manifest_sha256": null,
+    "task_splits": {
+      "smoke": [],
+      "exploratory": [],
+      "confirmatory": []
+    }
+  },
+  "arms": [
+    {
+      "id": "A",
+      "name": "single_agent_baseline",
+      "agent_count": 1,
+      "governance": "none"
+    },
+    {
+      "id": "B",
+      "name": "two_agent_basic_coordination",
+      "agent_count": 2,
+      "governance": "basic"
+    },
+    {
+      "id": "C",
+      "name": "two_agent_workcoord_bundle",
+      "agent_count": 2,
+      "governance": "workcoord"
+    }
+  ],
+  "parity": {
+    "same_base_model": true,
+    "same_tool_access": true,
+    "same_external_verifier": true,
+    "same_assigned_task_set": true,
+    "same_wall_clock_limit": true,
+    "same_token_price_accounting": true
+  },
+  "execution": {
+    "common_model_id": null,
+    "agent_adapter_commits": {
+      "A": null,
+      "B": null,
+      "C": null
+    },
+    "attempts_per_task_arm": 1,
+    "wall_clock_limit_seconds": 1800,
+    "total_cost_ceiling_usd": null,
+    "per_trial_cost_ceiling_usd": null,
+    "max_concurrent_trials": 1,
+    "task_filter_requires_exact_resolved_ids": true,
+    "public_ci_must_not_run_agent": true,
+    "allow_network_inside_tasks": "must_match_dataset_rules"
+  },
+  "analysis": {
+    "primary_outcome": "externally_verified_pass_per_assigned_task_intention_to_treat",
+    "denominator": "every_frozen_task_arm_attempt_including_failure_timeout_hold_missing_and_harness_error",
+    "cost_per_valid_outcome": "all_attempt_costs_for_arm_including_failed_trials_divided_by_external_passes_only",
+    "zero_pass_cost_per_valid_outcome": null,
+    "unmeasured_cost_semantics": "not_estimable",
+    "harness_error_policy": "count_as_not_pass_in_primary_and_separately_report_for_paired_sensitivity",
+    "false_completion_attempt_policy": "count_independently_adjudicated_attempts_even_if_workcoord_gate_blocks",
+    "avoidable_hold_policy": "count_only_when_independent_evaluator_labels_avoidable",
+    "multiple_comparisons": "exploratory_only_until_confirmatory_protocol_sealed"
+  },
+  "publication": {
+    "human_ip_and_confidentiality_review_approved": false,
+    "license_decided": false,
+    "merge_approved": false,
+    "benchmark_confirmatory_results_present": false,
+    "prohibit_raw_provider_traffic_or_secrets_in_git": true
+  }
+}

@@ -153,6 +153,14 @@ jobs:
           name: ledger-vertical-e2e-py-${{ matrix.python-version }}
           path: artifacts/ledger-vertical-e2e-v0.json
           if-no-files-found: error
+      - name: Validate unfrozen Harbor protocol (no network / agent)
+        env:
+          PYTHONPATH: src
+        run: python -m workcoord_lab.harbor_pilot
+      - name: Verify external pilot invariants (M107-M113)
+        env:
+          PYTHONPATH: src
+        run: python scripts/verify_harbor_protocol_mutations.py
       - name: Run synthetic demo
         env:
           PYTHONPATH: src
