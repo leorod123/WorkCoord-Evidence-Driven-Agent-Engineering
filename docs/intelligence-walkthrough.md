@@ -53,6 +53,6 @@ The tests cover revision conflicts, perspective/depth changes, explicit dependen
 
 All metadata, including maturity and provenance, is authored by the fixture itself. Current versus stale is a string equality check, **not** a VCS-verified source identity. Reading-character counts are not token counts or LLM cost measurements; small context is not automatically better context. The ranking weights are not calibrated or an independent grader.
 
-Next, measure **evidence recall** and quality of resulting decisions under the same independent evaluator for broad versus selective context. Include a case where selection misses an essential distant dependency or suppresses critical counterevidence. That comparison requires real agents and frozen instances; it has **not** been run.
+A [deterministic development comparison](context-comparison-v0.md) now measures evidence recall, hand-annotated provisional label alignment and unique source-body characters in full/local/expanded strategies. It includes missing-dependency and shallow-selection counterexamples. **Real-agent decision quality** still requires held-out instances and an isolated common external evaluator; that study has **not** been run.
 
 See the [experimental design](experimental-design.md) and [architecture](architecture.md).

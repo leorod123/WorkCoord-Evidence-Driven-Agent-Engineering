@@ -29,3 +29,7 @@ O projeto não reutiliza material privado e não pretende substituir plataformas
 ## Intelligence setorizada — demonstração sintética
 
 A [demonstração executável](docs/intelligence-walkthrough.md) começa por um registro antigo do worker, segue a dependência até a fila, encontra contraprovas atuais e revisa a hipótese de investigação. Perspectiva, profundidade, identidade de fontes, limitações e caracteres lidos permanecem explícitos. Execute `PYTHONPATH=src python -m workcoord_lab.intelligence_demo` na raiz do checkout. **Não é uma avaliação com agentes reais nem uma prova de ganho de eficiência.**
+
+## Comparação de contexto — três estratégias
+
+O [experimento sintético](docs/context-comparison-v0.md) compara corpus completo, setor local e expansão por dependências com o mesmo avaliador, inclusive casos em que a seleção perde informação decisiva. Mede recuperação de contraprovas e caracteres consultados, com diagnóstico provisório por regras anotadas manualmente. **Ainda não mede a qualidade das decisões de agentes reais nem ganhos de custo ou tokens.**

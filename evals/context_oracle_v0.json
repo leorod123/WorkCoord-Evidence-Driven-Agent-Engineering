@@ -1,0 +1,49 @@
+{
+  "schema": "workcoord.context-retrieval-oracle/v0",
+  "status": "PUBLIC_DEVELOPMENT_ORACLE_NOT_HELD_OUT",
+  "warning": "This is a public synthetic development oracle, NOT independently hidden from repository-reading agents. In future real-agent experiments the evaluator must be separately isolated.",
+  "cases": [
+    {
+      "id": "CTX01",
+      "expected_provisional_hypothesis": "ack-retry",
+      "decisive_sources": [
+        "worker-log-r2"
+      ],
+      "counterevidence_sources": [
+        "worker-log-r2"
+      ]
+    },
+    {
+      "id": "CTX02",
+      "expected_provisional_hypothesis": "ack-retry",
+      "decisive_sources": [
+        "queue-ack-r2",
+        "api-events-r2"
+      ],
+      "counterevidence_sources": [
+        "queue-ack-r2",
+        "api-events-r2"
+      ]
+    },
+    {
+      "id": "CTX03",
+      "expected_provisional_hypothesis": "ack-retry",
+      "decisive_sources": [
+        "api-events-r2"
+      ],
+      "counterevidence_sources": [
+        "api-events-r2"
+      ]
+    },
+    {
+      "id": "CTX04",
+      "expected_provisional_hypothesis": "ack-retry",
+      "decisive_sources": [
+        "queue-deep-r2"
+      ],
+      "counterevidence_sources": [
+        "queue-deep-r2"
+      ]
+    }
+  ]
+}

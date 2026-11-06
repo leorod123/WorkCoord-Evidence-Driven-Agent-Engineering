@@ -13,7 +13,7 @@ Null results and measured overhead are acceptable findings.
 
 ## Fictional evaluation environment
 
-The separate [synthetic context walkthrough](intelligence-walkthrough.md) provides a transparent *design probe*, with expected diagnostic annotations authored in the fixture. It is excluded from future held-out agent evaluation and cannot support measured token, quality or cost improvements.
+The separate [synthetic context walkthrough](intelligence-walkthrough.md) provides a transparent *design probe*, with expected diagnostic annotations authored in the fixture. A subsequent [three-strategy retrieval comparison](context-comparison-v0.md) includes four public development cases with explicit failures of selective retrieval. **Both exercises are excluded from future held-out agent evaluation** and cannot establish measured token, decision quality or productivity improvements.
 
 
 A small SaaS-style notification application called FlowDesk contains an API, event producer, retry-capable queue, worker, and delivery log. Source code, logs, notes, visible tests, and tool access are matched across evaluation configurations.
