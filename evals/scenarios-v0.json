@@ -1,0 +1,60 @@
+{
+  "schema_version": "public.workcoord.scenarios/v0",
+  "status": "draft_not_frozen",
+  "environment": "FlowDesk entirely fictional",
+  "agent_visible": [
+    "synthetic source",
+    "source-labeled documentation",
+    "synthetic logs",
+    "visible tests",
+    "bounded tools"
+  ],
+  "evaluator_only": [
+    "instance-level cause",
+    "hidden acceptance tests",
+    "scoring oracle"
+  ],
+  "scenarios": [
+    {
+      "id": "S01",
+      "title": "Simple Local Bug",
+      "purpose": "lightweight overhead"
+    },
+    {
+      "id": "S02",
+      "title": "Stale Documentation",
+      "purpose": "context authority"
+    },
+    {
+      "id": "S03",
+      "title": "Concurrent Work",
+      "purpose": "exclusive ownership"
+    },
+    {
+      "id": "S04",
+      "title": "Stale Evidence",
+      "purpose": "source pinning"
+    },
+    {
+      "id": "S05",
+      "title": "Cross-System Cause",
+      "purpose": "investigation"
+    },
+    {
+      "id": "S06",
+      "title": "Underdetermined Evidence",
+      "purpose": "calibrated abstention"
+    },
+    {
+      "id": "S07",
+      "title": "Interrupted Owner",
+      "purpose": "recovery and fencing"
+    },
+    {
+      "id": "S08",
+      "title": "Misleading Green Test",
+      "purpose": "independent behavioral validation"
+    }
+  ],
+  "note": "Public families are illustrative, not hidden evaluation instances."
+}

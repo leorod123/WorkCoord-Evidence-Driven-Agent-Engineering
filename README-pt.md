@@ -1,0 +1,27 @@
+# WorkCoord — Engenharia de Agentes Orientada por Evidências
+
+**Trabalho concluído não é necessariamente um resultado validado.**
+
+O WorkCoord é um projeto público independente para investigar como contexto governado, investigação estruturada, coordenação de tarefas e evidências verificáveis podem melhorar o trabalho de agentes de IA em software.
+
+## Por que existe?
+
+Agentes podem tomar decisões baseadas em documentos antigos, trabalhar simultaneamente na mesma tarefa, usar testes de outra revisão ou declarar uma correção concluída sem comprovar o comportamento completo. O objetivo não é adicionar o máximo de mecanismos; é encontrar o **menor processo suficiente para cada problema**.
+
+O modelo separa três dimensões: **conhecimento**, **estado do trabalho** e **autorização**. Uma hipótese não se torna validada porque o agente está confiante. Uma tarefa concluída não autoriza alterações de produção.
+
+## O que será demonstrado?
+
+O ambiente **FlowDesk** é inteiramente fictício: uma API, fila, worker e notificações. O estudo compara um agente único, dois agentes com coordenação convencional e dois agentes com verificações de contexto, posse e evidências.
+
+O protocolo propõe 72 execuções exploratórias, **ainda não realizadas**. Não há alegação de melhoria de desempenho até termos resultados reais e auditáveis. Testes determinísticos de invariantes não medem inteligência de modelos.
+
+## Navegação
+
+- [README completo em inglês](README.md)
+- [Arquitetura](docs/architecture.md)
+- [Método de pesquisa](docs/research-method.md)
+- [Desenho experimental](docs/experimental-design.md)
+- [Política de publicação](docs/publication-policy.md)
+
+O projeto não reutiliza material privado e não pretende substituir plataformas maduras de orquestração.

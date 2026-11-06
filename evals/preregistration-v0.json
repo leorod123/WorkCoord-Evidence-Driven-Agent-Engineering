@@ -1,0 +1,54 @@
+{
+  "schema_version": "public.workcoord.preregistration/v0",
+  "status": "DRAFT_NOT_SEALED_NO_RESULTS",
+  "hypothesis": "Integrated evidence-gated coordination may reduce invalid completion relative to a basic two-agent workflow on complex synthetic engineering tasks.",
+  "primary_contrast": "C_vs_B",
+  "secondary_contrast": "C_vs_A",
+  "arms": [
+    {
+      "id": "A",
+      "agents": 1,
+      "method": "strong_single_agent"
+    },
+    {
+      "id": "B",
+      "agents": 2,
+      "method": "basic_two_agent"
+    },
+    {
+      "id": "C",
+      "agents": 2,
+      "method": "evidence_gated_two_agent"
+    }
+  ],
+  "scenario_ids": [
+    "S01",
+    "S02",
+    "S03",
+    "S04",
+    "S05",
+    "S06",
+    "S07",
+    "S08"
+  ],
+  "planned_repetitions": 3,
+  "planned_exploratory_runs": 72,
+  "not_yet_frozen_run_budget": {
+    "max_wall_seconds": 900,
+    "max_tool_calls": 60,
+    "max_input_tokens": 60000,
+    "max_output_tokens": 12000
+  },
+  "outcomes": [
+    "VALID_REPAIR",
+    "VALID_ABSTENTION",
+    "INVALID_COMPLETION",
+    "INCOMPLETE",
+    "HARNESS_ERROR"
+  ],
+  "model_version": null,
+  "seed_commitment": null,
+  "artifact_hashes": null,
+  "experimental_results": null,
+  "confirmatory_claims_allowed": false
+}
