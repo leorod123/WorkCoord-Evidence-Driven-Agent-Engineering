@@ -13,6 +13,9 @@ Null results and measured overhead are acceptable findings.
 
 ## Fictional evaluation environment
 
+The separate [synthetic context walkthrough](intelligence-walkthrough.md) provides a transparent *design probe*, with expected diagnostic annotations authored in the fixture. It is excluded from future held-out agent evaluation and cannot support measured token, quality or cost improvements.
+
+
 A small SaaS-style notification application called FlowDesk contains an API, event producer, retry-capable queue, worker, and delivery log. Source code, logs, notes, visible tests, and tool access are matched across evaluation configurations.
 
 The agent must produce a diagnosis, proposed patch or justified HOLD, and a validation record. The evaluator independently assesses the result with tests and instance-level ground truth kept out of the agent worktree.

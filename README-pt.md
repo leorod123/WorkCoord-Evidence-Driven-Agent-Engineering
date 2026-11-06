@@ -25,3 +25,7 @@ O protocolo propõe 72 execuções exploratórias, **ainda não realizadas**. N�
 - [Política de publicação](docs/publication-policy.md)
 
 O projeto não reutiliza material privado e não pretende substituir plataformas maduras de orquestração.
+
+## Intelligence setorizada — demonstração sintética
+
+A [demonstração executável](docs/intelligence-walkthrough.md) começa por um registro antigo do worker, segue a dependência até a fila, encontra contraprovas atuais e revisa a hipótese de investigação. Perspectiva, profundidade, identidade de fontes, limitações e caracteres lidos permanecem explícitos. Execute `PYTHONPATH=src python -m workcoord_lab.intelligence_demo` na raiz do checkout. **Não é uma avaliação com agentes reais nem uma prova de ganho de eficiência.**

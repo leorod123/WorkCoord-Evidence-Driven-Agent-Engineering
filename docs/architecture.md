@@ -19,6 +19,9 @@ flowchart LR
 
 ## Sectorized context
 
+A candidate [executable fictional navigator](intelligence-walkthrough.md) demonstrates explicit sector/perspective/depth selection, current versus historical source revision, and traceable counterevidence under a character budget. **It is not source authentication, autonomous causal reasoning or execution authority.**
+
+
 Context is selected along independent dimensions rather than injected as a large undifferentiated history:
 
 | Dimension | Question | Example |
