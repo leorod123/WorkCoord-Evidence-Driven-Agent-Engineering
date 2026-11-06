@@ -1,6 +1,7 @@
 """Small SQLite reference state machine, not an execution authority.
 
-All times are caller-supplied logical ticks. A fence token is (work_id, generation).
+Caller-supplied ticks are checked against a durable ledger-local nondecreasing clock.
+A fence token is (work_id, generation). This is not a trusted distributed clock.
 No API here executes code, edits a repository, or grants production permissions.
 """
 
@@ -39,6 +40,9 @@ class Ledger:
           CREATE TABLE IF NOT EXISTS events (
             seq INTEGER PRIMARY KEY AUTOINCREMENT, payload TEXT NOT NULL,
             previous_hash TEXT NOT NULL, event_hash TEXT NOT NULL);
+          CREATE TABLE IF NOT EXISTS logical_clock (
+            id INTEGER PRIMARY KEY CHECK(id=1), tick INTEGER NOT NULL);
+          INSERT OR IGNORE INTO logical_clock(id,tick) VALUES (1,-1);
         """)
         # Existing local v0 databases may lack the new column.
         columns = {row[1] for row in self.db.execute("PRAGMA table_info(evidence)")}
@@ -60,6 +64,31 @@ class Ledger:
             except BaseException:
                 self.db.execute("ROLLBACK")
                 raise
+
+    def _observe_tick(self, now):
+        """Persist even a rejected call's observed time, preventing rollback of time.
+
+        Two transactions are intentional: a failed work transition must not
+        erase the logical time already observed by the ledger.
+        """
+        if type(now) is not int or now < 0:
+            raise GateError("logical tick must be a nonnegative integer")
+        with self._transaction():
+            previous = self.db.execute(
+                "SELECT tick FROM logical_clock WHERE id=1"
+            ).fetchone()[0]
+            if now < previous:
+                raise GateError("logical clock cannot move backwards")
+            self.db.execute(
+                "UPDATE logical_clock SET tick=? WHERE id=1", (now,)
+            )
+
+    def _require_current_tick(self, now):
+        last = self.db.execute(
+            "SELECT tick FROM logical_clock WHERE id=1"
+        ).fetchone()[0]
+        if type(now) is not int or now < last:
+            raise GateError("stale or invalid logical tick")
 
     def _row(self, work_id):
         row = self.db.execute("SELECT * FROM work WHERE id=?", (work_id,)).fetchone()
@@ -105,7 +134,7 @@ class Ledger:
                 )
             except sqlite3.IntegrityError as exc:
                 raise GateError("duplicate work id") from exc
-            self._event("create", work_id=work_id, revision=revision)
+            self._event("create", work_id=work_id, revision=revision, authority=authority)
 
     def add_dependency(self, work_id, dependency_id):
         with self._transaction():
@@ -135,9 +164,11 @@ class Ledger:
             self._event("dependency", work_id=work_id, prerequisite=dependency_id)
 
     def claim(self, work_id, agent, now, ttl):
-        if not agent or not isinstance(now, int) or not isinstance(ttl, int) or ttl <= 0:
+        if not agent or type(ttl) is not int or ttl <= 0:
             raise GateError("invalid lease parameters")
+        self._observe_tick(now)
         with self._transaction():
+            self._require_current_tick(now)
             item = self._row(work_id)
             if item["status"] == "DONE":
                 raise GateError("completed work is not claimable")
@@ -149,12 +180,15 @@ class Ledger:
                 "evidence_id=NULL,approved_by=NULL,receipt=NULL WHERE id=?",
                 (agent, generation, now + ttl, work_id),
             )
-            self._event("claim", work_id=work_id, agent=agent, generation=generation)
+            self._event("claim", work_id=work_id, agent=agent, generation=generation,
+                        issued_at=now, ttl=ttl, expires_at=now + ttl,
+                        revision=item["revision"])
             return generation
 
     def _fenced(self, item, agent, generation, now, status):
+        self._require_current_tick(now)
         if (item["owner"] != agent or item["generation"] != generation
-                or not isinstance(now, int) or now >= item["expires"]):
+                or now >= item["expires"]):
             raise GateError("stale owner or expired lease")
         if item["status"] != status:
             raise GateError("invalid work transition")
@@ -170,7 +204,8 @@ class Ledger:
                 )
             except sqlite3.IntegrityError as exc:
                 raise GateError("duplicate evidence id") from exc
-            self._event("evidence", evidence_id=evidence_id, kind=kind)
+            self._event("evidence", evidence_id=evidence_id, kind=kind,
+                        revision=revision, declared_group=independent_group)
 
 
     def record_attested_evidence(self, receipt):
@@ -189,7 +224,9 @@ class Ledger:
             except sqlite3.IntegrityError as exc:
                 raise GateError("duplicate evidence id") from exc
             self._event("attested_evidence", evidence_id=receipt["evidence_id"],
-                        revision=receipt["revision"], passed=receipt["passed"])
+                        work_id=receipt["work_id"], revision=receipt["revision"],
+                        passed=receipt["passed"], artifact_sha256=receipt["artifact_sha256"],
+                        receipt_mac=receipt["mac"])
 
     def _valid_attestation(self, evidence):
         from .evaluator import verify_attestation
@@ -220,6 +257,7 @@ class Ledger:
         return len(groups) >= required
 
     def submit(self, work_id, agent, generation, now, evidence_id):
+        self._observe_tick(now)
         with self._transaction():
             item = self._row(work_id)
             self._fenced(item, agent, generation, now, "CLAIMED")
@@ -228,9 +266,12 @@ class Ledger:
                     or not ev["passed"] or not ev["artifact"] or not self._valid_attestation(ev)):
                 raise GateError("missing passing revision-bound test artifact")
             self.db.execute("UPDATE work SET status='SUBMITTED',evidence_id=? WHERE id=?", (evidence_id, work_id))
-            self._event("submit", work_id=work_id, evidence_id=evidence_id)
+            self._event("submit", work_id=work_id, agent=agent, generation=generation,
+                        at_tick=now, revision=item["revision"], evidence_id=evidence_id,
+                        artifact_sha256=ev["artifact"])
 
     def verify(self, work_id, agent, generation, now):
+        self._observe_tick(now)
         with self._transaction():
             item = self._row(work_id)
             self._fenced(item, agent, generation, now, "SUBMITTED")
@@ -242,7 +283,9 @@ class Ledger:
                     or not ev["artifact"] or not self._valid_attestation(ev)):
                 raise GateError("evidence no longer valid")
             self.db.execute("UPDATE work SET status='VERIFIED' WHERE id=?", (work_id,))
-            self._event("verify", work_id=work_id, evidence_id=item["evidence_id"])
+            self._event("verify", work_id=work_id, agent=agent, generation=generation,
+                        at_tick=now, revision=item["revision"],
+                        evidence_id=item["evidence_id"], artifact_sha256=ev["artifact"])
 
     def approve(self, work_id, reviewer):
         if not reviewer:
@@ -254,19 +297,38 @@ class Ledger:
             if reviewer == item["owner"]:
                 raise GateError("owner cannot self-approve")
             self.db.execute("UPDATE work SET approved_by=? WHERE id=?", (reviewer, work_id))
-            self._event("approve", work_id=work_id, reviewer=reviewer)
+            self._event("approve", work_id=work_id, reviewer=reviewer,
+                        revision=item["revision"], generation=item["generation"])
 
     def change_revision(self, work_id, revision):
-        if not revision:
+        """Administrative synthetic source-change signal, not an authorization API.
+
+        Retains an unexpired claim's owner/generation, clears stale proof and
+        approval, and allows immediate resubmission on that same claim.
+        """
+        if not isinstance(revision, str) or not revision:
             raise GateError("revision required")
         with self._transaction():
             item = self._row(work_id)
             if item["status"] == "DONE":
                 raise GateError("completed work is immutable")
-            self.db.execute("UPDATE work SET revision=? WHERE id=?", (revision, work_id))
-            self._event("revision", work_id=work_id, revision=revision)
+            if item["revision"] == revision:
+                return
+            next_status = "READY" if item["status"] == "READY" else "CLAIMED"
+            self.db.execute(
+                "UPDATE work SET revision=?,status=?,evidence_id=NULL,"
+                "approved_by=NULL,receipt=NULL WHERE id=?",
+                (revision, next_status, work_id),
+            )
+            self._event(
+                "revision_invalidated", work_id=work_id, previous_revision=item["revision"],
+                revision=revision, previous_status=item["status"], status=next_status,
+                generation=item["generation"], evidence_cleared=item["evidence_id"],
+                approval_cleared=item["approved_by"],
+            )
 
     def complete(self, work_id, agent, generation, now):
+        self._observe_tick(now)
         with self._transaction():
             item = self._row(work_id)
             if item["status"] == "DONE" and item["owner"] == agent and item["generation"] == generation:
@@ -283,5 +345,8 @@ class Ledger:
                 "evidence_id": item["evidence_id"], "artifact": ev["artifact"],
             }).encode()).hexdigest()
             self.db.execute("UPDATE work SET status='DONE',receipt=? WHERE id=?", (receipt, work_id))
-            self._event("complete", work_id=work_id, receipt=receipt)
+            self._event("complete", work_id=work_id, agent=agent, generation=generation,
+                        at_tick=now, revision=item["revision"], authority=item["authority"],
+                        evidence_id=item["evidence_id"], artifact_sha256=ev["artifact"],
+                        approved_by=item["approved_by"], receipt=receipt)
             return receipt

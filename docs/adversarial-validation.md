@@ -16,9 +16,15 @@ A separate deterministic oracle function computes the expected synthetic notific
 
 The synthetic oracle also takes expected logical events as parameters; it does not independently authenticate the origin of those inputs. Production-grade verification would need isolated test infrastructure, external source pinning, independent approval identities and controlled execution authority.
 
+## Focused regression gates added after adversarial review
+
+The first adversarial review demonstrated that the original 32 tests still passed after removing owner/generation or expiry checks. This is a coverage gap, not a claim of a production exploit. The updated negative controls vary **only** the property under test; a dedicated CI mutation script must fail the target tests if those predicates are removed. Documentation: [Gates and mutations](gates-and-mutations.md).
+
+Changing a revision now clears stale verification/approval and provides immediate resubmission under the original still-valid claim. A persistent logical clock rejects backwards ticks. Claim events record issuance and expiry so differing leases do not produce indistinguishable event traces.
+
 ## Exit criteria before changing the README's implementation status
 
-1. All D01-D15 tests remain green.
+1. All D01-D15 tests and targeted negative-control tests remain green; M1/M2 are killed by the mutation check.
 2. Cross-process claim and interruption tests pass on both supported Python versions.
 3. Untrusted PASS flags, mutated receipts and invalid source revisions are rejected.
 4. Documentation explicitly disclaims distributed consistency, protected secrets, independent process isolation and real-agent benchmark results.
