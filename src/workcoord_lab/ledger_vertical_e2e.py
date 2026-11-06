@@ -89,7 +89,7 @@ def evaluate_context_and_decision(
 
     if document is None:
         reason = "PRIMARY_SOURCE_NOT_READ"
-    elif (document.get("revision") != manifest["source_revision"]
+    elif (document.get("source_revision") != manifest["source_revision"]
           or sha_body(document["body"]) != manifest["primary_source_sha256"]):
         reason = "PRIMARY_CONTEXT_REVISION_OR_BODY_MISMATCH"
     elif vertical["status"] != CANDIDATE:
