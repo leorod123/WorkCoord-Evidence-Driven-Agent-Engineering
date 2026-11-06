@@ -3,6 +3,7 @@
 import json
 
 from .ledger import Ledger
+from .evaluator import issue_delivery_attestation
 from .simulator import deliver, semantic_oracle
 
 
@@ -10,11 +11,15 @@ def main():
     logical_events = ["ticket-42-closed", "ticket-42-closed"]
     broken = deliver(logical_events)
     fixed = deliver(logical_events, idempotent=True)
-    db = Ledger()
+    # Intentionally public fictional key, not a production credential.
+    key = b"public-synthetic-evaluator-demo-key-v1"
+    db = Ledger(verification_key=key)
     try:
         db.create("fix-notifications", revision="synthetic-r1")
         gen = db.claim("fix-notifications", "agent-a", now=1, ttl=20)
-        db.record_evidence("test-e1", "synthetic-r1", "test", passed=semantic_oracle(logical_events, fixed), artifact="sha256:synthetic-test-a")
+        db.record_attested_evidence(issue_delivery_attestation(
+            key, "test-e1", "synthetic-r1", logical_events, fixed,
+        ))
         db.submit("fix-notifications", "agent-a", gen, now=2, evidence_id="test-e1")
         db.verify("fix-notifications", "agent-a", gen, now=3)
         receipt = db.complete("fix-notifications", "agent-a", gen, now=4)

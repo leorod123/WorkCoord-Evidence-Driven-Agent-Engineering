@@ -5,20 +5,26 @@ import threading
 import unittest
 
 from workcoord_lab.ledger import Ledger, GateError
+from workcoord_lab.evaluator import issue_delivery_attestation
 from workcoord_lab.policies import FakeSandbox, discover, score_decision
 from workcoord_lab.simulator import deliver, semantic_oracle
 
 
+TEST_KEY = b"fictional-evaluator-test-key-32-bytes"
+
+
 class InvariantTests(unittest.TestCase):
     def setUp(self):
-        self.db = Ledger()
+        self.db = Ledger(verification_key=TEST_KEY)
         self.db.create("one", "rev-a")
 
     def tearDown(self):
         self.db.close()
 
     def _proof(self, work_id="one", identity="test-a"):
-        self.db.record_evidence(identity, "rev-a", "test", passed=True, artifact="fictional-test-digest")
+        self.db.record_attested_evidence(issue_delivery_attestation(
+            TEST_KEY, identity, "rev-a", ["event-1", "event-1"], ["event-1"],
+        ))
         return identity
 
     def _verified(self, work_id="one", owner="a"):

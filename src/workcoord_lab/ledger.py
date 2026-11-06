@@ -20,7 +20,8 @@ def _canonical(value):
 
 
 class Ledger:
-    def __init__(self, path=":memory:"):
+    def __init__(self, path=":memory:", *, verification_key=None):
+        self._verification_key = verification_key
         self.db = sqlite3.connect(path, isolation_level=None, timeout=5, check_same_thread=False)
         self.db.row_factory = sqlite3.Row
         self.db.execute("PRAGMA busy_timeout=5000")
@@ -34,11 +35,15 @@ class Ledger:
             authority TEXT NOT NULL, deps TEXT NOT NULL DEFAULT '[]');
           CREATE TABLE IF NOT EXISTS evidence (
             id TEXT PRIMARY KEY, revision TEXT NOT NULL, kind TEXT NOT NULL,
-            passed INTEGER NOT NULL, artifact TEXT, independent_group TEXT);
+            passed INTEGER NOT NULL, artifact TEXT, independent_group TEXT, attestation TEXT);
           CREATE TABLE IF NOT EXISTS events (
             seq INTEGER PRIMARY KEY AUTOINCREMENT, payload TEXT NOT NULL,
             previous_hash TEXT NOT NULL, event_hash TEXT NOT NULL);
         """)
+        # Existing local v0 databases may lack the new column.
+        columns = {row[1] for row in self.db.execute("PRAGMA table_info(evidence)")}
+        if "attestation" not in columns:
+            self.db.execute("ALTER TABLE evidence ADD COLUMN attestation TEXT")
 
     def close(self):
         self.db.close()
@@ -158,12 +163,47 @@ class Ledger:
         with self._transaction():
             try:
                 self.db.execute(
-                    "INSERT INTO evidence VALUES (?,?,?,?,?,?)",
+                    "INSERT INTO evidence (id,revision,kind,passed,artifact,independent_group) VALUES (?,?,?,?,?,?)",
                     (evidence_id, revision, kind, int(bool(passed)), artifact, independent_group),
                 )
             except sqlite3.IntegrityError as exc:
                 raise GateError("duplicate evidence id") from exc
             self._event("evidence", evidence_id=evidence_id, kind=kind)
+
+
+    def record_attested_evidence(self, receipt):
+        """Accept only an integrity-checked result from the fictional evaluator."""
+        from .evaluator import verify_attestation, canonical
+        if self._verification_key is None or not verify_attestation(receipt, self._verification_key):
+            raise GateError("invalid or missing evaluator attestation")
+        with self._transaction():
+            try:
+                self.db.execute(
+                    "INSERT INTO evidence (id,revision,kind,passed,artifact,independent_group,attestation)"
+                    " VALUES (?,?,'test',?,?,?,?)",
+                    (receipt["evidence_id"], receipt["revision"], int(receipt["passed"]),
+                     receipt["artifact_sha256"], "synthetic-evaluator", canonical(receipt)),
+                )
+            except sqlite3.IntegrityError as exc:
+                raise GateError("duplicate evidence id") from exc
+            self._event("attested_evidence", evidence_id=receipt["evidence_id"],
+                        revision=receipt["revision"], passed=receipt["passed"])
+
+    def _valid_attestation(self, evidence):
+        from .evaluator import verify_attestation
+        if evidence is None or not evidence["attestation"] or self._verification_key is None:
+            return False
+        try:
+            receipt = json.loads(evidence["attestation"])
+        except (ValueError, TypeError):
+            return False
+        return (
+            verify_attestation(receipt, self._verification_key)
+            and receipt["evidence_id"] == evidence["id"]
+            and receipt["revision"] == evidence["revision"]
+            and receipt["artifact_sha256"] == evidence["artifact"]
+            and receipt["passed"] is bool(evidence["passed"])
+        )
 
     def independent_evidence(self, evidence_ids, required=2):
         if len(set(evidence_ids)) != len(evidence_ids):
@@ -182,7 +222,7 @@ class Ledger:
             self._fenced(item, agent, generation, now, "CLAIMED")
             ev = self.db.execute("SELECT * FROM evidence WHERE id=?", (evidence_id,)).fetchone()
             if (ev is None or ev["revision"] != item["revision"] or ev["kind"] != "test"
-                    or not ev["passed"] or not ev["artifact"]):
+                    or not ev["passed"] or not ev["artifact"] or not self._valid_attestation(ev)):
                 raise GateError("missing passing revision-bound test artifact")
             self.db.execute("UPDATE work SET status='SUBMITTED',evidence_id=? WHERE id=?", (evidence_id, work_id))
             self._event("submit", work_id=work_id, evidence_id=evidence_id)
@@ -195,7 +235,8 @@ class Ledger:
                 if self._row(dep)["status"] != "DONE":
                     raise GateError("dependency not completed")
             ev = self.db.execute("SELECT * FROM evidence WHERE id=?", (item["evidence_id"],)).fetchone()
-            if ev is None or ev["revision"] != item["revision"] or not ev["passed"] or not ev["artifact"]:
+            if (ev is None or ev["revision"] != item["revision"] or not ev["passed"]
+                    or not ev["artifact"] or not self._valid_attestation(ev)):
                 raise GateError("evidence no longer valid")
             self.db.execute("UPDATE work SET status='VERIFIED' WHERE id=?", (work_id,))
             self._event("verify", work_id=work_id, evidence_id=item["evidence_id"])
@@ -207,6 +248,8 @@ class Ledger:
             item = self._row(work_id)
             if item["status"] != "VERIFIED":
                 raise GateError("only verified work may receive approval")
+            if reviewer == item["owner"]:
+                raise GateError("owner cannot self-approve")
             self.db.execute("UPDATE work SET approved_by=? WHERE id=?", (reviewer, work_id))
             self._event("approve", work_id=work_id, reviewer=reviewer)
 
@@ -229,8 +272,9 @@ class Ledger:
             if item["authority"] == "REVIEW_REQUIRED" and not item["approved_by"]:
                 raise GateError("explicit approval required")
             ev = self.db.execute("SELECT * FROM evidence WHERE id=?", (item["evidence_id"],)).fetchone()
-            if ev is None or ev["revision"] != item["revision"]:
-                raise GateError("source changed; revalidation required")
+            if (ev is None or ev["revision"] != item["revision"]
+                    or not self._valid_attestation(ev)):
+                raise GateError("source changed or evaluator receipt invalid; revalidate")
             receipt = hashlib.sha256(_canonical({
                 "work_id": work_id, "generation": generation, "revision": item["revision"],
                 "evidence_id": item["evidence_id"], "artifact": ev["artifact"],
