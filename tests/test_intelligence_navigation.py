@@ -34,6 +34,8 @@ class IntelligenceNavigationTests(unittest.TestCase):
         self.assertEqual(first["leading_hypothesis"], "producer-duplicates")
         self.assertEqual(revised["leading_hypothesis"], "ack-retry")
         self.assertEqual(final["leading_hypothesis"], "ack-retry")
+        self.assertTrue(any(c["hypothesis"] == "producer-duplicates"
+                            for c in final["conflicts"]))
         conflict = next(c for c in final["conflicts"]
                         if c["hypothesis"] == "producer-duplicates")
         self.assertIn("worker-guide-r0", conflict["supports"])
