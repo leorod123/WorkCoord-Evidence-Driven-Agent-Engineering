@@ -18,14 +18,16 @@ def _check_key(key):
     if not isinstance(key, bytes) or len(key) < 16:
         raise ValueError("a synthetic evaluator key of at least 16 bytes is required")
 
-def issue_delivery_attestation(key, evidence_id, revision, logical_events, observed_deliveries):
+def issue_delivery_attestation(key, evidence_id, work_id, revision, logical_events, observed_deliveries):
     """The evaluator computes the result, independently of any claimed status.
 
     A real evaluator must control its ground truth, source identity and key.
     """
     _check_key(key)
-    if not isinstance(evidence_id, str) or not evidence_id or not isinstance(revision, str) or not revision:
-        raise ValueError("evidence id and revision required")
+    if (not isinstance(evidence_id, str) or not evidence_id or
+            not isinstance(work_id, str) or not work_id or
+            not isinstance(revision, str) or not revision):
+        raise ValueError("evidence id, work id, and revision required")
     if (not isinstance(logical_events, list) or not logical_events or
             not isinstance(observed_deliveries, list) or
             not all(isinstance(v, str) for v in logical_events + observed_deliveries)):
@@ -34,6 +36,7 @@ def issue_delivery_attestation(key, evidence_id, revision, logical_events, obser
     statement = {
         "schema": SCHEMA,
         "evidence_id": evidence_id,
+        "work_id": work_id,
         "revision": revision,
         "oracle": "one-delivery-per-distinct-event/v1",
         "artifact_sha256": hashlib.sha256(artifact).hexdigest(),
@@ -47,12 +50,13 @@ def verify_attestation(receipt, key):
     try:
         _check_key(key)
         if not isinstance(receipt, dict) or set(receipt) != {
-            "schema", "evidence_id", "revision", "oracle", "artifact_sha256", "passed", "mac",
+            "schema", "evidence_id", "work_id", "revision", "oracle", "artifact_sha256", "passed", "mac",
         }:
             return False
         if (receipt["schema"] != SCHEMA or
                 receipt["oracle"] != "one-delivery-per-distinct-event/v1" or
                 not isinstance(receipt["evidence_id"], str) or not receipt["evidence_id"] or
+                not isinstance(receipt["work_id"], str) or not receipt["work_id"] or
                 not isinstance(receipt["revision"], str) or not receipt["revision"] or
                 not isinstance(receipt["passed"], bool)):
             return False

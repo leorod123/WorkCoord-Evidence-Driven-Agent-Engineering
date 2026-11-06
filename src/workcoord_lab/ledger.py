@@ -35,7 +35,7 @@ class Ledger:
             authority TEXT NOT NULL, deps TEXT NOT NULL DEFAULT '[]');
           CREATE TABLE IF NOT EXISTS evidence (
             id TEXT PRIMARY KEY, revision TEXT NOT NULL, kind TEXT NOT NULL,
-            passed INTEGER NOT NULL, artifact TEXT, independent_group TEXT, attestation TEXT);
+            passed INTEGER NOT NULL, artifact TEXT, independent_group TEXT, attestation TEXT, work_id TEXT);
           CREATE TABLE IF NOT EXISTS events (
             seq INTEGER PRIMARY KEY AUTOINCREMENT, payload TEXT NOT NULL,
             previous_hash TEXT NOT NULL, event_hash TEXT NOT NULL);
@@ -44,6 +44,8 @@ class Ledger:
         columns = {row[1] for row in self.db.execute("PRAGMA table_info(evidence)")}
         if "attestation" not in columns:
             self.db.execute("ALTER TABLE evidence ADD COLUMN attestation TEXT")
+        if "work_id" not in columns:
+            self.db.execute("ALTER TABLE evidence ADD COLUMN work_id TEXT")
 
     def close(self):
         self.db.close()
@@ -179,9 +181,9 @@ class Ledger:
         with self._transaction():
             try:
                 self.db.execute(
-                    "INSERT INTO evidence (id,revision,kind,passed,artifact,independent_group,attestation)"
-                    " VALUES (?,?,'test',?,?,?,?)",
-                    (receipt["evidence_id"], receipt["revision"], int(receipt["passed"]),
+                    "INSERT INTO evidence (id,work_id,revision,kind,passed,artifact,independent_group,attestation)"
+                    " VALUES (?,?,?,'test',?,?,?,?)",
+                    (receipt["evidence_id"], receipt["work_id"], receipt["revision"], int(receipt["passed"]),
                      receipt["artifact_sha256"], "synthetic-evaluator", canonical(receipt)),
                 )
             except sqlite3.IntegrityError as exc:
@@ -200,6 +202,7 @@ class Ledger:
         return (
             verify_attestation(receipt, self._verification_key)
             and receipt["evidence_id"] == evidence["id"]
+            and receipt["work_id"] == evidence["work_id"]
             and receipt["revision"] == evidence["revision"]
             and receipt["artifact_sha256"] == evidence["artifact"]
             and receipt["passed"] is bool(evidence["passed"])
@@ -221,7 +224,7 @@ class Ledger:
             item = self._row(work_id)
             self._fenced(item, agent, generation, now, "CLAIMED")
             ev = self.db.execute("SELECT * FROM evidence WHERE id=?", (evidence_id,)).fetchone()
-            if (ev is None or ev["revision"] != item["revision"] or ev["kind"] != "test"
+            if (ev is None or ev["work_id"] != work_id or ev["revision"] != item["revision"] or ev["kind"] != "test"
                     or not ev["passed"] or not ev["artifact"] or not self._valid_attestation(ev)):
                 raise GateError("missing passing revision-bound test artifact")
             self.db.execute("UPDATE work SET status='SUBMITTED',evidence_id=? WHERE id=?", (evidence_id, work_id))
@@ -235,7 +238,7 @@ class Ledger:
                 if self._row(dep)["status"] != "DONE":
                     raise GateError("dependency not completed")
             ev = self.db.execute("SELECT * FROM evidence WHERE id=?", (item["evidence_id"],)).fetchone()
-            if (ev is None or ev["revision"] != item["revision"] or not ev["passed"]
+            if (ev is None or ev["work_id"] != work_id or ev["revision"] != item["revision"] or not ev["passed"]
                     or not ev["artifact"] or not self._valid_attestation(ev)):
                 raise GateError("evidence no longer valid")
             self.db.execute("UPDATE work SET status='VERIFIED' WHERE id=?", (work_id,))
@@ -272,7 +275,7 @@ class Ledger:
             if item["authority"] == "REVIEW_REQUIRED" and not item["approved_by"]:
                 raise GateError("explicit approval required")
             ev = self.db.execute("SELECT * FROM evidence WHERE id=?", (item["evidence_id"],)).fetchone()
-            if (ev is None or ev["revision"] != item["revision"]
+            if (ev is None or ev["work_id"] != work_id or ev["revision"] != item["revision"]
                     or not self._valid_attestation(ev)):
                 raise GateError("source changed or evaluator receipt invalid; revalidate")
             receipt = hashlib.sha256(_canonical({

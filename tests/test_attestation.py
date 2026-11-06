@@ -18,10 +18,10 @@ class AttestationTests(unittest.TestCase):
     def tearDown(self):
         self.db.close()
 
-    def receipt(self, evidence_id="one-proof", revision="r1", deliveries=None):
+    def receipt(self, evidence_id="one-proof", work_id="one", revision="r1", deliveries=None):
         if deliveries is None:
             deliveries = ["logical-event"]
-        return issue_delivery_attestation(KEY, evidence_id, revision,
+        return issue_delivery_attestation(KEY, evidence_id, work_id, revision,
                                           ["logical-event", "logical-event"], deliveries)
 
     def test_evaluator_accepts_semantically_correct_output(self):
@@ -65,7 +65,7 @@ class AttestationTests(unittest.TestCase):
 
     def test_modified_revision_or_digest_fails(self):
         original = self.receipt()
-        for field, value in (("revision", "r2"), ("artifact_sha256", "0" * 64)):
+        for field, value in (("revision", "r2"), ("work_id", "another-work"), ("artifact_sha256", "0" * 64)):
             forged = dict(original)
             forged[field] = value
             self.assertFalse(verify_attestation(forged, KEY))
@@ -86,7 +86,7 @@ class AttestationTests(unittest.TestCase):
     def test_reviewer_must_differ_from_owner(self):
         self.db.create("reviewed", "r1", authority="REVIEW_REQUIRED")
         gen = self.db.claim("reviewed", "investigator", 1, 30)
-        receipt = self.receipt(evidence_id="review-proof")
+        receipt = self.receipt(evidence_id="review-proof", work_id="reviewed")
         self.db.record_attested_evidence(receipt)
         self.db.submit("reviewed", "investigator", gen, 2, "review-proof")
         self.db.verify("reviewed", "investigator", gen, 3)
@@ -94,6 +94,13 @@ class AttestationTests(unittest.TestCase):
             self.db.approve("reviewed", "investigator")
         self.db.approve("reviewed", "reviewer")
         self.assertTrue(self.db.complete("reviewed", "investigator", gen, 4))
+
+    def test_cross_work_receipt_replay_is_rejected(self):
+        self.db.create("second", "r1")
+        second_generation = self.db.claim("second", "investigator", 1, 30)
+        self.db.record_attested_evidence(self.receipt())
+        with self.assertRaises(GateError):
+            self.db.submit("second", "investigator", second_generation, 2, "one-proof")
 
     def test_missing_key_denies_attested_submission(self):
         no_key = Ledger()

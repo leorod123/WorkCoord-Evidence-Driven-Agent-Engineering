@@ -23,7 +23,7 @@ class InvariantTests(unittest.TestCase):
 
     def _proof(self, work_id="one", identity="test-a"):
         self.db.record_attested_evidence(issue_delivery_attestation(
-            TEST_KEY, identity, "rev-a", ["event-1", "event-1"], ["event-1"],
+            TEST_KEY, identity, work_id, "rev-a", ["event-1", "event-1"], ["event-1"],
         ))
         return identity
 

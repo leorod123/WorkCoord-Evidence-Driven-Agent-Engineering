@@ -18,7 +18,7 @@ def main():
         db.create("fix-notifications", revision="synthetic-r1")
         gen = db.claim("fix-notifications", "agent-a", now=1, ttl=20)
         db.record_attested_evidence(issue_delivery_attestation(
-            key, "test-e1", "synthetic-r1", logical_events, fixed,
+            key, "test-e1", "fix-notifications", "synthetic-r1", logical_events, fixed,
         ))
         db.submit("fix-notifications", "agent-a", gen, now=2, evidence_id="test-e1")
         db.verify("fix-notifications", "agent-a", gen, now=3)

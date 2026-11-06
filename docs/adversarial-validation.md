@@ -10,7 +10,7 @@ Two additional subprocesses simulate interruption: one exits during a transactio
 
 ## Evidence evaluation boundary
 
-A separate deterministic oracle function computes the expected synthetic notification behavior from logical events and observed deliveries. It generates an HMAC-tagged receipt with evidence ID, revision, evaluation rule, PASS/FAIL and a digest of the evaluated fixture. The ledger rejects standalone claims of PASS during submission and rechecks the receipt at later state transitions.
+A separate deterministic oracle function computes the expected synthetic notification behavior from logical events and observed deliveries. It generates an HMAC-tagged receipt with evidence ID, **work ID**, revision, evaluation rule, PASS/FAIL and a digest of the evaluated fixture. A valid proof for one work unit must not be reusable to complete a different work unit. The ledger rejects standalone claims of PASS during submission and rechecks the receipt at later state transitions.
 
 **Crucial limitation:** the reference evaluator key is intentionally public in demonstrations and test fixtures. A party with that key, the ledger's interpreter, or raw SQLite write access can forge or alter the underlying records. HMAC shows how a separated evaluator could authenticate a receipt **if** credentials and processes were independently controlled; it does not supply that isolation in this repository.
 
