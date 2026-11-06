@@ -1,0 +1,536 @@
+{
+  "schema": "workcoord.full-ledger-cycle-fixture/v0",
+  "status": "PUBLIC_AUTHOR_AUTHORED_SYNTHETIC_NOT_REAL_AGENT_STUDY",
+  "source_vertical_catalog": "examples/vertical-integration-cases-v0.json",
+  "base_current_case_id": "VI01",
+  "base_stale_revision_case_id": "VI03",
+  "original_cut": 4,
+  "contradiction_cut": 6,
+  "stale_revision_cut": 6,
+  "rechecked_cut": 8,
+  "rechecked_patches": [
+    {
+      "op": "set",
+      "path": [
+        "manifest",
+        "source_revision"
+      ],
+      "value": "fictional-r3"
+    },
+    {
+      "op": "set",
+      "path": [
+        "manifest",
+        "primary_source_id"
+      ],
+      "value": "worker-r3"
+    },
+    {
+      "op": "set",
+      "path": [
+        "manifest",
+        "primary_observation_id"
+      ],
+      "value": "unit-idempotency-r3"
+    },
+    {
+      "op": "set",
+      "path": [
+        "manifest",
+        "primary_source_sha256"
+      ],
+      "value": "e802bfe104a8e988c875c283dd544652ad3851e76efad07daa14b4b75e22635e"
+    },
+    {
+      "op": "set",
+      "path": [
+        "research",
+        "source",
+        "id"
+      ],
+      "value": "worker-r3"
+    },
+    {
+      "op": "set",
+      "path": [
+        "research",
+        "source",
+        "revision"
+      ],
+      "value": "fictional-r3"
+    },
+    {
+      "op": "set",
+      "path": [
+        "research",
+        "evidence",
+        0,
+        "id"
+      ],
+      "value": "unit-idempotency-r3"
+    },
+    {
+      "op": "set",
+      "path": [
+        "research",
+        "evidence",
+        0,
+        "revision"
+      ],
+      "value": "fictional-r3"
+    },
+    {
+      "op": "set",
+      "path": [
+        "research",
+        "evidence",
+        0,
+        "finding"
+      ],
+      "value": "Rerun of synthetic retry guard on fictional-r3; external delivery behavior still needs a separate evaluator."
+    },
+    {
+      "op": "set",
+      "path": [
+        "research",
+        "hypotheses",
+        0,
+        "evidence_ids",
+        0
+      ],
+      "value": "unit-idempotency-r3"
+    },
+    {
+      "op": "set",
+      "path": [
+        "problem",
+        "problem",
+        "source_revision"
+      ],
+      "value": "fictional-r3"
+    },
+    {
+      "op": "set",
+      "path": [
+        "problem",
+        "evidence",
+        0,
+        "revision"
+      ],
+      "value": "fictional-r3"
+    },
+    {
+      "op": "set",
+      "path": [
+        "problem",
+        "evidence",
+        1,
+        "id"
+      ],
+      "value": "unit-idempotency-r3"
+    },
+    {
+      "op": "set",
+      "path": [
+        "problem",
+        "evidence",
+        1,
+        "revision"
+      ],
+      "value": "fictional-r3"
+    },
+    {
+      "op": "set",
+      "path": [
+        "problem",
+        "evidence",
+        2,
+        "revision"
+      ],
+      "value": "fictional-r3"
+    },
+    {
+      "op": "set",
+      "path": [
+        "cognitive",
+        "issue",
+        "source_revision"
+      ],
+      "value": "fictional-r3"
+    },
+    {
+      "op": "set",
+      "path": [
+        "cognitive",
+        "sources",
+        0,
+        "id"
+      ],
+      "value": "unit-idempotency-r3"
+    },
+    {
+      "op": "set",
+      "path": [
+        "cognitive",
+        "sources",
+        0,
+        "source_revision"
+      ],
+      "value": "fictional-r3"
+    },
+    {
+      "op": "set",
+      "path": [
+        "cognitive",
+        "sources",
+        0,
+        "finding"
+      ],
+      "value": "Rerun of synthetic retry guard on fictional-r3; external delivery behavior still needs a separate evaluator."
+    },
+    {
+      "op": "set",
+      "path": [
+        "cognitive",
+        "sources",
+        1,
+        "source_revision"
+      ],
+      "value": "fictional-r3"
+    },
+    {
+      "op": "set",
+      "path": [
+        "cognitive",
+        "sources",
+        2,
+        "source_revision"
+      ],
+      "value": "fictional-r3"
+    },
+    {
+      "op": "set",
+      "path": [
+        "cognitive",
+        "reviews",
+        0,
+        "source_revision"
+      ],
+      "value": "fictional-r3"
+    },
+    {
+      "op": "set",
+      "path": [
+        "cognitive",
+        "reviews",
+        0,
+        "source_ids",
+        0
+      ],
+      "value": "unit-idempotency-r3"
+    },
+    {
+      "op": "set",
+      "path": [
+        "cognitive",
+        "reviews",
+        1,
+        "source_revision"
+      ],
+      "value": "fictional-r3"
+    },
+    {
+      "op": "set",
+      "path": [
+        "cognitive",
+        "reviews",
+        1,
+        "source_ids",
+        0
+      ],
+      "value": "unit-idempotency-r3"
+    },
+    {
+      "op": "set",
+      "path": [
+        "cognitive",
+        "reviews",
+        2,
+        "source_revision"
+      ],
+      "value": "fictional-r3"
+    },
+    {
+      "op": "set",
+      "path": [
+        "cognitive",
+        "reviews",
+        3,
+        "source_revision"
+      ],
+      "value": "fictional-r3"
+    },
+    {
+      "op": "append",
+      "path": [
+        "knowledge_actions"
+      ],
+      "value": {
+        "id": "e05",
+        "tick": 5,
+        "kind": "SOURCE_ADD",
+        "data": {
+          "source_id": "worker-r3",
+          "lineage_id": "worker",
+          "revision": "fictional-r3",
+          "body": "Rerun of synthetic retry guard on fictional-r3; external delivery behavior still needs a separate evaluator.",
+          "available_tick": 5
+        }
+      }
+    },
+    {
+      "op": "append",
+      "path": [
+        "knowledge_actions"
+      ],
+      "value": {
+        "id": "e06",
+        "tick": 6,
+        "kind": "SOURCE_SUPERSEDE",
+        "data": {
+          "old_source_id": "worker-r2",
+          "new_source_id": "worker-r3",
+          "reason": "Fictional source revision changed during the claimed unit; old review invalidated."
+        }
+      }
+    },
+    {
+      "op": "append",
+      "path": [
+        "knowledge_actions"
+      ],
+      "value": {
+        "id": "e07",
+        "tick": 7,
+        "kind": "OBSERVATION_ADD",
+        "data": {
+          "observation_id": "unit-idempotency-r3",
+          "claim_id": "H-retry",
+          "source_id": "worker-r3",
+          "stance": "SUPPORT",
+          "finding": "Rerun of synthetic retry guard on fictional-r3; external delivery behavior still needs a separate evaluator."
+        }
+      }
+    },
+    {
+      "op": "append",
+      "path": [
+        "knowledge_actions"
+      ],
+      "value": {
+        "id": "e08",
+        "tick": 8,
+        "kind": "REVIEW_ACCEPT",
+        "data": {
+          "claim_id": "H-retry",
+          "basis_ids": [
+            "unit-idempotency-r3"
+          ],
+          "review_note": "Separate synthetic recheck r3 after source replacement; advisory only."
+        }
+      }
+    }
+  ],
+  "current_documents": [
+    {
+      "id": "worker-r2",
+      "title": "Worker retry source reviewed for fictional-r2",
+      "body": "Idempotency unit tests pass; the external notification behavior is not checked here.",
+      "sector": "worker",
+      "perspectives": [
+        "reliability"
+      ],
+      "depth": "focused",
+      "revision": "fictional-r2",
+      "maturity": "observed",
+      "tags": [
+        "duplicate-notification"
+      ],
+      "depends_on": [
+        "queue"
+      ],
+      "signals": {
+        "H-retry": "supports",
+        "H-producer": "contradicts"
+      }
+    },
+    {
+      "id": "worker-r1",
+      "title": "Historical worker guide",
+      "body": "Historical context only: an older revision had a different behavior explanation.",
+      "sector": "worker",
+      "perspectives": [
+        "reliability"
+      ],
+      "depth": "overview",
+      "revision": "fictional-r1",
+      "maturity": "validated",
+      "tags": [
+        "duplicate-notification"
+      ],
+      "depends_on": [
+        "queue"
+      ],
+      "signals": {
+        "H-producer": "supports"
+      }
+    },
+    {
+      "id": "queue-ack-fictional-r2",
+      "title": "Queue retry observation",
+      "body": "Synthetic lost acknowledgment observation shows redelivery can follow prior downstream delivery.",
+      "sector": "queue",
+      "perspectives": [
+        "reliability"
+      ],
+      "depth": "focused",
+      "revision": "fictional-r2",
+      "maturity": "observed",
+      "tags": [
+        "duplicate-notification"
+      ],
+      "depends_on": [
+        "api"
+      ],
+      "signals": {
+        "H-retry": "supports",
+        "H-producer": "contradicts"
+      }
+    },
+    {
+      "id": "api-single-fictional-r2",
+      "title": "Single logical producer event",
+      "body": "Synthetic API observation contains one logical producer event and repeated delivery attempts.",
+      "sector": "api",
+      "perspectives": [
+        "reliability"
+      ],
+      "depth": "focused",
+      "revision": "fictional-r2",
+      "maturity": "observed",
+      "tags": [
+        "duplicate-notification"
+      ],
+      "depends_on": [
+        "queue"
+      ],
+      "signals": {
+        "H-producer": "contradicts"
+      }
+    }
+  ],
+  "rechecked_documents": [
+    {
+      "id": "worker-r3",
+      "title": "Worker retry source reviewed for fictional-r3",
+      "body": "Rerun of synthetic retry guard on fictional-r3; external delivery behavior still needs a separate evaluator.",
+      "sector": "worker",
+      "perspectives": [
+        "reliability"
+      ],
+      "depth": "focused",
+      "revision": "fictional-r3",
+      "maturity": "observed",
+      "tags": [
+        "duplicate-notification"
+      ],
+      "depends_on": [
+        "queue"
+      ],
+      "signals": {
+        "H-retry": "supports",
+        "H-producer": "contradicts"
+      }
+    },
+    {
+      "id": "worker-r2",
+      "title": "Historical worker guide",
+      "body": "Historical context only: an older revision had a different behavior explanation.",
+      "sector": "worker",
+      "perspectives": [
+        "reliability"
+      ],
+      "depth": "overview",
+      "revision": "fictional-r2",
+      "maturity": "validated",
+      "tags": [
+        "duplicate-notification"
+      ],
+      "depends_on": [
+        "queue"
+      ],
+      "signals": {
+        "H-producer": "supports"
+      }
+    },
+    {
+      "id": "queue-ack-fictional-r3",
+      "title": "Queue retry observation",
+      "body": "Synthetic lost acknowledgment observation shows redelivery can follow prior downstream delivery.",
+      "sector": "queue",
+      "perspectives": [
+        "reliability"
+      ],
+      "depth": "focused",
+      "revision": "fictional-r3",
+      "maturity": "observed",
+      "tags": [
+        "duplicate-notification"
+      ],
+      "depends_on": [
+        "api"
+      ],
+      "signals": {
+        "H-retry": "supports",
+        "H-producer": "contradicts"
+      }
+    },
+    {
+      "id": "api-single-fictional-r3",
+      "title": "Single logical producer event",
+      "body": "Synthetic API observation contains one logical producer event and repeated delivery attempts.",
+      "sector": "api",
+      "perspectives": [
+        "reliability"
+      ],
+      "depth": "focused",
+      "revision": "fictional-r3",
+      "maturity": "observed",
+      "tags": [
+        "duplicate-notification"
+      ],
+      "depends_on": [
+        "queue"
+      ],
+      "signals": {
+        "H-producer": "contradicts"
+      }
+    }
+  ],
+  "work_id": "flowdesk-duplicate-deliveries",
+  "synthetic_owner": "worker-A",
+  "synthetic_other_actor": "worker-B",
+  "synthetic_reviewer": "reviewer-B",
+  "fictional_logical_events": [
+    "event-42",
+    "event-42"
+  ],
+  "declared_successful_deliveries": [
+    "event-42"
+  ],
+  "declared_failing_deliveries": [
+    "event-42",
+    "event-42"
+  ],
+  "note": "Fixture patches are authored reviewed inputs, not an automatic promotion of any observation or verified independent source."
+}
