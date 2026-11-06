@@ -94,6 +94,6 @@ For discussion in Portuguese, see [README-pt.md](README-pt.md).
 
 ## Status and next milestone
 
-The public design foundation is complemented in this candidate branch by a **synthetic Python + SQLite reference lab**, with deterministic invariant tests and a GitHub Actions matrix. The lab remains subject to a draft PR and independent human review; it does not establish production security or any gain in agent productivity. The next research milestone is sector/perspective/depth discovery with counterevidence, followed by independently evaluated agent experiments only after the protocol is frozen. See the [adversarial review response](docs/reviews/adversarial-response-v0.md).
+The current main branch contains the public design foundation. Next: publish a deliberately small SQLite + Python reference lab with a deterministic fictional incident, tests for the D01–D15 invariant probes, and a working GitHub Actions workflow. The agent benchmark follows only after the protocol and evaluation boundaries are frozen.
 
 **License:** To be selected by the repository owner before redistribution is explicitly permitted.
