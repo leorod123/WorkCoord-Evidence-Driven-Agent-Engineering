@@ -1,0 +1,237 @@
+{
+  "schema": "workcoord.synthetic-context/v1",
+  "status": "synthetic_training_fixture_not_agent_benchmark",
+  "current_revision": "demo-r2",
+  "issue_tags": [
+    "duplicate-notification"
+  ],
+  "hypotheses": [
+    "producer-duplicates",
+    "ack-retry"
+  ],
+  "documents": [
+    {
+      "id": "worker-guide-r0",
+      "title": "Old notification worker guide",
+      "sector": "worker",
+      "perspectives": [
+        "reliability"
+      ],
+      "depth": "overview",
+      "revision": "demo-r0",
+      "maturity": "validated",
+      "tags": [
+        "duplicate-notification"
+      ],
+      "depends_on": [
+        "queue"
+      ],
+      "body": "Historical worker runbook: repeat notifications were previously caused by a duplicated producer event. This guide was validated for revision demo-r0 only.",
+      "signals": {
+        "producer-duplicates": "supports"
+      }
+    },
+    {
+      "id": "worker-log-r2",
+      "title": "Worker retry trace",
+      "sector": "worker",
+      "perspectives": [
+        "reliability"
+      ],
+      "depth": "focused",
+      "revision": "demo-r2",
+      "maturity": "observed",
+      "tags": [
+        "duplicate-notification"
+      ],
+      "depends_on": [
+        "queue"
+      ],
+      "body": "Synthetic worker trace: the same event ID entered processing twice after a timeout. This observation is current but not independently validated as root cause.",
+      "signals": {
+        "producer-duplicates": "contradicts",
+        "ack-retry": "supports"
+      }
+    },
+    {
+      "id": "worker-throughput-r2",
+      "title": "Worker throughput observation",
+      "sector": "worker",
+      "perspectives": [
+        "performance"
+      ],
+      "depth": "overview",
+      "revision": "demo-r2",
+      "maturity": "observed",
+      "tags": [
+        "duplicate-notification"
+      ],
+      "depends_on": [
+        "queue"
+      ],
+      "body": "The worker latency histogram widens during retry bursts. This measurement alone does not identify which component emitted the event.",
+      "signals": {}
+    },
+    {
+      "id": "queue-note-r1",
+      "title": "Old queue redelivery policy",
+      "sector": "queue",
+      "perspectives": [
+        "reliability"
+      ],
+      "depth": "overview",
+      "revision": "demo-r1",
+      "maturity": "validated",
+      "tags": [
+        "duplicate-notification"
+      ],
+      "depends_on": [
+        "worker"
+      ],
+      "body": "Historical queue note: redelivery was disabled in an earlier release. The current broker configuration has not yet been verified by this note.",
+      "signals": {
+        "producer-duplicates": "supports"
+      }
+    },
+    {
+      "id": "queue-ack-r2",
+      "title": "Current lost-ack observation",
+      "sector": "queue",
+      "perspectives": [
+        "reliability"
+      ],
+      "depth": "focused",
+      "revision": "demo-r2",
+      "maturity": "observed",
+      "tags": [
+        "duplicate-notification"
+      ],
+      "depends_on": [
+        "api"
+      ],
+      "body": "Synthetic queue observation: an acknowledgement timed out after the delivery was recorded, followed by another delivery attempt for the same event ID.",
+      "signals": {
+        "producer-duplicates": "contradicts",
+        "ack-retry": "supports"
+      }
+    },
+    {
+      "id": "queue-metrics-r2",
+      "title": "Queue operations dashboard note",
+      "sector": "queue",
+      "perspectives": [
+        "performance"
+      ],
+      "depth": "focused",
+      "revision": "demo-r2",
+      "maturity": "observed",
+      "tags": [
+        "duplicate-notification"
+      ],
+      "depends_on": [
+        "worker"
+      ],
+      "body": "The queue has a short-lived spike in processing time. The dashboard cannot by itself determine whether retries or producer duplicates explain the spike.",
+      "signals": {}
+    },
+    {
+      "id": "queue-deep-r2",
+      "title": "Deep queue acknowledgement trace",
+      "sector": "queue",
+      "perspectives": [
+        "reliability"
+      ],
+      "depth": "deep",
+      "revision": "demo-r2",
+      "maturity": "observed",
+      "tags": [
+        "duplicate-notification"
+      ],
+      "depends_on": [
+        "api"
+      ],
+      "body": "Deep synthetic packet trace annotated for diagnosis: an acknowledgement fails after downstream success. This is still an observation requiring a discriminating test.",
+      "signals": {
+        "producer-duplicates": "contradicts",
+        "ack-retry": "supports"
+      }
+    },
+    {
+      "id": "api-events-r2",
+      "title": "Single producer event trace",
+      "sector": "api",
+      "perspectives": [
+        "reliability"
+      ],
+      "depth": "focused",
+      "revision": "demo-r2",
+      "maturity": "observed",
+      "tags": [
+        "duplicate-notification"
+      ],
+      "depends_on": [
+        "queue"
+      ],
+      "body": "Synthetic API observation: one logical event was published for the ticket while two downstream deliveries were recorded. The origin of duplicates is disputed.",
+      "signals": {
+        "producer-duplicates": "contradicts"
+      }
+    },
+    {
+      "id": "api-old-r0",
+      "title": "Historical API producer notes",
+      "sector": "api",
+      "perspectives": [
+        "reliability"
+      ],
+      "depth": "overview",
+      "revision": "demo-r0",
+      "maturity": "validated",
+      "tags": [
+        "duplicate-notification"
+      ],
+      "depends_on": [
+        "queue"
+      ],
+      "body": "Old release guidance described retries at the API producer. This is not proof of the current producer behavior.",
+      "signals": {
+        "producer-duplicates": "supports"
+      }
+    },
+    {
+      "id": "notification-security-r2",
+      "title": "Notification security observation",
+      "sector": "worker",
+      "perspectives": [
+        "security"
+      ],
+      "depth": "overview",
+      "revision": "demo-r2",
+      "maturity": "observed",
+      "tags": [
+        "duplicate-notification"
+      ],
+      "depends_on": [],
+      "body": "A sandbox-only security checklist lists notification permissions. It does not establish the retry mechanism.",
+      "signals": {}
+    },
+    {
+      "id": "unrelated-worker-r2",
+      "title": "Unrelated worker configuration",
+      "sector": "worker",
+      "perspectives": [
+        "reliability"
+      ],
+      "depth": "overview",
+      "revision": "demo-r2",
+      "maturity": "validated",
+      "tags": [
+        "other-incident"
+      ],
+      "depends_on": [],
+      "body": "This document is current but addresses an unrelated background cleanup task.",
+      "signals": {}
+    }
+  ],
+  "disclosure": "All source stances are explicitly authored fixture labels. They are not independently inferred by an LLM or verified against production logs."
+}

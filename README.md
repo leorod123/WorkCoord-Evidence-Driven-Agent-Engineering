@@ -47,6 +47,16 @@ The same incident family is evaluated under increasingly structured workflows. T
 
 The scenarios are deliberately synthetic and contain no material from private projects.
 
+## Traceable intelligence walkthrough (draft)
+
+The [executable fictional walkthrough](docs/intelligence-walkthrough.md) begins with an old worker note suggesting producer duplication, follows a declared dependency to the queue, discovers current contradictory evidence, and revises the **provisional** investigation hypothesis:
+
+```bash
+PYTHONPATH=src python -m workcoord_lab.intelligence_demo
+```
+
+The trace exposes source revision, maturity, sector, perspective, depth, gaps, conflicting observations and reading characters. Its diagnostic signals are **human-authored annotations**, not inference by an AI model. The exercise demonstrates inspectability, not a measured reasoning or productivity improvement.
+
 ## What we will measure
 
 | Comparison | Purpose |
@@ -76,6 +86,7 @@ We will report valid repairs, justified abstentions, invalid completions, time, 
 | Resource | Purpose | Maturity |
 | --- | --- | --- |
 | [Architecture](docs/architecture.md) | Boundaries and contracts | Design |
+| [Intelligence walkthrough](docs/intelligence-walkthrough.md) | Synthetic sector/perspective/depth navigation | Executable draft |
 | [Research method](docs/research-method.md) | Hypotheses, falsifiers and evidence | Design |
 | [Experimental design](docs/experimental-design.md) | Comparison plan, metrics and validity threats | Draft, not preregistered |
 | [Scenario catalog](evals/scenarios-v0.json) | Eight fictional scenario families | Draft |
@@ -94,6 +105,6 @@ For discussion in Portuguese, see [README-pt.md](README-pt.md).
 
 ## Status and next milestone
 
-The public design foundation is complemented in this candidate branch by a **synthetic Python + SQLite reference lab**, with deterministic invariant tests and a GitHub Actions matrix. The lab remains subject to a draft PR and independent human review; it does not establish production security or any gain in agent productivity. The next research milestone is sector/perspective/depth discovery with counterevidence, followed by independently evaluated agent experiments only after the protocol is frozen. See the [adversarial review response](docs/reviews/adversarial-response-v0.md).
+This draft PR stack contains the fictional Python + SQLite coordinator and a **sectorized context-navigation walkthrough**. Both have deterministic tests, but neither demonstrates production security, authenticated real-world sources or improved agent performance. Next: design a common external evaluation of context relevance, missed counterevidence, outcomes and measured cost before real-agent experiments. See the [adversarial review response](docs/reviews/adversarial-response-v0.md).
 
 **License:** To be selected by the repository owner before redistribution is explicitly permitted.

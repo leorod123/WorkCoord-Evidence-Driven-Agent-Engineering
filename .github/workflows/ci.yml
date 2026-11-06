@@ -24,6 +24,14 @@ jobs:
         env:
           PYTHONPATH: src
         run: python scripts/verify_mutations.py
+      - name: Verify context-selector mutations are detected
+        env:
+          PYTHONPATH: src
+        run: python scripts/verify_context_mutations.py
+      - name: Run synthetic intelligence walkthrough
+        env:
+          PYTHONPATH: src
+        run: python -m workcoord_lab.intelligence_demo
       - name: Run synthetic demo
         env:
           PYTHONPATH: src
