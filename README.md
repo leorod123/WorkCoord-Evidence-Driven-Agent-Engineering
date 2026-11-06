@@ -160,6 +160,18 @@ PYTHONPATH=src python -m unittest discover -s tests -v
 python scripts/verify_audit_mutations.py
 ```
 
+## Ledger end-to-end v0 — one fictional proof path, including source change
+
+The [complete synthetic replay](docs/ledger-vertical-e2e-v0.md) now joins the **existing** ContextNavigator, four vertical advisory gates, SQLite Ledger, revision-bound synthetic evaluator receipt and required reviewer label in one fictional task. An initially passing source `fictional-r2` is replaced by `fictional-r3` **before completion**: the earlier proof and approval are invalidated; an explicit fresh source observation, renewed four-stage packet, independent-looking toy behavior probe and new declared review are required.
+
+Deliberate negative controls check a failed behavior oracle, late counterevidence, stale source identity, an unread primary document, wrong owner, missing approval and forged output leakage. The evaluator HMAC key is **ephemeral runtime memory**, and redacted public receipts do not contain raw attestations or MACs.
+
+```bash
+PYTHONPATH=src python -m workcoord_lab.ledger_vertical_e2e
+```
+
+A synthetic Ledger `DONE` is **not independent real-world problem acceptance**. This remains a cooperative fixture-driven bridge, not an enforced production authorization boundary or a measured agent improvement. See the [executed development results](docs/ledger-vertical-e2e-results-v0.md).
+
 ## What we will measure
 
 | Comparison | Purpose |
@@ -199,6 +211,7 @@ We will report valid repairs, justified abstentions, invalid completions, time, 
 | [Knowledge & Learning v0](docs/knowledge-genealogy-v0.md) | Append-only revision, negative evidence and dependent claim invalidation | Synthetic draft |
 | [Vertical evidence chain v0](docs/vertical-evidence-v0.md) | Four existing advisory contracts on one case; late negative invalidation | Synthetic draft |
 | [Independent audit remediation](docs/reviews/independent-audit-remediation-v0.md) | Directed A01-A05 tests, reader isolation and pinned CI Actions | Synthetic draft |
+| [Ledger E2E v0](docs/ledger-vertical-e2e-v0.md) | Existing context, four advisory gates, fencing, renewed behavioral proof and revision invalidation | Synthetic draft |
 | [Experimental design](docs/experimental-design.md) | Comparison plan, metrics and validity threats | Draft, not preregistered |
 | [Scenario catalog](evals/scenarios-v0.json) | Eight fictional scenario families | Draft |
 | [Preregistration](evals/preregistration-v0.json) | Proposed experimental parameters | Draft, not sealed |
@@ -216,6 +229,6 @@ For discussion in Portuguese, see [README-pt.md](README-pt.md).
 
 ## Status and next milestone
 
-The draft PR stack contains independent public reference modules for coordination, context, investigation, scientific admission, semantic problem closure, cognitive review and knowledge genealogy, plus a minimal four-module **vertical composition**. These are **deterministic synthetic fixtures**, not production integration or proof of agent productivity. Next: independent architecture/confidentiality review and license/PR stack decision, followed by a genuinely held-out evaluation with total cost accounting. See the [adversarial review response](docs/reviews/adversarial-response-v0.md).
+The stacked draft PRs now include a **bounded synthetic full path** through context retrieval, four advisory checks and the existing SQLite Ledger, including forced revalidation of proof and approval after a source revision. These are **author-authored deterministic fixtures**, not authenticated production integration or evidence of superior agent productivity. Next: human confidentiality/IP/license review and explicit PR integration decisions, then an externally scored, cost-accounted Harbor/Terminal-Bench pilot under controlled budgets. See the [independent audit remediation](docs/reviews/independent-audit-remediation-v0.md).
 
 **License:** To be selected by the repository owner before redistribution is explicitly permitted.

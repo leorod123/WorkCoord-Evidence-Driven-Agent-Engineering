@@ -91,6 +91,12 @@ The [vertical evidence-chain example](vertical-evidence-v0.md) calls the **origi
 
 An observation appearing **after** an earlier history cut may invalidate its advisory conclusion without changing the earlier technical test results. Superseding a primary source revision also blocks promotion until all four earlier stages are reconsidered. No new coordinator, persistence layer, external access or permission system is created; the integrated checkpoint remains advisory.
 
+## One bounded synthetic path through the Ledger
+
+[Ledger End-to-End v0](ledger-vertical-e2e-v0.md) composes the **existing** context navigator, four advisory evaluators, SQLite lease fencing, source-revision-bound toy evaluator and explicit reviewer string for one fictional notification problem. A source changes **after** VERIFIED but **before** DONE: the ledger clears stale attestation and approval and requires new source selection, explicit genealogy review, fresh semantic test and renewed declared approval. A late contradicting observation blocks the cooperative bridge before further proof steps.
+
+This does not integrate the advisory rules as an enforced Ledger security policy. A caller can directly access the general-purpose Ledger API, and the bridge relies on caller-supplied source snapshots; reviewer identities and evaluation clocks are still not authenticated. A local `DONE` is separate from independent semantic acceptance and production permission.
+
 ## Decision and completion gates
 
 1. A unit can be claimed only with an unexpired, uniquely fenced lease.

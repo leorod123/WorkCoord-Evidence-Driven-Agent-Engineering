@@ -61,3 +61,7 @@ O [exemplo integrado público](docs/vertical-evidence-v0.md) compõe os quatro a
 ## Correções da auditoria adversarial (A01-A05)
 
 A [resposta técnica](docs/reviews/independent-audit-remediation-v0.md) trata avanço indevido do relógio de leases, identidade histórica dependente de eventos futuros, vazamento de orientação das fontes não lidas, bloqueio excessivo por referências históricas de contexto e contraprovas cognitivas não resolvidas. O CI usa permissões mínimas e Actions fixadas por SHA. Isso **não comprova segurança de produção nem ganho com agentes reais**. A API do Codex não foi usada nesta etapa e nenhuma chave foi adicionada.
+
+## Integração sintética com Ledger — ciclo completo de trabalho
+
+O [fluxo executável](docs/ledger-vertical-e2e-v0.md) reúne ContextNavigator, pesquisa, decisão, perspectivas, genealogia e o Ledger SQLite existente. O caso começa com revisão `fictional-r2`: posse exclusiva, teste comportamental fictício e revisão declarada. Antes da conclusão, a fonte muda para `fictional-r3`: evidência e aprovação anteriores são invalidadas, e uma nova comprovação vinculada à revisão atual é exigida. Uma contraprova tardia também bloqueia o caminho. A chave HMAC do teste é gerada apenas em memória, sem API do Codex e sem credenciais publicadas. **`DONE` no exemplo não significa bug real corrigido, identidade autenticada ou permissão de produção.** [Resultados do CI e limites](docs/ledger-vertical-e2e-results-v0.md).
